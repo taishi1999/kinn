@@ -46,6 +46,7 @@
 		F7A11BD42C48B17D0076C73A /* dropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A11BD32C48B17D0076C73A /* dropdown.swift */; };
 		F7A65AC62CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A65AC52CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift */; };
 		F7A8487D2CBFA318006AA83B /* パーツ_パルス.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A8487C2CBFA318006AA83B /* パーツ_パルス.swift */; };
+		F7AEC3CB2CEC6E8400C134A0 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F7AEC3CA2CEC6E8400C134A0 /* .gitignore */; };
 		F7B1E41A2CE053F00040EAD4 /* Coredata送るテスト.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B1E4192CE053F00040EAD4 /* Coredata送るテスト.swift */; };
 		F7B1E41C2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B1E41B2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift */; };
 		F7B4D5062CCE118800E1BD54 /* 日付フォーマット.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B4D5052CCE118800E1BD54 /* 日付フォーマット.swift */; };
@@ -116,6 +117,7 @@
 		F7A11BD32C48B17D0076C73A /* dropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dropdown.swift; sourceTree = "<group>"; };
 		F7A65AC52CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_文字数入力欄.swift"; sourceTree = "<group>"; };
 		F7A8487C2CBFA318006AA83B /* パーツ_パルス.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_パルス.swift"; sourceTree = "<group>"; };
+		F7AEC3CA2CEC6E8400C134A0 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		F7B1E4192CE053F00040EAD4 /* Coredata送るテスト.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coredata送るテスト.swift"; sourceTree = "<group>"; };
 		F7B1E41B2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_ライナーグラデーション.swift"; sourceTree = "<group>"; };
 		F7B4D5052CCE118800E1BD54 /* 日付フォーマット.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "日付フォーマット.swift"; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		F79338B32BF074A300523E28 = {
 			isa = PBXGroup;
 			children = (
+				F7AEC3CA2CEC6E8400C134A0 /* .gitignore */,
 				F7A086CD2CC0B65300C8EE31 /* DiaryEntry+CoreDataClass.swift */,
 				F7A086CE2CC0B65300C8EE31 /* DiaryEntry+CoreDataProperties.swift */,
 				F79AF0C62CA53C2900DBFAEC /* MyTask+CoreDataClass.swift */,
@@ -427,6 +430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F79338C72BF074A300523E28 /* Preview Assets.xcassets in Resources */,
+				F7AEC3CB2CEC6E8400C134A0 /* .gitignore in Resources */,
 				F79338C42BF074A300523E28 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
