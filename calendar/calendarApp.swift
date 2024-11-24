@@ -213,11 +213,12 @@ struct MyApp: App {
 //            MainTextEditorView()
 //            MainView()
             // ダークモード
-                .preferredColorScheme(.dark)
-                .environment(\.managedObjectContext, dataController.container.viewContext)  // Core Dataのコンテキストを渡す
-                .onAppear {
-                                    checkFirstLaunch()
-                                }
+//            アプリルート(viewModel: taskViewModel)
+                            .preferredColorScheme(.dark)
+                            .environment(\.managedObjectContext, dataController.container.viewContext)
+//                .onAppear {
+//                                    checkFirstLaunch()
+//                                }
             //開発のため一時コメントアウト
 //                .sheet(isPresented: $showSettingsOnFirstLaunch) {
 //                    初回設定View()

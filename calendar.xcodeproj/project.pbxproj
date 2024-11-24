@@ -36,6 +36,10 @@
 		F79998D22C9FE5E0001A5FEB /* パーツ_FABボタン_タスク作成.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79998D12C9FE5E0001A5FEB /* パーツ_FABボタン_タスク作成.swift */; };
 		F79998D52C9FFBF4001A5FEB /* スタイル_バウンドボタン.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79998D42C9FFBF4001A5FEB /* スタイル_バウンドボタン.swift */; };
 		F79998D82C9FFD90001A5FEB /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79998D72C9FFD90001A5FEB /* ContentViewModel.swift */; };
+		F799EFEF2CF3019C00497356 /* パーツ_曜日選択.swift in Sources */ = {isa = PBXBuildFile; fileRef = F799EFEE2CF3019C00497356 /* パーツ_曜日選択.swift */; };
+		F799EFF12CF3030C00497356 /* パーツ_時刻選択.swift in Sources */ = {isa = PBXBuildFile; fileRef = F799EFF02CF3030C00497356 /* パーツ_時刻選択.swift */; };
+		F799EFF32CF30C8800497356 /* ページ_ロゴ.swift in Sources */ = {isa = PBXBuildFile; fileRef = F799EFF22CF30C8800497356 /* ページ_ロゴ.swift */; };
+		F799EFF52CF30CEA00497356 /* アプリルート.swift in Sources */ = {isa = PBXBuildFile; fileRef = F799EFF42CF30CEA00497356 /* アプリルート.swift */; };
 		F79AF0C82CA53C2900DBFAEC /* MyTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79AF0C62CA53C2900DBFAEC /* MyTask+CoreDataClass.swift */; };
 		F79AF0C92CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79AF0C72CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift */; };
 		F79CDD772C9EEFF500F93ECE /* Tasks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F79CDD752C9EEFF500F93ECE /* Tasks.xcdatamodeld */; };
@@ -107,6 +111,10 @@
 		F79998D12C9FE5E0001A5FEB /* パーツ_FABボタン_タスク作成.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_FABボタン_タスク作成.swift"; sourceTree = "<group>"; };
 		F79998D42C9FFBF4001A5FEB /* スタイル_バウンドボタン.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "スタイル_バウンドボタン.swift"; sourceTree = "<group>"; };
 		F79998D72C9FFD90001A5FEB /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		F799EFEE2CF3019C00497356 /* パーツ_曜日選択.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_曜日選択.swift"; sourceTree = "<group>"; };
+		F799EFF02CF3030C00497356 /* パーツ_時刻選択.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_時刻選択.swift"; sourceTree = "<group>"; };
+		F799EFF22CF30C8800497356 /* ページ_ロゴ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ページ_ロゴ.swift"; sourceTree = "<group>"; };
+		F799EFF42CF30CEA00497356 /* アプリルート.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "アプリルート.swift"; sourceTree = "<group>"; };
 		F79AF0C62CA53C2900DBFAEC /* MyTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyTask+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F79AF0C72CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F79CDD762C9EEFF500F93ECE /* Tasks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tasks.xcdatamodel; sourceTree = "<group>"; };
@@ -234,6 +242,7 @@
 		F79998CA2C9FCCB5001A5FEB /* ページ */ = {
 			isa = PBXGroup;
 			children = (
+				F799EFF42CF30CEA00497356 /* アプリルート.swift */,
 				F7C760CF2CA1068200F3BF16 /* TaskListView.swift */,
 				F79EC1EB2C46677500983F8A /* ビュー_タスク作成.swift */,
 				F79998C62C9FCB1D001A5FEB /* ビュー_予定.swift */,
@@ -243,6 +252,7 @@
 				F78A28D42CCF8A960080FCCE /* 設定ページ.swift */,
 				F79312202CD8C10D007AA9C6 /* ページ_ブロック画面.swift */,
 				F7B1E4192CE053F00040EAD4 /* Coredata送るテスト.swift */,
+				F799EFF22CF30C8800497356 /* ページ_ロゴ.swift */,
 			);
 			name = "ページ";
 			path = "ページ";
@@ -267,6 +277,8 @@
 				F77D29D62CCC772400BC7D2E /* パーツ_ボタン_日記作成.swift */,
 				F77D29DC2CCC903800BC7D2E /* パーツ_ボトムタブビュー.swift */,
 				F7A65AC52CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift */,
+				F799EFEE2CF3019C00497356 /* パーツ_曜日選択.swift */,
+				F799EFF02CF3030C00497356 /* パーツ_時刻選択.swift */,
 			);
 			name = "パーツ";
 			path = "パーツ";
@@ -463,6 +475,7 @@
 				F7A8487D2CBFA318006AA83B /* パーツ_パルス.swift in Sources */,
 				F78A28D52CCF8A960080FCCE /* 設定ページ.swift in Sources */,
 				F79998CF2C9FE334001A5FEB /* Extension.swift in Sources */,
+				F799EFEF2CF3019C00497356 /* パーツ_曜日選択.swift in Sources */,
 				F79998D82C9FFD90001A5FEB /* ContentViewModel.swift in Sources */,
 				F7B1E41A2CE053F00040EAD4 /* Coredata送るテスト.swift in Sources */,
 				F79AF0C82CA53C2900DBFAEC /* MyTask+CoreDataClass.swift in Sources */,
@@ -470,9 +483,11 @@
 				F77D29D92CCC788E00BC7D2E /* ページ_日記エディタ.swift in Sources */,
 				F7A086D02CC0B65300C8EE31 /* DiaryEntry+CoreDataProperties.swift in Sources */,
 				F7A65AC62CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift in Sources */,
+				F799EFF52CF30CEA00497356 /* アプリルート.swift in Sources */,
 				F7B4D5062CCE118800E1BD54 /* 日付フォーマット.swift in Sources */,
 				F79AF0C92CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift in Sources */,
 				F78EB7542C494A2100AB3683 /* dropdown_default.swift in Sources */,
+				F799EFF12CF3030C00497356 /* パーツ_時刻選択.swift in Sources */,
 				F7BB31702CDB476200300885 /* TaskDataController.swift in Sources */,
 				F79338C22BF074A300523E28 /* ContentView.swift in Sources */,
 				F79041132C40C47600BD67BB /* ScreenTimeSamplesApp.swift in Sources */,
@@ -494,6 +509,7 @@
 				F79EC1EC2C46677500983F8A /* ビュー_タスク作成.swift in Sources */,
 				F7B1E41C2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift in Sources */,
 				F79338CC2BF074A300523E28 /* calendar.xcdatamodeld in Sources */,
+				F799EFF32CF30C8800497356 /* ページ_ロゴ.swift in Sources */,
 				F79998D52C9FFBF4001A5FEB /* スタイル_バウンドボタン.swift in Sources */,
 				F787FFBA2CAFA05C00897D89 /* パーツ_セグメントピッカー.swift in Sources */,
 				F79998CC2C9FCF85001A5FEB /* ページ_タスク作成.swift in Sources */,

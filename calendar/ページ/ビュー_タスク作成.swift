@@ -14,7 +14,17 @@ struct ビュー_タスク作成: View {
     @Binding var isTextFieldVisible: Bool
     //    @Binding var value: Int
 
-    let days = ["日", "月", "火", "水", "木", "金", "土"]
+    private var days: [String] {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "ja_JP") // 日本語ロケール
+            formatter.dateFormat = "EEE"
+            let calendar = Calendar.current
+            let today = calendar.startOfDay(for: Date()) // 今日の日付の開始時間
+            return (0..<7).map { offset in
+                guard let date = calendar.date(byAdding: .day, value: offset, to: today) else { return "" }
+                return formatter.string(from: date) // 曜日を文字列で取得
+            }
+        }
 
     @State private var selectedDays: Set<String> = []
 
@@ -310,61 +320,13 @@ struct ビュー_タスク作成: View {
             パーツ_フィルター(
                 overlayComponentView:
                     VStack(spacing:0){
-                        VStack(spacing:16) {
-
-                            HStack {
-                                Text("開始")
-                                Spacer()
-                                DatePicker(
-                                    "",
-                                    selection: $startTime,
-                                    displayedComponents: [.hourAndMinute]
-                                )
-                            }
-
-                            DatePicker(
-                                "終了",
-                                selection: $endTime,
-                                displayedComponents: [/*.date,*/.hourAndMinute]
-                            )
-                        }.padding()
-
+                        パーツ_時刻選択(開始時刻: $startTime, 終了時刻: $endTime)
                         パーツ_ライン()
                             .stroke(Color(UIColor { traitCollection in
                                 return traitCollection.userInterfaceStyle == .dark ? .systemGray5 : .systemGray5
                             }), lineWidth: 1)
                             .frame(height: 1)
-
-                        //曜日
-                        Section {
-                            HStack {
-                                //                        Spacer()
-                                ForEach(Array(days.enumerated()), id: \.offset) { index, day in
-                                    Text(day)
-                                        .frame(width: 40, height: 40)
-                                        .background(self.repeatDays.contains(index) ? Color.primary : Color.clear)
-                                        .foregroundColor(self.repeatDays.contains(index) ? Color(.systemBackground) : Color(.systemGray))
-                                        .fontWeight(self.repeatDays.contains(index) ? .bold : .regular)
-                                        .cornerRadius(20)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 20)
-                                                .stroke(Color(.tertiarySystemFill), lineWidth: 2)
-                                        )
-                                        .onTapGesture {
-                                            if let existingIndex = self.repeatDays.firstIndex(of: index) {
-                                                self.repeatDays.remove(at: existingIndex)  // インデックスを配列から削除
-                                            } else {
-                                                self.repeatDays.append(index)  // インデックスを配列に追加
-                                            }
-                                        }
-                                }
-
-
-                                //                        Spacer()
-                            }
-                            .padding(.vertical)
-                            .frame(maxWidth: .infinity)
-                        }
+                        パーツ_曜日選択ビュー(繰り返し曜日: $repeatDays)
                     },
                 cornerRadius: 16,
                 padding: 16,

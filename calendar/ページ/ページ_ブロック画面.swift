@@ -71,7 +71,7 @@ struct ページ_ブロック画面: View {
                     .foregroundColor(.primary)
                     .fontWeight(.bold)
 
-                日記作成ボタン(フラグ_日記エディタ表示: $フラグ_日記エディタ表示)
+                パーツ_ボタン_メイン(フラグ_日記エディタ表示: $フラグ_日記エディタ表示,ボタンテキスト: "今日の日記を書く")
                     .padding(.horizontal,24)
                     .sheet(isPresented: $フラグ_日記エディタ表示) {
                         NavigationView {

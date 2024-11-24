@@ -394,13 +394,17 @@ struct TaskListView: View {
                 Text(task.taskType ?? "Unknown Task")
                     .font(.headline)
 
-                // 文字数表示をすべてのタスクで行う場合
                 Text("Character Count: \(task.characterCount)")
 
-//                Text("Completed: \(task.isCompleted ? "Yes" : "No")")
-                Text("Start Time: \(task.startTime.formatted())")
-                Text("End Time: \(task.endTime.formatted())")
+//                // startTimeを安全にアンラップして表示
+//                Text("Start Time: \(task.startTime.formatted())")
+//
+//                // endTimeを安全にアンラップして表示
+//                Text("End Time: \(task.endTime.formatted())")
+
                 Text("Repeat Days: \(task.repeatDays ?? "None")")
+
+                // createdAtも安全にアンラップして表示
                 Text("Created At: \(task.createdAt?.formatted() ?? "Unknown")")
             }
             .padding(.vertical, 5)
@@ -408,6 +412,7 @@ struct TaskListView: View {
         .navigationTitle("Saved Tasks")
     }
 }
+
 
 
 extension Date {

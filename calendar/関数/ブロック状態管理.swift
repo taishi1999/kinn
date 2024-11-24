@@ -142,8 +142,8 @@ struct DateCheckerView_Previews: PreviewProvider {
         let calendar = Calendar.current
         let now = Date()
 
-        let startTime_date = calendar.date(bySettingHour: 21, minute: 40, second: 0, of: now)!
-        let endTime_date = calendar.date(bySettingHour: 21, minute: 41, second: 0, of: calendar.date(byAdding: .day, value: 0, to: now)!)!
+        let startTime_date = calendar.date(bySettingHour: 11, minute: 0, second: 0, of: now)!
+        let endTime_date = calendar.date(bySettingHour: 11, minute: 59, second: 0, of: calendar.date(byAdding: .day, value: 0, to: now)!)!
 
         return DateCheckerView(
             startTime_date: startTime_date,

@@ -1,15 +1,16 @@
 import SwiftUI
 
-struct 日記作成ボタン: View {
+struct パーツ_ボタン_メイン: View {
     @Binding var フラグ_日記エディタ表示: Bool
-     var generator = UIImpactFeedbackGenerator(style: .medium)
+    var ボタンテキスト: String // Bindingでテキストを受け取る
+    var generator = UIImpactFeedbackGenerator(style: .medium)
 
     var body: some View {
         Button(action: {
             generator.impactOccurred()
             フラグ_日記エディタ表示.toggle()
         }) {
-            Text("今日の日記を書く")
+            Text(ボタンテキスト) // 受け取った文字列を表示
                 .padding(.vertical, 14)
                 .frame(maxWidth: .infinity)
                 .background(Color.buttonOrange)
@@ -118,7 +119,7 @@ struct パーツ_ボタン_日記作成: View {
             .cornerRadius(.infinity)
             .padding(.bottom, 8)
 
-            日記作成ボタン(フラグ_日記エディタ表示: $フラグ_日記エディタ表示)
+            パーツ_ボタン_メイン(フラグ_日記エディタ表示: $フラグ_日記エディタ表示,ボタンテキスト: "今日の日記を書く")
         }
     }
 

@@ -195,6 +195,32 @@ struct ページ_タスク作成: View {
     }
 
     private func updateTask(context: NSManagedObjectContext) {
+        print("updateTask startTime:\(startTime) endTime:\(endTime)")
+        let calendar = Calendar.current
+        // 時間と分を抽出して比較
+            let startHour = calendar.component(.hour, from: startTime)
+            let startMinute = calendar.component(.minute, from: startTime)
+            let endHour = calendar.component(.hour, from: endTime)
+            let endMinute = calendar.component(.minute, from: endTime)
+
+        // 時間と分だけを比較
+           if startHour < endHour || (startHour == endHour && startMinute < endMinute) {
+               // startTime < endTime の場合、日付を同じにする
+               let startDateComponents = calendar.dateComponents([.year, .month, .day], from: startTime)
+               endTime = calendar.date(bySettingHour: endHour, minute: endMinute, second: 0, of: calendar.date(from: startDateComponents)!) ?? endTime
+           } else {
+               // endTime >= startTime の場合
+               // endTime を startTime の 1 日後に設定
+               let startDatePlusOneDay = calendar.date(byAdding: .day, value: 1, to: startTime) ?? startTime
+               endTime = calendar.date(bySettingHour: endHour, minute: endMinute, second: 0, of: startDatePlusOneDay) ?? endTime
+
+               // 時間と分が同じ場合、-1 分調整
+               if startHour == endHour && startMinute == endMinute {
+                   endTime = calendar.date(byAdding: .minute, value: -5, to: endTime) ?? endTime
+               }
+           }
+
+
         task.startTime = startTime
         task.endTime = endTime
         task.repeatDays = repeatDays.sorted().map { String($0) }.joined(separator: ",")

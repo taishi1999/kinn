@@ -1,6 +1,45 @@
 import SwiftUI
 import CoreData
 import UIKit
+import FamilyControls
+
+struct FamilyActivityPickerView: View {
+    @State private var activitySelection = FamilyActivitySelection()
+
+    var body: some View {
+        VStack {
+            Text("ブロックしたいアプリを選択してください")
+                .font(.title2)
+                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                .padding()
+
+            FamilyActivityPicker(selection: $activitySelection)
+                .padding()
+
+            Button(action: {
+                print("選択されたアプリ: \(activitySelection)")
+            }) {
+                Text("完了")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+            .padding()
+        }
+//        .navigationTitle("アプリ選択")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct FamilyActivityPickerView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            FamilyActivityPickerView()
+        }
+    }
+}
 
 // UITextView のカスタムクラス
 class CustomTextView: UITextView, UITextViewDelegate {
