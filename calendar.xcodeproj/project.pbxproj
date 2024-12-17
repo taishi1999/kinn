@@ -7,11 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F74357DC2D0C4A4600D5ED9F /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79998C22C9FB689001A5FEB /* DataController.swift */; };
+		F74357DE2D0C4A5600D5ED9F /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79998D72C9FFD90001A5FEB /* ContentViewModel.swift */; };
+		F74357E02D0C4A6F00D5ED9F /* MyTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79AF0C62CA53C2900DBFAEC /* MyTask+CoreDataClass.swift */; };
+		F74357E32D0C4ACA00D5ED9F /* MyTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79AF0C72CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift */; };
+		F74357EA2D0C4BA200D5ED9F /* mainSheldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74357E92D0C4BA200D5ED9F /* mainSheldView.swift */; };
+		F74357EB2D0C4C1E00D5ED9F /* mainSheldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74357E92D0C4BA200D5ED9F /* mainSheldView.swift */; };
 		F77D29D72CCC772400BC7D2E /* パーツ_ボタン_日記作成.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77D29D62CCC772400BC7D2E /* パーツ_ボタン_日記作成.swift */; };
 		F77D29D92CCC788E00BC7D2E /* ページ_日記エディタ.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77D29D82CCC788E00BC7D2E /* ページ_日記エディタ.swift */; };
 		F77D29DB2CCC794700BC7D2E /* ページ_日記リスト.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77D29DA2CCC794700BC7D2E /* ページ_日記リスト.swift */; };
 		F77D29DD2CCC903800BC7D2E /* パーツ_ボトムタブビュー.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77D29DC2CCC903800BC7D2E /* パーツ_ボトムタブビュー.swift */; };
 		F77D29E02CCC90BE00BC7D2E /* SwiftSVG in Frameworks */ = {isa = PBXBuildFile; productRef = F77D29DF2CCC90BE00BC7D2E /* SwiftSVG */; };
+		F77E78762D0FDA42008449AD /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A42A762D0C2BFC00EE2BEE /* ManagedSettings.framework */; };
+		F77E78792D0FDA42008449AD /* ShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77E78782D0FDA42008449AD /* ShieldActionExtension.swift */; };
+		F77E787E2D0FDA42008449AD /* ShieldActionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F77E78752D0FDA42008449AD /* ShieldActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F77E78822D0FDABB008449AD /* FamilyControllerView_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C1D26A2D02E703007F3DE4 /* FamilyControllerView_test.swift */; };
 		F787FFB82CAF9A7B00897D89 /* パーツ_ボタン_タスク.swift in Sources */ = {isa = PBXBuildFile; fileRef = F787FFB72CAF9A7B00897D89 /* パーツ_ボタン_タスク.swift */; };
 		F787FFBA2CAFA05C00897D89 /* パーツ_セグメントピッカー.swift in Sources */ = {isa = PBXBuildFile; fileRef = F787FFB92CAFA05C00897D89 /* パーツ_セグメントピッカー.swift */; };
 		F78A28D52CCF8A960080FCCE /* 設定ページ.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78A28D42CCF8A960080FCCE /* 設定ページ.swift */; };
@@ -43,25 +53,45 @@
 		F79AF0C82CA53C2900DBFAEC /* MyTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79AF0C62CA53C2900DBFAEC /* MyTask+CoreDataClass.swift */; };
 		F79AF0C92CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79AF0C72CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift */; };
 		F79CDD772C9EEFF500F93ECE /* Tasks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F79CDD752C9EEFF500F93ECE /* Tasks.xcdatamodeld */; };
+		F79DC84F2D0A73A8003149D6 /* アラーム管理.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79DC84E2D0A73A8003149D6 /* アラーム管理.swift */; };
+		F79DC8512D0AD40A003149D6 /* Clock_Alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F79DC8502D0AD40A003149D6 /* Clock_Alarm.mp3 */; };
 		F79EC1EC2C46677500983F8A /* ビュー_タスク作成.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79EC1EB2C46677500983F8A /* ビュー_タスク作成.swift */; };
 		F7A086CF2CC0B65300C8EE31 /* DiaryEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A086CD2CC0B65300C8EE31 /* DiaryEntry+CoreDataClass.swift */; };
 		F7A086D02CC0B65300C8EE31 /* DiaryEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A086CE2CC0B65300C8EE31 /* DiaryEntry+CoreDataProperties.swift */; };
 		F7A086D22CC0E87C00C8EE31 /* 日記.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A086D12CC0E87C00C8EE31 /* 日記.swift */; };
 		F7A11BD42C48B17D0076C73A /* dropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A11BD32C48B17D0076C73A /* dropdown.swift */; };
+		F7A42A832D0C3AC200EE2BEE /* FamilyControllerView_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C1D26A2D02E703007F3DE4 /* FamilyControllerView_test.swift */; };
 		F7A65AC62CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A65AC52CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift */; };
 		F7A8487D2CBFA318006AA83B /* パーツ_パルス.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A8487C2CBFA318006AA83B /* パーツ_パルス.swift */; };
+		F7AD90602D08431500304B34 /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AD905F2D08431500304B34 /* DeviceActivity.framework */; };
+		F7AD90632D08431500304B34 /* DeviceActivityMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD90622D08431500304B34 /* DeviceActivityMonitorExtension.swift */; };
+		F7AD90682D08431500304B34 /* ScheduledDeviceMonitor_DAM.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F7AD905D2D08431500304B34 /* ScheduledDeviceMonitor_DAM.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F7AEC3CB2CEC6E8400C134A0 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F7AEC3CA2CEC6E8400C134A0 /* .gitignore */; };
 		F7B1E41A2CE053F00040EAD4 /* Coredata送るテスト.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B1E4192CE053F00040EAD4 /* Coredata送るテスト.swift */; };
 		F7B1E41C2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B1E41B2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift */; };
 		F7B4D5062CCE118800E1BD54 /* 日付フォーマット.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B4D5052CCE118800E1BD54 /* 日付フォーマット.swift */; };
 		F7B520492CE446CE00F86232 /* ブロック状態管理.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B520482CE446CE00F86232 /* ブロック状態管理.swift */; };
 		F7BB31702CDB476200300885 /* TaskDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BB316F2CDB476200300885 /* TaskDataController.swift */; };
+		F7C1D26B2D02E703007F3DE4 /* FamilyControllerView_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C1D26A2D02E703007F3DE4 /* FamilyControllerView_test.swift */; };
 		F7C760D02CA1068200F3BF16 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C760CF2CA1068200F3BF16 /* TaskListView.swift */; };
 		F7C760D82CA14ED900F3BF16 /* リマインダーで見るタイプのtimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C760D72CA14ED900F3BF16 /* リマインダーで見るタイプのtimePicker.swift */; };
+		F7C94EEE2D0D150600F500C0 /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A42A762D0C2BFC00EE2BEE /* ManagedSettings.framework */; };
+		F7C94EEF2D0D150600F500C0 /* ManagedSettingsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A42A8B2D0C3BBB00EE2BEE /* ManagedSettingsUI.framework */; };
+		F7C94EF22D0D150600F500C0 /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C94EF12D0D150600F500C0 /* ShieldConfigurationExtension.swift */; };
+		F7C94EF72D0D150600F500C0 /* ShieldConfiguration.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F7C94EED2D0D150600F500C0 /* ShieldConfiguration.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F7D40C932D09854700E174F1 /* 通知管理.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D40C922D09854700E174F1 /* 通知管理.swift */; };
 		F7DE20932CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DE20922CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift */; };
+		F7EFA7562CFF365D00B1D26D /* テスト.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EFA7552CFF365D00B1D26D /* テスト.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F77E787C2D0FDA42008449AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F79338B42BF074A300523E28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F77E78742D0FDA42008449AD;
+			remoteInfo = ShieldActionExtension;
+		};
 		F79338D22BF074A300523E28 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F79338B42BF074A300523E28 /* Project object */;
@@ -76,13 +106,48 @@
 			remoteGlobalIDString = F79338BB2BF074A300523E28;
 			remoteInfo = calendar;
 		};
+		F7AD90662D08431500304B34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F79338B42BF074A300523E28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F7AD905C2D08431500304B34;
+			remoteInfo = ScheduledDeviceMonitor_DAM;
+		};
+		F7C94EF52D0D150600F500C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F79338B42BF074A300523E28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F7C94EEC2D0D150600F500C0;
+			remoteInfo = ShieldConfiguration;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F7AD906C2D08431500304B34 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F7C94EF72D0D150600F500C0 /* ShieldConfiguration.appex in Embed Foundation Extensions */,
+				F7AD90682D08431500304B34 /* ScheduledDeviceMonitor_DAM.appex in Embed Foundation Extensions */,
+				F77E787E2D0FDA42008449AD /* ShieldActionExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		F74357E92D0C4BA200D5ED9F /* mainSheldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainSheldView.swift; sourceTree = "<group>"; };
 		F77D29D62CCC772400BC7D2E /* パーツ_ボタン_日記作成.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_ボタン_日記作成.swift"; sourceTree = "<group>"; };
 		F77D29D82CCC788E00BC7D2E /* ページ_日記エディタ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ページ_日記エディタ.swift"; sourceTree = "<group>"; };
 		F77D29DA2CCC794700BC7D2E /* ページ_日記リスト.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ページ_日記リスト.swift"; sourceTree = "<group>"; };
 		F77D29DC2CCC903800BC7D2E /* パーツ_ボトムタブビュー.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_ボトムタブビュー.swift"; sourceTree = "<group>"; };
+		F77E78752D0FDA42008449AD /* ShieldActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShieldActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F77E78782D0FDA42008449AD /* ShieldActionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldActionExtension.swift; sourceTree = "<group>"; };
+		F77E787A2D0FDA42008449AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F77E787B2D0FDA42008449AD /* ShieldActionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldActionExtension.entitlements; sourceTree = "<group>"; };
 		F787FFB72CAF9A7B00897D89 /* パーツ_ボタン_タスク.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_ボタン_タスク.swift"; sourceTree = "<group>"; };
 		F787FFB92CAFA05C00897D89 /* パーツ_セグメントピッカー.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_セグメントピッカー.swift"; sourceTree = "<group>"; };
 		F78A28D42CCF8A960080FCCE /* 設定ページ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "設定ページ.swift"; sourceTree = "<group>"; };
@@ -118,25 +183,50 @@
 		F79AF0C62CA53C2900DBFAEC /* MyTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyTask+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F79AF0C72CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F79CDD762C9EEFF500F93ECE /* Tasks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tasks.xcdatamodel; sourceTree = "<group>"; };
+		F79DC84E2D0A73A8003149D6 /* アラーム管理.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "アラーム管理.swift"; sourceTree = "<group>"; };
+		F79DC8502D0AD40A003149D6 /* Clock_Alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Clock_Alarm.mp3; sourceTree = "<group>"; };
 		F79EC1EB2C46677500983F8A /* ビュー_タスク作成.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ビュー_タスク作成.swift"; sourceTree = "<group>"; };
 		F7A086CD2CC0B65300C8EE31 /* DiaryEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiaryEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F7A086CE2CC0B65300C8EE31 /* DiaryEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiaryEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F7A086D12CC0E87C00C8EE31 /* 日記.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "日記.swift"; sourceTree = "<group>"; };
 		F7A11BD32C48B17D0076C73A /* dropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dropdown.swift; sourceTree = "<group>"; };
+		F7A42A762D0C2BFC00EE2BEE /* ManagedSettings.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManagedSettings.framework; path = System/Library/Frameworks/ManagedSettings.framework; sourceTree = SDKROOT; };
+		F7A42A8B2D0C3BBB00EE2BEE /* ManagedSettingsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManagedSettingsUI.framework; path = System/Library/Frameworks/ManagedSettingsUI.framework; sourceTree = SDKROOT; };
 		F7A65AC52CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_文字数入力欄.swift"; sourceTree = "<group>"; };
 		F7A8487C2CBFA318006AA83B /* パーツ_パルス.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_パルス.swift"; sourceTree = "<group>"; };
+		F7AD90582D07EF7A00304B34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F7AD905D2D08431500304B34 /* ScheduledDeviceMonitor_DAM.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ScheduledDeviceMonitor_DAM.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7AD905F2D08431500304B34 /* DeviceActivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceActivity.framework; path = System/Library/Frameworks/DeviceActivity.framework; sourceTree = SDKROOT; };
+		F7AD90622D08431500304B34 /* DeviceActivityMonitorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitorExtension.swift; sourceTree = "<group>"; };
+		F7AD90642D08431500304B34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F7AD90652D08431500304B34 /* ScheduledDeviceMonitor_DAM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScheduledDeviceMonitor_DAM.entitlements; sourceTree = "<group>"; };
 		F7AEC3CA2CEC6E8400C134A0 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		F7B1E4192CE053F00040EAD4 /* Coredata送るテスト.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coredata送るテスト.swift"; sourceTree = "<group>"; };
 		F7B1E41B2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_ライナーグラデーション.swift"; sourceTree = "<group>"; };
 		F7B4D5052CCE118800E1BD54 /* 日付フォーマット.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "日付フォーマット.swift"; sourceTree = "<group>"; };
 		F7B520482CE446CE00F86232 /* ブロック状態管理.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ブロック状態管理.swift"; sourceTree = "<group>"; };
 		F7BB316F2CDB476200300885 /* TaskDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDataController.swift; sourceTree = "<group>"; };
+		F7C1D26A2D02E703007F3DE4 /* FamilyControllerView_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyControllerView_test.swift; sourceTree = "<group>"; };
 		F7C760CF2CA1068200F3BF16 /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
 		F7C760D72CA14ED900F3BF16 /* リマインダーで見るタイプのtimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "リマインダーで見るタイプのtimePicker.swift"; sourceTree = "<group>"; };
+		F7C94EED2D0D150600F500C0 /* ShieldConfiguration.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShieldConfiguration.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7C94EF12D0D150600F500C0 /* ShieldConfigurationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldConfigurationExtension.swift; sourceTree = "<group>"; };
+		F7C94EF32D0D150600F500C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F7C94EF42D0D150600F500C0 /* ShieldConfiguration.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldConfiguration.entitlements; sourceTree = "<group>"; };
+		F7D40C922D09854700E174F1 /* 通知管理.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "通知管理.swift"; sourceTree = "<group>"; };
 		F7DE20922CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_カスタムセグメントピッカー.swift"; sourceTree = "<group>"; };
+		F7EFA7552CFF365D00B1D26D /* テスト.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "テスト.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F77E78722D0FDA42008449AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F77E78762D0FDA42008449AD /* ManagedSettings.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F79338B92BF074A300523E28 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -159,9 +249,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F7AD905A2D08431500304B34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7AD90602D08431500304B34 /* DeviceActivity.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7C94EEA2D0D150600F500C0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7C94EEE2D0D150600F500C0 /* ManagedSettings.framework in Frameworks */,
+				F7C94EEF2D0D150600F500C0 /* ManagedSettingsUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F77E78772D0FDA42008449AD /* ShieldActionExtension */ = {
+			isa = PBXGroup;
+			children = (
+				F77E78782D0FDA42008449AD /* ShieldActionExtension.swift */,
+				F77E787A2D0FDA42008449AD /* Info.plist */,
+				F77E787B2D0FDA42008449AD /* ShieldActionExtension.entitlements */,
+			);
+			path = ShieldActionExtension;
+			sourceTree = "<group>";
+		};
 		F79338B32BF074A300523E28 = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +291,10 @@
 				F79338BE2BF074A300523E28 /* calendar */,
 				F79338D42BF074A300523E28 /* calendarTests */,
 				F79338DE2BF074A300523E28 /* calendarUITests */,
+				F7AD90612D08431500304B34 /* ScheduledDeviceMonitor_DAM */,
+				F7C94EF02D0D150600F500C0 /* ShieldConfiguration */,
+				F77E78772D0FDA42008449AD /* ShieldActionExtension */,
+				F7AD905E2D08431500304B34 /* Frameworks */,
 				F79338BD2BF074A300523E28 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -184,6 +305,9 @@
 				F79338BC2BF074A300523E28 /* calendar.app */,
 				F79338D12BF074A300523E28 /* calendarTests.xctest */,
 				F79338DB2BF074A300523E28 /* calendarUITests.xctest */,
+				F7AD905D2D08431500304B34 /* ScheduledDeviceMonitor_DAM.appex */,
+				F7C94EED2D0D150600F500C0 /* ShieldConfiguration.appex */,
+				F77E78752D0FDA42008449AD /* ShieldActionExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -191,8 +315,10 @@
 		F79338BE2BF074A300523E28 /* calendar */ = {
 			isa = PBXGroup;
 			children = (
+				F7AD90582D07EF7A00304B34 /* Info.plist */,
 				F7B520472CE446BA00F86232 /* 関数 */,
 				F79338BF2BF074A300523E28 /* calendarApp.swift */,
+				F74357E92D0C4BA200D5ED9F /* mainSheldView.swift */,
 				F79338C12BF074A300523E28 /* ContentView.swift */,
 				F79998CA2C9FCCB5001A5FEB /* ページ */,
 				F79998D32C9FFB19001A5FEB /* スタイル */,
@@ -201,6 +327,7 @@
 				F79998CD2C9FDED3001A5FEB /* Extensions */,
 				F79998D62C9FFD7C001A5FEB /* モデル */,
 				F79338C32BF074A300523E28 /* Assets.xcassets */,
+				F79DC8502D0AD40A003149D6 /* Clock_Alarm.mp3 */,
 				F79041112C40BC6400BD67BB /* calendar.entitlements */,
 				F79338C82BF074A300523E28 /* Persistence.swift */,
 				F79338CA2BF074A300523E28 /* calendar.xcdatamodeld */,
@@ -253,6 +380,8 @@
 				F79312202CD8C10D007AA9C6 /* ページ_ブロック画面.swift */,
 				F7B1E4192CE053F00040EAD4 /* Coredata送るテスト.swift */,
 				F799EFF22CF30C8800497356 /* ページ_ロゴ.swift */,
+				F7EFA7552CFF365D00B1D26D /* テスト.swift */,
+				F7C1D26A2D02E703007F3DE4 /* FamilyControllerView_test.swift */,
 			);
 			name = "ページ";
 			path = "ページ";
@@ -303,10 +432,32 @@
 			path = "モデル";
 			sourceTree = "<group>";
 		};
+		F7AD905E2D08431500304B34 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD905F2D08431500304B34 /* DeviceActivity.framework */,
+				F7A42A762D0C2BFC00EE2BEE /* ManagedSettings.framework */,
+				F7A42A8B2D0C3BBB00EE2BEE /* ManagedSettingsUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F7AD90612D08431500304B34 /* ScheduledDeviceMonitor_DAM */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD90622D08431500304B34 /* DeviceActivityMonitorExtension.swift */,
+				F7AD90642D08431500304B34 /* Info.plist */,
+				F7AD90652D08431500304B34 /* ScheduledDeviceMonitor_DAM.entitlements */,
+			);
+			path = ScheduledDeviceMonitor_DAM;
+			sourceTree = "<group>";
+		};
 		F7B520472CE446BA00F86232 /* 関数 */ = {
 			isa = PBXGroup;
 			children = (
 				F7B520482CE446CE00F86232 /* ブロック状態管理.swift */,
+				F7D40C922D09854700E174F1 /* 通知管理.swift */,
+				F79DC84E2D0A73A8003149D6 /* アラーム管理.swift */,
 			);
 			path = "関数";
 			sourceTree = "<group>";
@@ -331,9 +482,36 @@
 			path = "使わないやつ";
 			sourceTree = "<group>";
 		};
+		F7C94EF02D0D150600F500C0 /* ShieldConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				F7C94EF12D0D150600F500C0 /* ShieldConfigurationExtension.swift */,
+				F7C94EF32D0D150600F500C0 /* Info.plist */,
+				F7C94EF42D0D150600F500C0 /* ShieldConfiguration.entitlements */,
+			);
+			path = ShieldConfiguration;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F77E78742D0FDA42008449AD /* ShieldActionExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F77E787F2D0FDA42008449AD /* Build configuration list for PBXNativeTarget "ShieldActionExtension" */;
+			buildPhases = (
+				F77E78712D0FDA42008449AD /* Sources */,
+				F77E78722D0FDA42008449AD /* Frameworks */,
+				F77E78732D0FDA42008449AD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShieldActionExtension;
+			productName = ShieldActionExtension;
+			productReference = F77E78752D0FDA42008449AD /* ShieldActionExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		F79338BB2BF074A300523E28 /* calendar */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F79338E52BF074A300523E28 /* Build configuration list for PBXNativeTarget "calendar" */;
@@ -341,10 +519,14 @@
 				F79338B82BF074A300523E28 /* Sources */,
 				F79338B92BF074A300523E28 /* Frameworks */,
 				F79338BA2BF074A300523E28 /* Resources */,
+				F7AD906C2D08431500304B34 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F7AD90672D08431500304B34 /* PBXTargetDependency */,
+				F7C94EF62D0D150600F500C0 /* PBXTargetDependency */,
+				F77E787D2D0FDA42008449AD /* PBXTargetDependency */,
 			);
 			name = calendar;
 			packageProductDependencies = (
@@ -390,6 +572,40 @@
 			productReference = F79338DB2BF074A300523E28 /* calendarUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		F7AD905C2D08431500304B34 /* ScheduledDeviceMonitor_DAM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7AD90692D08431500304B34 /* Build configuration list for PBXNativeTarget "ScheduledDeviceMonitor_DAM" */;
+			buildPhases = (
+				F7AD90592D08431500304B34 /* Sources */,
+				F7AD905A2D08431500304B34 /* Frameworks */,
+				F7AD905B2D08431500304B34 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ScheduledDeviceMonitor_DAM;
+			productName = ScheduledDeviceMonitor_DAM;
+			productReference = F7AD905D2D08431500304B34 /* ScheduledDeviceMonitor_DAM.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		F7C94EEC2D0D150600F500C0 /* ShieldConfiguration */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7C94EF82D0D150600F500C0 /* Build configuration list for PBXNativeTarget "ShieldConfiguration" */;
+			buildPhases = (
+				F7C94EE92D0D150600F500C0 /* Sources */,
+				F7C94EEA2D0D150600F500C0 /* Frameworks */,
+				F7C94EEB2D0D150600F500C0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShieldConfiguration;
+			productName = ShieldConfiguration;
+			productReference = F7C94EED2D0D150600F500C0 /* ShieldConfiguration.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -397,9 +613,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
+					F77E78742D0FDA42008449AD = {
+						CreatedOnToolsVersion = 15.4;
+					};
 					F79338BB2BF074A300523E28 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -410,6 +629,12 @@
 					F79338DA2BF074A300523E28 = {
 						CreatedOnToolsVersion = 14.3.1;
 						TestTargetID = F79338BB2BF074A300523E28;
+					};
+					F7AD905C2D08431500304B34 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					F7C94EEC2D0D150600F500C0 = {
+						CreatedOnToolsVersion = 15.4;
 					};
 				};
 			};
@@ -432,15 +657,26 @@
 				F79338BB2BF074A300523E28 /* calendar */,
 				F79338D02BF074A300523E28 /* calendarTests */,
 				F79338DA2BF074A300523E28 /* calendarUITests */,
+				F7AD905C2D08431500304B34 /* ScheduledDeviceMonitor_DAM */,
+				F7C94EEC2D0D150600F500C0 /* ShieldConfiguration */,
+				F77E78742D0FDA42008449AD /* ShieldActionExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F77E78732D0FDA42008449AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F79338BA2BF074A300523E28 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F79DC8512D0AD40A003149D6 /* Clock_Alarm.mp3 in Resources */,
 				F79338C72BF074A300523E28 /* Preview Assets.xcassets in Resources */,
 				F7AEC3CB2CEC6E8400C134A0 /* .gitignore in Resources */,
 				F79338C42BF074A300523E28 /* Assets.xcassets in Resources */,
@@ -461,9 +697,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F7AD905B2D08431500304B34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7C94EEB2D0D150600F500C0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F77E78712D0FDA42008449AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F77E78822D0FDABB008449AD /* FamilyControllerView_test.swift in Sources */,
+				F77E78792D0FDA42008449AD /* ShieldActionExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F79338B82BF074A300523E28 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -475,6 +734,7 @@
 				F7A8487D2CBFA318006AA83B /* パーツ_パルス.swift in Sources */,
 				F78A28D52CCF8A960080FCCE /* 設定ページ.swift in Sources */,
 				F79998CF2C9FE334001A5FEB /* Extension.swift in Sources */,
+				F79DC84F2D0A73A8003149D6 /* アラーム管理.swift in Sources */,
 				F799EFEF2CF3019C00497356 /* パーツ_曜日選択.swift in Sources */,
 				F79998D82C9FFD90001A5FEB /* ContentViewModel.swift in Sources */,
 				F7B1E41A2CE053F00040EAD4 /* Coredata送るテスト.swift in Sources */,
@@ -483,8 +743,10 @@
 				F77D29D92CCC788E00BC7D2E /* ページ_日記エディタ.swift in Sources */,
 				F7A086D02CC0B65300C8EE31 /* DiaryEntry+CoreDataProperties.swift in Sources */,
 				F7A65AC62CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift in Sources */,
+				F7C1D26B2D02E703007F3DE4 /* FamilyControllerView_test.swift in Sources */,
 				F799EFF52CF30CEA00497356 /* アプリルート.swift in Sources */,
 				F7B4D5062CCE118800E1BD54 /* 日付フォーマット.swift in Sources */,
+				F7EFA7562CFF365D00B1D26D /* テスト.swift in Sources */,
 				F79AF0C92CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift in Sources */,
 				F78EB7542C494A2100AB3683 /* dropdown_default.swift in Sources */,
 				F799EFF12CF3030C00497356 /* パーツ_時刻選択.swift in Sources */,
@@ -505,10 +767,12 @@
 				F79998C52C9FB729001A5FEB /* Tasks.swift in Sources */,
 				F7C760D02CA1068200F3BF16 /* TaskListView.swift in Sources */,
 				F79CDD772C9EEFF500F93ECE /* Tasks.xcdatamodeld in Sources */,
+				F74357EA2D0C4BA200D5ED9F /* mainSheldView.swift in Sources */,
 				F79338C02BF074A300523E28 /* calendarApp.swift in Sources */,
 				F79EC1EC2C46677500983F8A /* ビュー_タスク作成.swift in Sources */,
 				F7B1E41C2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift in Sources */,
 				F79338CC2BF074A300523E28 /* calendar.xcdatamodeld in Sources */,
+				F7D40C932D09854700E174F1 /* 通知管理.swift in Sources */,
 				F799EFF32CF30C8800497356 /* ページ_ロゴ.swift in Sources */,
 				F79998D52C9FFBF4001A5FEB /* スタイル_バウンドボタン.swift in Sources */,
 				F787FFBA2CAFA05C00897D89 /* パーツ_セグメントピッカー.swift in Sources */,
@@ -533,9 +797,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F7AD90592D08431500304B34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F74357E02D0C4A6F00D5ED9F /* MyTask+CoreDataClass.swift in Sources */,
+				F74357DC2D0C4A4600D5ED9F /* DataController.swift in Sources */,
+				F7A42A832D0C3AC200EE2BEE /* FamilyControllerView_test.swift in Sources */,
+				F74357EB2D0C4C1E00D5ED9F /* mainSheldView.swift in Sources */,
+				F7AD90632D08431500304B34 /* DeviceActivityMonitorExtension.swift in Sources */,
+				F74357E32D0C4ACA00D5ED9F /* MyTask+CoreDataProperties.swift in Sources */,
+				F74357DE2D0C4A5600D5ED9F /* ContentViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7C94EE92D0D150600F500C0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7C94EF22D0D150600F500C0 /* ShieldConfigurationExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F77E787D2D0FDA42008449AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F77E78742D0FDA42008449AD /* ShieldActionExtension */;
+			targetProxy = F77E787C2D0FDA42008449AD /* PBXContainerItemProxy */;
+		};
 		F79338D32BF074A300523E28 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F79338BB2BF074A300523E28 /* calendar */;
@@ -546,9 +837,80 @@
 			target = F79338BB2BF074A300523E28 /* calendar */;
 			targetProxy = F79338DC2BF074A300523E28 /* PBXContainerItemProxy */;
 		};
+		F7AD90672D08431500304B34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F7AD905C2D08431500304B34 /* ScheduledDeviceMonitor_DAM */;
+			targetProxy = F7AD90662D08431500304B34 /* PBXContainerItemProxy */;
+		};
+		F7C94EF62D0D150600F500C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F7C94EEC2D0D150600F500C0 /* ShieldConfiguration */;
+			targetProxy = F7C94EF52D0D150600F500C0 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		F77E78802D0FDA42008449AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = ShieldActionExtension/ShieldActionExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KB63PKHBJL;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShieldActionExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShieldActionExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = karasaki.kinn.ShieldActionExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F77E78812D0FDA42008449AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = ShieldActionExtension/ShieldActionExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KB63PKHBJL;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShieldActionExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShieldActionExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = karasaki.kinn.ShieldActionExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F79338E32BF074A300523E28 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -668,6 +1030,7 @@
 		F79338E62BF074A300523E28 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = calendar/calendar.entitlements;
@@ -677,11 +1040,13 @@
 				DEVELOPMENT_TEAM = KB63PKHBJL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = calendar/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -698,6 +1063,7 @@
 		F79338E72BF074A300523E28 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = calendar/calendar.entitlements;
@@ -707,11 +1073,13 @@
 				DEVELOPMENT_TEAM = KB63PKHBJL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = calendar/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -797,9 +1165,140 @@
 			};
 			name = Release;
 		};
+		F7AD906A2D08431500304B34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = ScheduledDeviceMonitor_DAM/ScheduledDeviceMonitor_DAM.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KB63PKHBJL;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ScheduledDeviceMonitor_DAM/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ScheduledDeviceMonitor_DAM;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "karasaki.kinn.ScheduledDeviceMonitor-DAM";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F7AD906B2D08431500304B34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = ScheduledDeviceMonitor_DAM/ScheduledDeviceMonitor_DAM.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KB63PKHBJL;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ScheduledDeviceMonitor_DAM/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ScheduledDeviceMonitor_DAM;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "karasaki.kinn.ScheduledDeviceMonitor-DAM";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F7C94EF92D0D150600F500C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = ShieldConfiguration/ShieldConfiguration.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KB63PKHBJL;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShieldConfiguration/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShieldConfiguration;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = karasaki.kinn.ShieldConfiguration;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F7C94EFA2D0D150600F500C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = ShieldConfiguration/ShieldConfiguration.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KB63PKHBJL;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShieldConfiguration/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShieldConfiguration;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = karasaki.kinn.ShieldConfiguration;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F77E787F2D0FDA42008449AD /* Build configuration list for PBXNativeTarget "ShieldActionExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F77E78802D0FDA42008449AD /* Debug */,
+				F77E78812D0FDA42008449AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F79338B72BF074A300523E28 /* Build configuration list for PBXProject "calendar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -832,6 +1331,24 @@
 			buildConfigurations = (
 				F79338EC2BF074A300523E28 /* Debug */,
 				F79338ED2BF074A300523E28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7AD90692D08431500304B34 /* Build configuration list for PBXNativeTarget "ScheduledDeviceMonitor_DAM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7AD906A2D08431500304B34 /* Debug */,
+				F7AD906B2D08431500304B34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7C94EF82D0D150600F500C0 /* Build configuration list for PBXNativeTarget "ShieldConfiguration" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7C94EF92D0D150600F500C0 /* Debug */,
+				F7C94EFA2D0D150600F500C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

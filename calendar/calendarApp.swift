@@ -192,7 +192,8 @@ import CoreData
 //    }
 //}
 
-@main
+//いったんコメントアウト(screentime apiのために)
+//@main
 struct MyApp: App {
     //    let center = AuthorizationCenter.shared
     @StateObject private var dataController = DataController()  // Core Dataのコントローラ
@@ -208,14 +209,36 @@ struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             let taskViewModel = TaskViewModel(context: dataController.container.viewContext)
-            ページ_日記リスト(viewModel: taskViewModel)
+//本丸
+//            ページ_日記リスト(viewModel: taskViewModel)
 //            MainTabView()
 //            MainTextEditorView()
 //            MainView()
             // ダークモード
+//            UserDefaultsExampleView()
+//スクリーンタイムAPIでのブロックのテスト
+            
+//            let model = ScreenTimeSelectAppsModel() // インスタンスをここで作成
+//            ScreenTimeSelectAppsView(model: model)
+
+//            let model = ScreenTimeSelectAppsModel_test()
+//            ScreenTimeSelectAppsContentView(model: model)
+            //ローカル通知
+//            AlarmView()
+//            AudioPlayerView()
+            //64コマ出遅れた
+//            AlarmNotificationView()
+//            NotificationView()
+            通知スケジュールビュー()
+            //http://pedroesli.com/2023-11-13-screen-time-api/のやり方
+//            ShieldView()
+            //DAMectensionのテスト
+//            ActivitySelectionView()
+//            LocalNotificationView()
 //            アプリルート(viewModel: taskViewModel)
                             .preferredColorScheme(.dark)
                             .environment(\.managedObjectContext, dataController.container.viewContext)
+
 //                .onAppear {
 //                                    checkFirstLaunch()
 //                                }

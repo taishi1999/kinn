@@ -1,39 +1,39 @@
 import SwiftUI
-import CoreData
+//import CoreData
 
 // coredataのViewModelの作成
-class TaskViewModel: ObservableObject {
-    @Published var coredata_MyTask: MyTask  // 非オプショナルに変更
-
-    init(context: NSManagedObjectContext) {
-        // 既存のタスクがあるか確認
-        let fetchRequest: NSFetchRequest<MyTask> = MyTask.fetchRequest()
-        fetchRequest.fetchLimit = 1  // 1件のみ取得
-        if let existingTask = try? context.fetch(fetchRequest).first {
-            // 既存のタスクがある場合はそれを使用
-            self.coredata_MyTask = existingTask
-        } else {
-            // 新しいタスクを作成し、初期値を設定
-            let newTask = MyTask(context: context)
-            newTask.taskType = "diary"
-            newTask.startTime = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date()) ?? Date()
-            newTask.endTime = newTask.startTime.addingTimeInterval(3600)
-            newTask.repeatDays = "0,1,2,3,4,5,6"
-            newTask.characterCount = 78
-            self.coredata_MyTask = newTask
-
-            // 非同期で保存
-            DispatchQueue.main.async {
-                do {
-                    try context.save()
-                    print("Task saved successfully!")
-                } catch {
-                    print("Failed to save task: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-}
+//class TaskViewModel: ObservableObject {
+//    @Published var coredata_MyTask: MyTask  // 非オプショナルに変更
+//
+//    init(context: NSManagedObjectContext) {
+//        // 既存のタスクがあるか確認
+//        let fetchRequest: NSFetchRequest<MyTask> = MyTask.fetchRequest()
+//        fetchRequest.fetchLimit = 1  // 1件のみ取得
+//        if let existingTask = try? context.fetch(fetchRequest).first {
+//            // 既存のタスクがある場合はそれを使用
+//            self.coredata_MyTask = existingTask
+//        } else {
+//            // 新しいタスクを作成し、初期値を設定
+//            let newTask = MyTask(context: context)
+//            newTask.taskType = "diary"
+//            newTask.startTime = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date()) ?? Date()
+//            newTask.endTime = newTask.startTime.addingTimeInterval(3600)
+//            newTask.repeatDays = "0,1,2,3,4,5,6"
+//            newTask.characterCount = 78
+//            self.coredata_MyTask = newTask
+//
+//            // 非同期で保存
+//            DispatchQueue.main.async {
+//                do {
+//                    try context.save()
+//                    print("Task saved successfully!")
+//                } catch {
+//                    print("Failed to save task: \(error.localizedDescription)")
+//                }
+//            }
+//        }
+//    }
+//}
 
 struct ページ_日記リスト: View {
     @ObservedObject var viewModel: TaskViewModel
@@ -65,6 +65,10 @@ struct ページ_日記リスト: View {
 
     @State private var listPositionX: CGFloat = 0.0
 
+//    init(viewModel: TaskViewModel) {
+//            self.viewModel = viewModel
+//        }
+
     private var safeAreaInsets: UIEdgeInsets {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
@@ -91,21 +95,23 @@ struct ページ_日記リスト: View {
     @State private var showPopover = true // ポップオーバー表示フラグ
     //    @State var characterCount = 270
 
-    func deleteAllTasks(context: NSManagedObjectContext) {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = MyTask.fetchRequest()
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+//    func deleteAllTasks(context: NSManagedObjectContext) {
+//        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = MyTask.fetchRequest()
+//        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+//
+//        do {
+//            try context.execute(deleteRequest)
+//            try context.save()
+//            print("All tasks have been deleted.")
+//
+//            // キャッシュをリフレッシュ
+//            context.refreshAllObjects()
+//        } catch let error as NSError {
+//            print("Could not delete all tasks. \(error), \(error.userInfo)")
+//        }
+//    }
 
-        do {
-            try context.execute(deleteRequest)
-            try context.save()
-            print("All tasks have been deleted.")
 
-            // キャッシュをリフレッシュ
-            context.refreshAllObjects()
-        } catch let error as NSError {
-            print("Could not delete all tasks. \(error), \(error.userInfo)")
-        }
-    }
 
     //最初にcoredataをfetchするために必要
     //実行するたびにTaskViewModelがcoredataにデータを追加しちゃう
@@ -198,7 +204,8 @@ struct ページ_日記リスト: View {
                         HStack {
                             //                            パーツ_文字数入力欄(text: $characterCount)
                             Button(action: {
-                                deleteAllTasks(context: viewContext)
+                                viewModel.deleteAllTasks(context: viewContext)
+//                                deleteAllTasks(context: viewContext)
                             }) {
                                 Text("Delete All Tasks")
                                     .padding()
@@ -230,7 +237,9 @@ struct ページ_日記リスト: View {
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
                             }.fullScreenCover(isPresented: $フラグ_ブロック画面表示) {
-                                ページ_ブロック画面() // フルスクリーンで表示するビュー
+                                ページ_ブロック画面(action: {
+                                    フラグ_日記エディタ表示 = true // フラグを変更
+                                }) // フルスクリーンで表示するビュー
                             }
                             Spacer()
                             //設定
@@ -280,7 +289,9 @@ struct ページ_日記リスト: View {
                     }
                     VStack(spacing: 0) {
                         Spacer()
-                        パーツ_ボタン_日記作成(フラグ_日記エディタ表示: $フラグ_日記エディタ表示, startTime: $viewModel.coredata_MyTask.startTime, endTime: $viewModel.coredata_MyTask.endTime,repeatDays: Binding<[Int]>(
+                        パーツ_ボタン_日記作成( action: {
+                            フラグ_日記エディタ表示 = true // フラグを変更
+                        },/*フラグ_日記エディタ表示: $フラグ_日記エディタ表示, */startTime: $viewModel.coredata_MyTask.startTime, endTime: $viewModel.coredata_MyTask.endTime,repeatDays: Binding<[Int]>(
                             get: {
                                 // Stringを[Int]に変換
                                 (viewModel.coredata_MyTask.repeatDays ?? "")
@@ -291,7 +302,7 @@ struct ページ_日記リスト: View {
                                 // [Int]をStringに変換して保存
                                 viewModel.coredata_MyTask.repeatDays = newRepeatDays.map { String($0) }.joined(separator: ",")
                             }
-                        )) {}
+                        )) 
                             .sheet(isPresented: $フラグ_日記エディタ表示) {
                                 NavigationView {
                                     ページ_日記エディタ {
@@ -386,7 +397,7 @@ struct ページ_日記リスト: View {
             if currentTime <= viewModel.coredata_MyTask.endTime {
                 print("ブロック範囲内です")
             } else {
-                print("終了時間を過ぎました")
+                print("\(#file):\(#line) 終了時間を過ぎました")
                 タイマー開始()
             }
         }

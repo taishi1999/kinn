@@ -2039,7 +2039,7 @@ struct TextFieldView_Previews: PreviewProvider {
 
 
 struct ContentView: View {
-    @StateObject private var viewModel = TimeSelectionViewModel()
+//    @StateObject private var viewModel = TimeSelectionViewModel()
 
     //    @State private var isShowPopoverEnd = false
     //    @State private var isShowPopoverStart = false
@@ -2305,48 +2305,48 @@ struct ListItem: Identifiable {
     let id = UUID() // 一意のID
     let name: String
 }
-struct ListmenuView: View {
-    let items = [
-        ListItem(name: "アイテム1"),
-        ListItem(name: "アイテム2"),
-        ListItem(name: "アイテム3"),
-        ListItem(name: "アイテム4")
-    ]
-    @State private var selectedItem: ListItem?
-    @StateObject private var viewModel = TimeSelectionViewModel()
-
-    var body: some View {
-        List {
-            Section{
-//                SelectTimeView(
-//                    startHour: $viewModel.startHour,
-//                    startMin: $viewModel.startMin,
-//                    endHour: $viewModel.endHour,
-//                    endMin: $viewModel.endMin,
-//                    isOpenStartSet: $viewModel.isOpenStartSet,
-//                    isOpenEndSet: $viewModel.isOpenEndSet
-//                )
-            }
-            Section(header: Spacer(minLength: 10)) {
-                Text(verbatim: "First Section")
-            }
-            Text("リンゴ🍎")
-            Text("ミカン🍊")
-            Text("バナナ🍌")
-            Text("ぶどう🍇")
-            Text("パイナップル🍍")
-//            SelectTimeView(
-//                startHour: $viewModel.startHour,
-//                startMin: $viewModel.startMin,
-//                endHour: $viewModel.endHour,
-//                endMin: $viewModel.endMin,
-//                isOpenStartSet: $viewModel.isOpenStartSet,
-//                isOpenEndSet: $viewModel.isOpenEndSet
-//            )
-        }
-
-    }
-}
+//struct ListmenuView: View {
+//    let items = [
+//        ListItem(name: "アイテム1"),
+//        ListItem(name: "アイテム2"),
+//        ListItem(name: "アイテム3"),
+//        ListItem(name: "アイテム4")
+//    ]
+//    @State private var selectedItem: ListItem?
+//    @StateObject private var viewModel = TimeSelectionViewModel()
+//
+//    var body: some View {
+//        List {
+//            Section{
+////                SelectTimeView(
+////                    startHour: $viewModel.startHour,
+////                    startMin: $viewModel.startMin,
+////                    endHour: $viewModel.endHour,
+////                    endMin: $viewModel.endMin,
+////                    isOpenStartSet: $viewModel.isOpenStartSet,
+////                    isOpenEndSet: $viewModel.isOpenEndSet
+////                )
+//            }
+//            Section(header: Spacer(minLength: 10)) {
+//                Text(verbatim: "First Section")
+//            }
+//            Text("リンゴ🍎")
+//            Text("ミカン🍊")
+//            Text("バナナ🍌")
+//            Text("ぶどう🍇")
+//            Text("パイナップル🍍")
+////            SelectTimeView(
+////                startHour: $viewModel.startHour,
+////                startMin: $viewModel.startMin,
+////                endHour: $viewModel.endHour,
+////                endMin: $viewModel.endMin,
+////                isOpenStartSet: $viewModel.isOpenStartSet,
+////                isOpenEndSet: $viewModel.isOpenEndSet
+////            )
+//        }
+//
+//    }
+//}
 struct DetailView: View {
     var selectedItem: ListItem
 

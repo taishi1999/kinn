@@ -3,14 +3,17 @@ import SwiftUI
 struct パーツ_曜日選択ビュー: View {
     @Binding var 繰り返し曜日: [Int]
 
+    // 日曜日から始まる曜日のリストを生成
     private var 曜日: [String] {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ja_JP") // 日本語ロケール
         formatter.dateFormat = "EEE"
         let calendar = Calendar.current
-        let 今日 = calendar.startOfDay(for: Date()) // 今日の日付の開始時間
+
+        // 日曜日を起点とする曜日リスト
+        let 日曜日 = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date()))!
         return (0..<7).map { offset in
-            guard let 日付 = calendar.date(byAdding: .day, value: offset, to: 今日) else { return "" }
+            guard let 日付 = calendar.date(byAdding: .day, value: offset, to: 日曜日) else { return "" }
             return formatter.string(from: 日付) // 曜日を文字列で取得
         }
     }

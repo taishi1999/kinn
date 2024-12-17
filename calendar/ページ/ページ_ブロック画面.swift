@@ -1,8 +1,10 @@
 import SwiftUI
 
 struct ページ_ブロック画面: View {
+    var action: () -> Void
     @State private var isAnimating = false
     @Environment(\.presentationMode) var presentationMode // フルスクリーンを閉じるために必要
+
     @State private var フラグ_日記エディタ表示 = false  // シートの表示状態を管理
 
     var body: some View {
@@ -71,7 +73,7 @@ struct ページ_ブロック画面: View {
                     .foregroundColor(.primary)
                     .fontWeight(.bold)
 
-                パーツ_ボタン_メイン(フラグ_日記エディタ表示: $フラグ_日記エディタ表示,ボタンテキスト: "今日の日記を書く")
+                パーツ_共通ボタン(ボタンテキスト: "今日の日記を書く", action:action)
                     .padding(.horizontal,24)
                     .sheet(isPresented: $フラグ_日記エディタ表示) {
                         NavigationView {
@@ -90,8 +92,8 @@ struct ページ_ブロック画面: View {
     }
 }
 
-struct ページ_ブロック画面_Previews: PreviewProvider {
-    static var previews: some View {
-        ページ_ブロック画面()
-    }
-}
+//struct ページ_ブロック画面_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ページ_ブロック画面()
+//    }
+//}

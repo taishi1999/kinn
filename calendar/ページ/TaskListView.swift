@@ -396,11 +396,11 @@ struct TaskListView: View {
 
                 Text("Character Count: \(task.characterCount)")
 
-//                // startTimeを安全にアンラップして表示
-//                Text("Start Time: \(task.startTime.formatted())")
-//
-//                // endTimeを安全にアンラップして表示
-//                Text("End Time: \(task.endTime.formatted())")
+                // startTimeを安全にアンラップして表示
+                Text("Start Time: \(task.startTime.formatted())")
+
+                // endTimeを安全にアンラップして表示
+                Text("End Time: \(task.endTime.formatted())")
 
                 Text("Repeat Days: \(task.repeatDays ?? "None")")
 

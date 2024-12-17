@@ -2,24 +2,16 @@ import SwiftUI
 import CoreData
 
 struct ページ_タスク作成: View {
-//    let days = ["日", "月", "火", "水", "木", "金", "土"]
-//    @Binding var initialTask: MyTask
-    // 編集用の変数
-//    @State private var editableTask: MyTask
-
-    // 親ビューから受け取る@Bindingプロパティを定義
-//    @Binding var taskType: TaskType
-//    @Binding var startTime: Date
-//    @Binding var endTime: Date
-//    @Binding var repeatDays: Set<Int>  // Set型で受け取る
-//    @Binding var characterCount: Int
-//    @Binding var existingTask: MyTask  // 編集対象の既存タスクを親ビューから受け取る
     @State private var taskType: TaskType
     @State private var startTime: Date
     @State private var endTime: Date
     @State private var repeatDays: [Int]
     @State private var characterCount: Int
     @State private var value: Int = 80  // 初期値
+
+    @State private var showAlert = false // アラート表示フラグ
+    @State private var alertMessage = "" // アラートメッセージ
+
 
     @State private var selectedApp: String = ""
     @State private var selectedPickerIndex: Int? = nil
@@ -59,23 +51,6 @@ struct ページ_タスク作成: View {
         _characterCount = State(initialValue: Int(task.characterCount))
     }
 
-//    init(taskType: Binding<TaskType>, startTime: Binding<Date>, endTime: Binding<Date>, repeatDays: Binding<Set<Int>>, characterCount: Binding<Int>, existingTask: Binding<MyTask>) {
-//        self._taskType = taskType
-//        self._startTime = startTime
-//        self._endTime = endTime
-//        self._repeatDays = repeatDays
-//        self._characterCount = characterCount
-//        self._existingTask = existingTask  // バインディングとして設定
-//
-//        // その他の初期化処理
-//        _selectedDays = State(initialValue: [getCurrentDayOfWeek()])
-//        let bounds = UIScreen.main.bounds
-//        let width = bounds.width - 32 //外側のpadding
-//        let itemWidth = 40 * CGFloat(days.count)
-//        let totalSpacing = width - itemWidth - (2 * 16) // 16 is the padding
-//        self._daySpacing = State(initialValue: totalSpacing / CGFloat(days.count - 1))
-//    }
-
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -98,31 +73,10 @@ struct ページ_タスク作成: View {
                             endTime: $endTime,
                             repeatDays: $repeatDays,
                             characterCount: $characterCount,
-//                            taskType: Binding(
-//                                get: { TaskType(rawValue: existingTask.taskType ?? "diary") ?? .diary },
-//                                set: { existingTask.taskType = $0.rawValue }
-//                            ),
-//                            startTime: Binding(
-//                                get: { existingTask.startTime ?? Date() },
-//                                set: { existingTask.startTime = $0 }
-//                            ),
-//                            endTime: Binding(
-//                                get: { existingTask.endTime ?? Date().addingTimeInterval(3600) },
-//                                set: { existingTask.endTime = $0 }
-//                            ),
-//                            repeatDays: Binding(
-//                                get: { Array(Set(existingTask.repeatDays?.split(separator: ",").compactMap { Int($0) } ?? [])) },
-//                                set: { existingTask.repeatDays = Set($0).sorted().map { String($0) }.joined(separator: ",") }
-//                            )
-//                            ,
-//                            characterCount: Binding(
-//                                get: { Int(existingTask.characterCount) },
-//                                set: { existingTask.characterCount = Int16($0) }
-//                            ),
+
                             pinFocusState: $pinFocusState,
                             isButtonAbled: $isButtonAbled,
                             isTextFieldVisible: $isTextFieldVisible
-//                            value: $value
                         )
                         Spacer().frame(height: 100)
                     }
@@ -131,10 +85,29 @@ struct ページ_タスク作成: View {
 
             VStack {
                 Spacer()
-
                 Button(action: {
-                    isDisabled_保存ボタン = true
-                    updateTask(context: viewContext)
+                    isDisabled_保存ボタン = true //処理中に押せないように
+                    //todo
+//                    updateTask(context: viewContext)
+                    viewModel.updateTask(
+                            taskType: taskType,
+                            startTime: startTime,
+                            endTime: endTime,
+                            repeatDays: repeatDays,
+                            characterCount: characterCount,
+                            context: viewContext
+                        )
+                    { success in
+                        if success {
+                            print("保存成功")
+                            dismiss()
+                        } else {
+                            print("保存失敗")
+                            alertMessage = "タスクの保存に失敗しました。" // 失敗メッセージを設定
+                            showAlert = true // アラートを表示
+                            isDisabled_保存ボタン=false
+                        }
+                    }
                 }) {
                     Text("保存")
                         .foregroundColor(isDisabled_保存ボタン ? .secondary : .primary)
@@ -151,6 +124,13 @@ struct ページ_タスク作成: View {
             .ignoresSafeArea(.keyboard, edges: .bottom)
             
         }
+        .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("保存失敗"),
+                        message: Text(alertMessage),
+                        dismissButton: .default(Text("閉じる"))
+                    )
+                }
         .onReceive(keyboardPublisher) { isVisible in
             print("キーボードが表示されました: \(isVisible ? "はい" : "いいえ")")
         }
@@ -214,7 +194,7 @@ struct ページ_タスク作成: View {
                let startDatePlusOneDay = calendar.date(byAdding: .day, value: 1, to: startTime) ?? startTime
                endTime = calendar.date(bySettingHour: endHour, minute: endMinute, second: 0, of: startDatePlusOneDay) ?? endTime
 
-               // 時間と分が同じ場合、-1 分調整
+               // 時間と分が同じ場合、-5 分調整
                if startHour == endHour && startMinute == endMinute {
                    endTime = calendar.date(byAdding: .minute, value: -5, to: endTime) ?? endTime
                }
