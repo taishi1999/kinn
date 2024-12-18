@@ -42,7 +42,7 @@ class ShieldActionExtension: ShieldActionDelegate {
 
         // Start a device activity for this particular application
     func startMonitoring() {
-        let unlockTime = 2
+        let unlockTime = 1
         let event: [DeviceActivityEvent.Name: DeviceActivityEvent] = [
             DeviceActivityEvent.Name(applicationProfile.id.uuidString) : DeviceActivityEvent(
                 applications: Set<ApplicationToken>([applicationProfile.applicationToken]),

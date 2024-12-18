@@ -1,14 +1,3 @@
-//import SwiftUI
-//
-//@main
-//struct MainShieldViewApp: App {
-//    var body: some Scene {
-//        WindowGroup {
-//            ShieldView() // ShieldView() を実行
-//        }
-//    }
-//}
-
 import SwiftUI
 import FamilyControls
 

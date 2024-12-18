@@ -12,7 +12,6 @@
 		F74357E02D0C4A6F00D5ED9F /* MyTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79AF0C62CA53C2900DBFAEC /* MyTask+CoreDataClass.swift */; };
 		F74357E32D0C4ACA00D5ED9F /* MyTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79AF0C72CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift */; };
 		F74357EA2D0C4BA200D5ED9F /* mainSheldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74357E92D0C4BA200D5ED9F /* mainSheldView.swift */; };
-		F74357EB2D0C4C1E00D5ED9F /* mainSheldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74357E92D0C4BA200D5ED9F /* mainSheldView.swift */; };
 		F77D29D72CCC772400BC7D2E /* パーツ_ボタン_日記作成.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77D29D62CCC772400BC7D2E /* パーツ_ボタン_日記作成.swift */; };
 		F77D29D92CCC788E00BC7D2E /* ページ_日記エディタ.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77D29D82CCC788E00BC7D2E /* ページ_日記エディタ.swift */; };
 		F77D29DB2CCC794700BC7D2E /* ページ_日記リスト.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77D29DA2CCC794700BC7D2E /* ページ_日記リスト.swift */; };
@@ -81,6 +80,14 @@
 		F7C94EF72D0D150600F500C0 /* ShieldConfiguration.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F7C94EED2D0D150600F500C0 /* ShieldConfiguration.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F7D40C932D09854700E174F1 /* 通知管理.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D40C922D09854700E174F1 /* 通知管理.swift */; };
 		F7DE20932CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DE20922CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift */; };
+		F7ED67C42D125ACD007BD0DE /* ManagedSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67C32D125ACD007BD0DE /* ManagedSettingsStore.swift */; };
+		F7ED67C62D125B57007BD0DE /* ShieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67C52D125B57007BD0DE /* ShieldView.swift */; };
+		F7ED67D02D126A95007BD0DE /* ApplicationProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67CF2D126A95007BD0DE /* ApplicationProfile.swift */; };
+		F7ED67D22D126AAF007BD0DE /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67D12D126AAF007BD0DE /* DataBase.swift */; };
+		F7ED67D32D126AC8007BD0DE /* ApplicationProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67CF2D126A95007BD0DE /* ApplicationProfile.swift */; };
+		F7ED67D42D126AC9007BD0DE /* ApplicationProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67CF2D126A95007BD0DE /* ApplicationProfile.swift */; };
+		F7ED67D52D126ACC007BD0DE /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67D12D126AAF007BD0DE /* DataBase.swift */; };
+		F7ED67D62D126ACD007BD0DE /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67D12D126AAF007BD0DE /* DataBase.swift */; };
 		F7EFA7562CFF365D00B1D26D /* テスト.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EFA7552CFF365D00B1D26D /* テスト.swift */; };
 /* End PBXBuildFile section */
 
@@ -215,6 +222,10 @@
 		F7C94EF42D0D150600F500C0 /* ShieldConfiguration.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldConfiguration.entitlements; sourceTree = "<group>"; };
 		F7D40C922D09854700E174F1 /* 通知管理.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "通知管理.swift"; sourceTree = "<group>"; };
 		F7DE20922CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_カスタムセグメントピッカー.swift"; sourceTree = "<group>"; };
+		F7ED67C32D125ACD007BD0DE /* ManagedSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedSettingsStore.swift; sourceTree = "<group>"; };
+		F7ED67C52D125B57007BD0DE /* ShieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldView.swift; sourceTree = "<group>"; };
+		F7ED67CF2D126A95007BD0DE /* ApplicationProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationProfile.swift; sourceTree = "<group>"; };
+		F7ED67D12D126AAF007BD0DE /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
 		F7EFA7552CFF365D00B1D26D /* テスト.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "テスト.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -315,10 +326,10 @@
 		F79338BE2BF074A300523E28 /* calendar */ = {
 			isa = PBXGroup;
 			children = (
+				F7ED67C22D125AA7007BD0DE /* ScreenTimeApiTest */,
 				F7AD90582D07EF7A00304B34 /* Info.plist */,
 				F7B520472CE446BA00F86232 /* 関数 */,
 				F79338BF2BF074A300523E28 /* calendarApp.swift */,
-				F74357E92D0C4BA200D5ED9F /* mainSheldView.swift */,
 				F79338C12BF074A300523E28 /* ContentView.swift */,
 				F79998CA2C9FCCB5001A5FEB /* ページ */,
 				F79998D32C9FFB19001A5FEB /* スタイル */,
@@ -490,6 +501,18 @@
 				F7C94EF42D0D150600F500C0 /* ShieldConfiguration.entitlements */,
 			);
 			path = ShieldConfiguration;
+			sourceTree = "<group>";
+		};
+		F7ED67C22D125AA7007BD0DE /* ScreenTimeApiTest */ = {
+			isa = PBXGroup;
+			children = (
+				F74357E92D0C4BA200D5ED9F /* mainSheldView.swift */,
+				F7ED67C32D125ACD007BD0DE /* ManagedSettingsStore.swift */,
+				F7ED67C52D125B57007BD0DE /* ShieldView.swift */,
+				F7ED67CF2D126A95007BD0DE /* ApplicationProfile.swift */,
+				F7ED67D12D126AAF007BD0DE /* DataBase.swift */,
+			);
+			path = ScreenTimeApiTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -718,7 +741,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7ED67D32D126AC8007BD0DE /* ApplicationProfile.swift in Sources */,
 				F77E78822D0FDABB008449AD /* FamilyControllerView_test.swift in Sources */,
+				F7ED67D62D126ACD007BD0DE /* DataBase.swift in Sources */,
 				F77E78792D0FDA42008449AD /* ShieldActionExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -731,6 +756,7 @@
 				F794945F2CA40786009FEC16 /* タスクモデル.swift in Sources */,
 				F7A11BD42C48B17D0076C73A /* dropdown.swift in Sources */,
 				F79338C92BF074A300523E28 /* Persistence.swift in Sources */,
+				F7ED67D22D126AAF007BD0DE /* DataBase.swift in Sources */,
 				F7A8487D2CBFA318006AA83B /* パーツ_パルス.swift in Sources */,
 				F78A28D52CCF8A960080FCCE /* 設定ページ.swift in Sources */,
 				F79998CF2C9FE334001A5FEB /* Extension.swift in Sources */,
@@ -758,6 +784,7 @@
 				F7DE20932CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift in Sources */,
 				F79998D22C9FE5E0001A5FEB /* パーツ_FABボタン_タスク作成.swift in Sources */,
 				F7B520492CE446CE00F86232 /* ブロック状態管理.swift in Sources */,
+				F7ED67C42D125ACD007BD0DE /* ManagedSettingsStore.swift in Sources */,
 				F77D29DB2CCC794700BC7D2E /* ページ_日記リスト.swift in Sources */,
 				F7C760D82CA14ED900F3BF16 /* リマインダーで見るタイプのtimePicker.swift in Sources */,
 				F7A086D22CC0E87C00C8EE31 /* 日記.swift in Sources */,
@@ -765,6 +792,7 @@
 				F77D29D72CCC772400BC7D2E /* パーツ_ボタン_日記作成.swift in Sources */,
 				F79998C32C9FB689001A5FEB /* DataController.swift in Sources */,
 				F79998C52C9FB729001A5FEB /* Tasks.swift in Sources */,
+				F7ED67C62D125B57007BD0DE /* ShieldView.swift in Sources */,
 				F7C760D02CA1068200F3BF16 /* TaskListView.swift in Sources */,
 				F79CDD772C9EEFF500F93ECE /* Tasks.xcdatamodeld in Sources */,
 				F74357EA2D0C4BA200D5ED9F /* mainSheldView.swift in Sources */,
@@ -777,6 +805,7 @@
 				F79998D52C9FFBF4001A5FEB /* スタイル_バウンドボタン.swift in Sources */,
 				F787FFBA2CAFA05C00897D89 /* パーツ_セグメントピッカー.swift in Sources */,
 				F79998CC2C9FCF85001A5FEB /* ページ_タスク作成.swift in Sources */,
+				F7ED67D02D126A95007BD0DE /* ApplicationProfile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -802,11 +831,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F74357E02D0C4A6F00D5ED9F /* MyTask+CoreDataClass.swift in Sources */,
+				F7ED67D42D126AC9007BD0DE /* ApplicationProfile.swift in Sources */,
 				F74357DC2D0C4A4600D5ED9F /* DataController.swift in Sources */,
 				F7A42A832D0C3AC200EE2BEE /* FamilyControllerView_test.swift in Sources */,
-				F74357EB2D0C4C1E00D5ED9F /* mainSheldView.swift in Sources */,
 				F7AD90632D08431500304B34 /* DeviceActivityMonitorExtension.swift in Sources */,
 				F74357E32D0C4ACA00D5ED9F /* MyTask+CoreDataProperties.swift in Sources */,
+				F7ED67D52D126ACC007BD0DE /* DataBase.swift in Sources */,
 				F74357DE2D0C4A5600D5ED9F /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1041,6 +1071,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = calendar/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Kinn;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1074,6 +1106,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = calendar/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Kinn;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
