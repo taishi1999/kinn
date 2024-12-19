@@ -15,7 +15,8 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     override func intervalDidStart(for activity: DeviceActivityName) {
         super.intervalDidStart(for: activity)
 
-        // Handle the start of the interval.
+        ShieldManager.shared.shieldActivities()
+        NSLog("intervalDidStart")
     }
 
     override func intervalDidEnd(for activity: DeviceActivityName) {

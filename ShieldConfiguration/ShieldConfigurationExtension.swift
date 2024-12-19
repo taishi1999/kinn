@@ -1,10 +1,3 @@
-//
-//  ShieldConfigurationExtension.swift
-//  ShieldConfig
-//
-//  Created by Kei Fujikawa on 2023/08/21.
-//
-
 import ManagedSettings
 import ManagedSettingsUI
 import UIKit

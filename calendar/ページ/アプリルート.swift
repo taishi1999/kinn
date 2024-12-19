@@ -82,15 +82,15 @@ struct アプリルート: View {
                 ページ_日記リスト(viewModel: viewModel)
             }
 
-            // デバッグ用のリセットボタン
-            Button("Reset Onboarding (Debug)") {
-                isOnboardingCompleted = false // AppStorageをリセット
-                print("isOnboardingCompleted = false")
-            }
-            .padding()
-            .background(Color.red)
-            .foregroundColor(.white)
-            .cornerRadius(8)
+//            // デバッグ用のリセットボタン
+//            Button("Reset Onboarding (Debug)") {
+//                isOnboardingCompleted = false // AppStorageをリセット
+//                print("isOnboardingCompleted = false")
+//            }
+//            .padding()
+//            .background(Color.red)
+//            .foregroundColor(.white)
+//            .cornerRadius(8)
         }
     }
 }

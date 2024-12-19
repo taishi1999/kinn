@@ -76,19 +76,20 @@ struct OnboardingView: View {
     @State private var showAlert = false // アラート表示フラグ
 
     var body: some View {
-        NavigationStack(path: $path){
-            オンボ_アプリピッカー(activitySelection: $activitySelection,taskData: taskData,
-                        onComplete: onComplete,path: $path)
-            .navigationDestination(for: String.self) { destination in
-                switch destination {
-                case "B":
-                    オンボ_時間設定(taskData: taskData,path: $path)
-                case "C":
-                    オンボ_文字数設定(taskData: taskData,isLoading: $isLoading, path: $path,updateTask: updateTask/*, isNavigationEnabled: $isNavigationEnabled*/)
-                default:
-                    EmptyView()
+        NavigationStack(path: $path) {
+            オンボ_スクリーンタイム(path: $path) // 1番目に表示したいビューをここに設定
+                .navigationDestination(for: String.self) { destination in
+                    switch destination {
+                    case "A":
+                        オンボ_アプリピッカー(activitySelection: $activitySelection, /*taskData: taskData,*/ onComplete: onComplete, path: $path)
+                    case "B":
+                        オンボ_時間設定(taskData: taskData, path: $path)
+                    case "C":
+                        オンボ_文字数設定(taskData: taskData, isLoading: $isLoading, path: $path, updateTask: updateTask/*, isNavigationEnabled: $isNavigationEnabled*/)
+                    default:
+                        EmptyView()
+                    }
                 }
-            }
         }
         .disabled(isLoading)
         .alert(isPresented: $showAlert) {
@@ -229,10 +230,107 @@ struct OnboardingView: View {
     }
 }
 
+struct オンボ_スクリーンタイム: View {
+    @State private var isPresented = false
+
+//    var onComplete: () -> Void
+    //    var onNext: () -> Void
+    @Binding var path: NavigationPath
+
+    @State private var navigateToNext = false
+
+    var body: some View {
+        VStack(spacing: 0) {
+//            Button("Complete Onboarding") {
+//                onComplete()
+//            }
+//            .padding()
+//            .background(Color.blue)
+//            .foregroundColor(.white)
+//            .cornerRadius(8)
+
+            Spacer()
+                .frame(height: 20)
+
+            VStack(spacing: 8) {
+                Text("スクリーンタイムへのアクセスを\n許可してください")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                Text("アプリやサイトをブロックするためには\nスクリーンタイムへの許可が必要です")
+                    .fontWeight(.bold)
+                    .foregroundStyle(Color.secondary)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+            }
+
+            Spacer()
+                .frame(height: 32)
+            Image("iPhone15_Pro_ScreenTime_Cutted")
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
+            ZStack {
+                VStack(spacing: 0) {
+//                    Spacer()
+//                    パーツ_ライナーグラデーション(height: 24)
+
+                    VStack {
+                        Spacer().frame(height: 16)
+
+                        Button("Go to A") {
+                            path.append("A") // 次の画面へ遷移
+                        }
+                        パーツ_共通ボタン(ボタンテキスト: "アプリを選択する", action: {isPresented = true})
+//                            .familyActivityPicker(
+//                                isPresented: $isPresented,
+//                                selection: $activitySelection
+//                            )
+//                            .onChange(of: isPresented) { newValue in
+//                                if !newValue {
+//                                    print("Selected Activities: \(activitySelection)")
+//                                    navigateToNext = true
+//                                }
+//                            }
+//                        NavigationLink(destination: オンボ_時間設定(taskData: taskData), isActive: $navigateToNext) {
+//                            Text("アプリを選択する")
+//                                .padding(.vertical, 16)
+//                                .frame(maxWidth: .infinity)
+//                                .background(Color.buttonOrange)
+//                                .foregroundColor(.white)
+//                                .fontWeight(.bold)
+//                                .cornerRadius(12)
+//                        }
+//                        .padding(.bottom, 20)
+
+                        Text("a")
+                            .foregroundStyle(.primary)
+                            .opacity(0)
+                            .padding(.vertical, 20)
+                    }
+                    .background(Color(.systemBackground))
+                }
+            }
+
+//            Spacer()
+//                .frame(height: 20)
+        }
+//        .toolbar {
+//            ToolbarItem(placement: .principal) {
+//                Text("")
+//            }
+//        }
+//        .navigationBarTitleDisplayMode(.inline)
+        .padding(.horizontal, 20)
+    }
+}
+
+
 struct オンボ_アプリピッカー: View {
     @State private var isPresented = false
     @Binding var activitySelection: FamilyActivitySelection
-    @ObservedObject var taskData: TaskData
+//    @ObservedObject var taskData: TaskData
     var onComplete: () -> Void
     //    var onNext: () -> Void
     @Binding var path: NavigationPath
@@ -264,20 +362,18 @@ struct オンボ_アプリピッカー: View {
             }
 
             Spacer()
-                .frame(height: 40)
-
+                .frame(height: 32)
+            Image("iPhone15_Pro_ScreenTime_Access")
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
             ZStack {
-                Image("iPhone15_Pro_app_picker_png")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: .infinity)
-
                 VStack(spacing: 0) {
-                    Spacer()
-                    パーツ_ライナーグラデーション(height: 100)
+//                    Spacer()
+//                    パーツ_ライナーグラデーション(height: 40)
 
                     VStack {
-                        Spacer().frame(height: 24)
+                        Spacer().frame(height: 16)
 
                         Button("Go to B") {
                             path.append("B") // 次の画面へ遷移

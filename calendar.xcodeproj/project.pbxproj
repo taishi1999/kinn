@@ -78,6 +78,7 @@
 		F7C94EEF2D0D150600F500C0 /* ManagedSettingsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A42A8B2D0C3BBB00EE2BEE /* ManagedSettingsUI.framework */; };
 		F7C94EF22D0D150600F500C0 /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C94EF12D0D150600F500C0 /* ShieldConfigurationExtension.swift */; };
 		F7C94EF72D0D150600F500C0 /* ShieldConfiguration.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F7C94EED2D0D150600F500C0 /* ShieldConfiguration.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F7CA59762D13B656005D169E /* ManagedSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67C32D125ACD007BD0DE /* ManagedSettingsStore.swift */; };
 		F7D40C932D09854700E174F1 /* 通知管理.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D40C922D09854700E174F1 /* 通知管理.swift */; };
 		F7DE20932CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DE20922CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift */; };
 		F7ED67C42D125ACD007BD0DE /* ManagedSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67C32D125ACD007BD0DE /* ManagedSettingsStore.swift */; };
@@ -208,7 +209,7 @@
 		F7AD90642D08431500304B34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7AD90652D08431500304B34 /* ScheduledDeviceMonitor_DAM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScheduledDeviceMonitor_DAM.entitlements; sourceTree = "<group>"; };
 		F7AEC3CA2CEC6E8400C134A0 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		F7B1E4192CE053F00040EAD4 /* Coredata送るテスト.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coredata送るテスト.swift"; sourceTree = "<group>"; };
+		F7B1E4192CE053F00040EAD4 /* Coredata送るテスト.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coredata送るテスト.swift"; sourceTree = "<group>"; wrapsLines = 0; };
 		F7B1E41B2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_ライナーグラデーション.swift"; sourceTree = "<group>"; };
 		F7B4D5052CCE118800E1BD54 /* 日付フォーマット.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "日付フォーマット.swift"; sourceTree = "<group>"; };
 		F7B520482CE446CE00F86232 /* ブロック状態管理.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ブロック状態管理.swift"; sourceTree = "<group>"; };
@@ -305,6 +306,7 @@
 				F7AD90612D08431500304B34 /* ScheduledDeviceMonitor_DAM */,
 				F7C94EF02D0D150600F500C0 /* ShieldConfiguration */,
 				F77E78772D0FDA42008449AD /* ShieldActionExtension */,
+				F7ED67D72D127257007BD0DE /* AppExtensions */,
 				F7AD905E2D08431500304B34 /* Frameworks */,
 				F79338BD2BF074A300523E28 /* Products */,
 			);
@@ -513,6 +515,13 @@
 				F7ED67D12D126AAF007BD0DE /* DataBase.swift */,
 			);
 			path = ScreenTimeApiTest;
+			sourceTree = "<group>";
+		};
+		F7ED67D72D127257007BD0DE /* AppExtensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AppExtensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -831,6 +840,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F74357E02D0C4A6F00D5ED9F /* MyTask+CoreDataClass.swift in Sources */,
+				F7CA59762D13B656005D169E /* ManagedSettingsStore.swift in Sources */,
 				F7ED67D42D126AC9007BD0DE /* ApplicationProfile.swift in Sources */,
 				F74357DC2D0C4A4600D5ED9F /* DataController.swift in Sources */,
 				F7A42A832D0C3AC200EE2BEE /* FamilyControllerView_test.swift in Sources */,

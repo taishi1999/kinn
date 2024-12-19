@@ -1,14 +1,15 @@
 import SwiftUI
 import FamilyControls
 
-@main
+//@main
 struct ScreenTimeApp: App {
 
     let center = AuthorizationCenter.shared
 
     var body: some Scene {
         WindowGroup {
-            ShieldView()                
+            ShieldView()
+                .preferredColorScheme(.dark)
                 .task {
                 do {
                     try await center.requestAuthorization(for: .individual)
