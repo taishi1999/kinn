@@ -193,7 +193,7 @@ import CoreData
 //}
 
 //いったんコメントアウト(screentime apiのために)
-@main
+//@main
 struct MyApp: App {
     //    let center = AuthorizationCenter.shared
     @StateObject private var dataController = DataController()  // Core Dataのコントローラ
@@ -232,10 +232,10 @@ struct MyApp: App {
             //http://pedroesli.com/2023-11-13-screen-time-api/のやり方
 //            ShieldView()
             //DAMextensionのテスト
-//            ActivitySelectionView()
+            ActivitySelectionView()
 //            LocalNotificationView()
             //本丸
-            アプリルート(viewModel: taskViewModel)
+//            アプリルート(viewModel: taskViewModel)
                             .preferredColorScheme(.dark)
                             .environment(\.managedObjectContext, dataController.container.viewContext)
 

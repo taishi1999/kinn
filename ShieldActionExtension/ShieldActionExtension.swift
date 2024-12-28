@@ -13,9 +13,9 @@ class ShieldActionExtension: ShieldActionDelegate {
         // Handle the action as needed.
         switch action {
         case .primaryButtonPressed:
-            createApplicationProfile(for: application)
-            startMonitoring()
-            unlockApp()
+//            createApplicationProfile(for: application)
+//            startMonitoring()
+//            unlockApp()
             completionHandler(.close)
         case .secondaryButtonPressed:
             completionHandler(.defer)
