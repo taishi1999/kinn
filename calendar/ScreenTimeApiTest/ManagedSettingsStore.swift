@@ -26,6 +26,7 @@ class ShieldManager: ObservableObject {
         discouragedSelections = result.selection ?? FamilyActivitySelection()
         startTime = result.startTime ?? Date() // 既存の保存値、または現在時刻
         endTime = result.endTime ?? Date().addingTimeInterval(60 * 60) // 既存の保存値、または1時間後
+        weekDays = result.weekDays ?? []
     }
 
 //    func saveSelectedApplications() {
@@ -50,7 +51,7 @@ class ShieldManager: ObservableObject {
            timer = nil
        }
 
-    func saveSelection(selection: FamilyActivitySelection,startTime: Date, endTime: Date) {
+    func saveSelection(selection: FamilyActivitySelection,startTime: Date, endTime: Date, weekDays: [WeekDays]) {
 //        let defaults = UserDefaults.standard
         let appGroupDefaults = UserDefaults(suiteName: "group.com.karasaki.kinn.date")
 //        defaults.set(
@@ -60,6 +61,10 @@ class ShieldManager: ObservableObject {
         )
         appGroupDefaults?.set(startTime, forKey: startTimeKey)
         appGroupDefaults?.set(endTime, forKey: endTimeKey)
+
+        let weekDaysRawValues = weekDays.map { $0.rawValue }
+        appGroupDefaults?.set(weekDaysRawValues, forKey: "weekDaysKey")
+        print("saved")
     }
 
     func loadSelectionFromAppGroup() -> FamilyActivitySelection? {
@@ -94,7 +99,7 @@ class ShieldManager: ObservableObject {
 //            from: data
 //        )
 //    }
-    func savedSelection() -> (selection: FamilyActivitySelection?, startTime: Date?, endTime: Date?) {
+    func savedSelection() -> (selection: FamilyActivitySelection?, startTime: Date?, endTime: Date?, weekDays: [WeekDays]?) {
         // appGroup を使用
         let userDefaults = UserDefaults(suiteName: "group.com.karasaki.kinn.date")
 
@@ -109,9 +114,14 @@ class ShieldManager: ObservableObject {
         // startTime と endTime を読み込む
         let startTime = userDefaults?.object(forKey: startTimeKey) as? Date
         let endTime = userDefaults?.object(forKey: endTimeKey) as? Date
-
+        let weekDays: [WeekDays]? = {
+                guard let rawValues = userDefaults?.array(forKey: "weekDaysKey") as? [Int] else {
+                    return nil
+                }
+                return rawValues.compactMap { WeekDays(rawValue: $0) }
+            }()
         // 結果をタプルで返す
-        return (selection, startTime, endTime)
+        return (selection, startTime, endTime, weekDays)
     }
 
 
@@ -171,8 +181,34 @@ class ShieldManager: ObservableObject {
     }
 }
 
-struct ActivityData: Codable {
-    let selection: FamilyActivitySelection
-    let startTime: Date
-    let endTime: Date
+//struct ActivityData: Codable {
+//    let selection: FamilyActivitySelection
+//    let startTime: Date
+//    let endTime: Date
+//}
+//enum WeekDays: Int, CaseIterable {
+//    case sun = 1
+//    case mon = 2
+//    case tue = 3
+//    case wed = 4
+//    case thu = 5
+//    case fri = 6
+//    case sat = 7
+//}
+enum WeekDays: Int, CaseIterable, Identifiable {
+    case sun = 1
+    case mon, tue, wed, thu, fri, sat
+
+    var id: Int { rawValue } // Picker 用の Identifiable 準拠
+    var displayName: String {
+        switch self {
+        case .sun: return "日曜日"
+        case .mon: return "月曜日"
+        case .tue: return "火曜日"
+        case .wed: return "水曜日"
+        case .thu: return "木曜日"
+        case .fri: return "金曜日"
+        case .sat: return "土曜日"
+        }
+    }
 }

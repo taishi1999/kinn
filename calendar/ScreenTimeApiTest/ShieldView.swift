@@ -11,6 +11,7 @@ struct ShieldView: View {
     @State private var showActivityPicker = false
     private let center = DeviceActivityCenter()
 
+
     //    @State private var startTime: Date = Date() // 初期値として現在時刻を設定
     //    @State private var endTime: Date = Date().addingTimeInterval(60 * 60) // 初期値として1時間後を設定
     //    private let userDefaultsKey = "ScreenTimeSelection_DAMExtension"
@@ -50,7 +51,7 @@ struct ShieldView: View {
             .buttonStyle(.bordered)
 
             Button("save") {
-                manager.saveSelection(selection: manager.discouragedSelections,startTime: manager.startTime,endTime: manager.endTime)
+                manager.saveSelection(selection: manager.discouragedSelections,startTime: manager.startTime,endTime: manager.endTime, weekDays: manager.weekDays)
             }
 
             Button("get") {
@@ -63,6 +64,9 @@ struct ShieldView: View {
                     }
                     if let endTime = result.endTime {
                         print("End time: \(endTime)")
+                    }
+                    if let weekDays = result.weekDays {
+                        print("weekdays: \(weekDays)")
                     }
                 } else {
                     print("No selection found")
@@ -81,6 +85,36 @@ struct ShieldView: View {
                     print("現在ブロックされていません")
                 }
             }
+
+            ScrollView { // ScrollView を追加
+                VStack(alignment: .leading) { // VStack を ScrollView 内に配置
+                    ForEach(WeekDays.allCases) { day in
+                        HStack {
+                            Text(day.displayName)
+                            Spacer()
+                            // チェックボックス形式で選択状態を表示
+                            if manager.weekDays.contains(day) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.blue)
+                            } else {
+                                Image(systemName: "circle")
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                        .padding()
+                        .onTapGesture {
+                            // 選択状態をトグル
+                            if manager.weekDays.contains(day) {
+                                manager.weekDays.removeAll { $0 == day }
+                            } else {
+                                manager.weekDays.append(day)
+                            }
+                        }
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: 200) // 必要に応じて高さを調整
+            .border(Color.gray, width: 1)
         }
         .familyActivityPicker(isPresented: $showActivityPicker, selection: $manager.discouragedSelections)
 
@@ -88,20 +122,27 @@ struct ShieldView: View {
 
     private func startMonitoringWithEvent() {
         print("Start Monitoring with DeviceActivityEvent")
-        let weekDays: [WeekDays] = [.mon, .tue, .sat]
+//        let weekDays: [WeekDays] = [.mon, .tue, .sat]
 
         let result = manager.savedSelection()
         guard let startTime = result.startTime,
-              let endTime = result.endTime else {
-            print("開始時間または終了時間が見つかりません")
-            return
-        }
+                  let endTime = result.endTime,
+                  let weekDays = result.weekDays else { // weekDays を取得
+                print("開始時間、終了時間、または曜日が見つかりません")
+                return
+            }
 
         let startComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime)
         var endComponents = Calendar.current.dateComponents([.hour, .minute], from: endTime)
 
-        // 経過時間を計算（分単位）
-        let elapsedMinutes = Calendar.current.dateComponents([.minute], from: startTime, to: endTime).minute ?? 0
+        // 開始から終了までの時間を計算
+        let elapsedComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime, to: endTime)
+//        print("hour:\(String(describing: elapsedComponents.hour)) minute:\(String(describing: elapsedComponents.minute))")
+        
+        // 全体の経過分数を計算
+        let elapsedMinutes = (elapsedComponents.hour ?? 0) * 60 + (elapsedComponents.minute ?? 0)
+
+        print("経過時間（分単位）: \(elapsedMinutes)")
 
         // warningTime を設定
         var warningTime = DateComponents(minute: 0)
@@ -144,14 +185,25 @@ struct ShieldView: View {
         //            print("スケジュール登録エラー: \(error)")
         //        }
         for weekDay in weekDays {
+            let scheduleName = DeviceActivityName("\(weekDay)Schedule")
+            // 1. 既存のスケジュールを停止
+            center.stopMonitoring([scheduleName])
+
             var startWithWeekday = startComponents
             var endWithWeekday = endComponents
 
             // 曜日を追加
             startWithWeekday.weekday = weekDay.rawValue
-            //翌日になった場合、ブロック解除されないので
-            endWithWeekday.weekday = weekDay.rawValue
-
+            //翌日になった場合、次の日の曜日を設定
+            if elapsedMinutes <= 0 {
+                    // 次の曜日を計算
+                    let nextWeekdayRawValue = (weekDay.rawValue % 7) + 1
+                    endWithWeekday.weekday = nextWeekdayRawValue
+                print("次の曜日: \(nextWeekdayRawValue)")
+                } else {
+                    // 同じ曜日のまま
+                    endWithWeekday.weekday = weekDay.rawValue
+                }
             // スケジュールを作成
             let schedule = DeviceActivitySchedule(
                 intervalStart: startWithWeekday,
@@ -162,10 +214,11 @@ struct ShieldView: View {
 
             do {
                 // スケジュールとイベントを登録
-                try center.startMonitoring(
-                    .init("\(weekDay)Schedule"), // 各曜日ごとのスケジュール名
-                    during: schedule
-                )
+//                try center.startMonitoring(
+//                    .init("\(weekDay)Schedule"), // 各曜日ごとのスケジュール名
+//                    during: schedule
+//                )
+                try center.startMonitoring(scheduleName, during: schedule)
                 print("\(weekDay) のスケジュールが登録されました")
             } catch {
                 print("\(weekDay) のスケジュール登録エラー: \(error.localizedDescription)")
@@ -173,35 +226,26 @@ struct ShieldView: View {
         }
     }
 
-    private func startMonitoring() {
-        print("startMonitoring")
-        let schedule = DeviceActivitySchedule(
-            intervalStart: DateComponents(hour: 12, minute: 03),
-            intervalEnd: DateComponents(hour: 16, minute: 30),
-            repeats: true
-        )
-
-        //        let event = DeviceActivityEvent(
-        //            name: DeviceActivityEvent.Name("shortUsageEvent"),
-        //            applications: [ApplicationToken("com.example.app")],
-        //            threshold: DateComponents(minute: 1)
-        //        )
-
-        do {
-            try center.startMonitoring(.daily, during: schedule)
-        } catch {
-            print ("Could not start monitoring \(error)")
-        }
-    }
+//    private func startMonitoring() {
+//        print("startMonitoring")
+//        let schedule = DeviceActivitySchedule(
+//            intervalStart: DateComponents(hour: 12, minute: 03),
+//            intervalEnd: DateComponents(hour: 16, minute: 30),
+//            repeats: true
+//        )
+//
+//        //        let event = DeviceActivityEvent(
+//        //            name: DeviceActivityEvent.Name("shortUsageEvent"),
+//        //            applications: [ApplicationToken("com.example.app")],
+//        //            threshold: DateComponents(minute: 1)
+//        //        )
+//
+//        do {
+//            try center.startMonitoring(.daily, during: schedule)
+//        } catch {
+//            print ("Could not start monitoring \(error)")
+//        }
+//    }
 
 }
 
-enum WeekDays: Int, CaseIterable {
-    case sun = 1
-    case mon = 2
-    case tue = 3
-    case wed = 4
-    case thu = 5
-    case fri = 6
-    case sat = 7
-}
