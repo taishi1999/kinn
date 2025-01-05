@@ -258,30 +258,28 @@ struct オンボ_スクリーンタイム: View {
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
-                Text("アプリやサイトをブロックするためには\nスクリーンタイムへの許可が必要です")
-                    .fontWeight(.bold)
-                    .foregroundStyle(Color.secondary)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity)
+
             }
 
             Spacer()
-                .frame(height: 32)
+                .frame(height: 24)
             Image("iPhone15_Pro_ScreenTime_Cutted")
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: .infinity)
             ZStack {
-                VStack(spacing: 0) {
-//                    Spacer()
-//                    パーツ_ライナーグラデーション(height: 24)
-
                     VStack {
-                        Spacer().frame(height: 16)
 
-                        Button("Go to A") {
-                            path.append("A") // 次の画面へ遷移
-                        }
+//                        Button("Go to A") {
+//                            path.append("A") // 次の画面へ遷移
+//                        }
+                        Text("アプリやサイトをブロックするためには\nスクリーンタイムへの許可が必要です")
+                            .font(.callout)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color.secondary)
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity)
+                        Spacer().frame(height: 16)
                         パーツ_共通ボタン(ボタンテキスト: "アプリを選択する", action: {isPresented = true})
 //                            .familyActivityPicker(
 //                                isPresented: $isPresented,
@@ -304,13 +302,15 @@ struct オンボ_スクリーンタイム: View {
 //                        }
 //                        .padding(.bottom, 20)
 
-                        Text("a")
-                            .foregroundStyle(.primary)
-                            .opacity(0)
-                            .padding(.vertical, 20)
+//                        Text("a")
+//                            .foregroundStyle(.primary)
+//                            .opacity(0)
+//                            .padding(.vertical, 20)
+                        Spacer().frame(height: 16)
+
                     }
                     .background(Color(.systemBackground))
-                }
+
             }
 
 //            Spacer()

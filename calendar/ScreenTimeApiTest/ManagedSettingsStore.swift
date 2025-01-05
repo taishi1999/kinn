@@ -4,6 +4,8 @@ import ManagedSettings
 
 class ShieldManager: ObservableObject {
     static let shared = ShieldManager()
+//    @Published var diaryTask: DiaryTask?
+
     @Published var discouragedSelections = FamilyActivitySelection()
     @Published var startTime = Date()
     @Published var endTime = Date()
@@ -27,7 +29,11 @@ class ShieldManager: ObservableObject {
         startTime = result.startTime ?? Date() // 既存の保存値、または現在時刻
         endTime = result.endTime ?? Date().addingTimeInterval(60 * 60) // 既存の保存値、または1時間後
         weekDays = result.weekDays ?? []
+
+
+//        self.diaryTask = loadTask(withKey: "diary", as: DiaryTask.self)
     }
+
 
 //    func saveSelectedApplications() {
 //        // ApplicationToken の bundleIdentifier を保存
@@ -50,6 +56,43 @@ class ShieldManager: ObservableObject {
            timer?.invalidate()
            timer = nil
        }
+    
+//    func saveTask<T: Codable>(_ task: T, withKey key: String) {
+//        let encoder = JSONEncoder()
+//        encoder.dateEncodingStrategy = .iso8601 // 日付のフォーマットを指定
+//        if let encodedTask = try? encoder.encode(task) {
+//            UserDefaults.standard.set(encodedTask, forKey: key)
+//            print("\(key) saved successfully.")
+//        } else {
+//            print("Failed to encode \(key).")
+//        }
+//    }
+//
+//    func loadTask<T: Codable>(withKey key: String, as type: T.Type) -> T? {
+//        if let savedData = UserDefaults.standard.data(forKey: key) {
+//            let decoder = JSONDecoder()
+//            decoder.dateDecodingStrategy = .iso8601 // 日付のフォーマットを指定
+//            if let task = try? decoder.decode(type, from: savedData) {
+//                print("\(key) loaded successfully.")
+//                return task
+//            } else {
+//                print("Failed to decode \(key).")
+//            }
+//        } else {
+//            print("No task found for key: \(key).")
+//        }
+//        return nil
+//    }
+//    
+//    func loadInitialData() {
+//            // DiaryTaskを非同期で読み込む処理
+//            DispatchQueue.global().asyncAfter(deadline: .now() + 2) { // 擬似的な遅延
+//                DispatchQueue.main.async {
+//                    self.diaryTask = self.loadTask(withKey: "diary", as: DiaryTask.self)
+//                }
+//            }
+//        }
+
 
     func saveSelection(selection: FamilyActivitySelection,startTime: Date, endTime: Date, weekDays: [WeekDays]) {
 //        let defaults = UserDefaults.standard

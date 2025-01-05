@@ -19,109 +19,178 @@ struct ShieldView: View {
 
     var body: some View {
         VStack {
-            VStack(alignment: .leading, spacing: 10) {
-                Text("開始時間")
-                    .font(.subheadline)
-                DatePicker("開始時間", selection: $manager.startTime, displayedComponents: .hourAndMinute)
-                    .labelsHidden()
+//            if manager.diaryTask == nil {
+//                // ローディングビュー
+//                VStack {
+//                    ProgressView("Loading...")
+//                        .progressViewStyle(CircularProgressViewStyle())
+//                        .padding()
+//                    Text("データを読み込んでいます...")
+//                        .font(.subheadline)
+//                        .foregroundColor(.gray)
+//                }
+//                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//            } else {
+                // 通常のUI
+                VStack {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("開始時間")
+                            .font(.subheadline)
 
-            }
-            .padding()
-            // 終了時間の設定
-            VStack(alignment: .leading, spacing: 10) {
-                Text("終了時間")
-                    .font(.subheadline)
-                DatePicker("終了時間", selection: $manager.endTime, displayedComponents: .hourAndMinute)
-                    .labelsHidden()
-            }
-            .padding()
-
-            Button {
-                showActivityPicker = true
-            } label: {
-                Label("アプリ選択", systemImage: "gearshape")
-            }
-            .buttonStyle(.borderedProminent)
-
-            Button("Apply Shielding") {
-                //                startMonitoring()
-                startMonitoringWithEvent()
-                //                manager.shieldActivities()
-            }
-            .buttonStyle(.bordered)
-
-            Button("save") {
-                manager.saveSelection(selection: manager.discouragedSelections,startTime: manager.startTime,endTime: manager.endTime, weekDays: manager.weekDays)
-            }
-
-            Button("get") {
-                let result = manager.savedSelection()
-
-                if let selection = result.selection {
-                    print("Saved selection: \(selection)")
-                    if let startTime = result.startTime {
-                        print("Start time: \(startTime)")
+                        DatePicker("開始時間", selection: $manager.startTime, displayedComponents: .hourAndMinute)
+                            .labelsHidden()
                     }
-                    if let endTime = result.endTime {
-                        print("End time: \(endTime)")
+                    .padding()
+                    // 終了時間の設定
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("終了時間")
+                            .font(.subheadline)
+                        DatePicker("終了時間", selection: $manager.endTime, displayedComponents: .hourAndMinute)
+                        .labelsHidden()
+                        
                     }
-                    if let weekDays = result.weekDays {
-                        print("weekdays: \(weekDays)")
+                    .padding()
+
+                    Button {
+                        showActivityPicker = true
+                    } label: {
+                        Label("アプリ選択", systemImage: "gearshape")
                     }
-                } else {
-                    print("No selection found")
-                }
-            }
+                    .buttonStyle(.borderedProminent)
 
-            Button("unlock") {
-                manager.removeAllShields()
-            }
+                    Button("Apply Shielding") {
+                        //                startMonitoring()
+                        startMonitoringWithEvent()
+                        //                manager.shieldActivities()
+                    }
+                    .buttonStyle(.bordered)
 
-            Button("fetch_blocking") {
-                //                manager.isCurrentlyBlocked()
-                if manager.isCurrentlyBlocked() {
-                    print("現在ブロックされています")
-                } else {
-                    print("現在ブロックされていません")
-                }
-            }
+                    Button("save") {
+                        //                let diaryTask = DiaryTask(
+                        //                    startTime: Date(),
+                        //                    endTime: Date().addingTimeInterval(3600), // 1時間後
+                        //                    weekDays: [1, 2, 3], // 月, 火, 水
+                        //                    characterCount: 100
+                        //                )
+//                        manager.saveTask(manager.diaryTask, withKey: "diary")
+//                        if let loadedDiaryTask: DiaryTask = manager.loadTask(withKey: "diary", as: DiaryTask.self) {
+//                            print("Loaded DiaryTask: \(loadedDiaryTask)")
+//                        }
+                                        manager.saveSelection(selection: manager.discouragedSelections,startTime: manager.startTime,endTime: manager.endTime, weekDays: manager.weekDays)
+                    }
 
-            ScrollView { // ScrollView を追加
-                VStack(alignment: .leading) { // VStack を ScrollView 内に配置
-                    ForEach(WeekDays.allCases) { day in
-                        HStack {
-                            Text(day.displayName)
-                            Spacer()
-                            // チェックボックス形式で選択状態を表示
-                            if manager.weekDays.contains(day) {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.blue)
-                            } else {
-                                Image(systemName: "circle")
-                                    .foregroundColor(.gray)
+                    Button("get") {
+                        let result = manager.savedSelection()
+
+                        if let selection = result.selection {
+                            print("Saved selection: \(selection)")
+                            if let startTime = result.startTime {
+                                print("Start time: \(startTime)")
                             }
-                        }
-                        .padding()
-                        .onTapGesture {
-                            // 選択状態をトグル
-                            if manager.weekDays.contains(day) {
-                                manager.weekDays.removeAll { $0 == day }
-                            } else {
-                                manager.weekDays.append(day)
+                            if let endTime = result.endTime {
+                                print("End time: \(endTime)")
                             }
+                            if let weekDays = result.weekDays {
+                                print("weekdays: \(weekDays)")
+                            }
+                        } else {
+                            print("No selection found")
                         }
                     }
+
+                    Button("unlock") {
+                        manager.removeAllShields()
+                    }
+
+                    Button("is_ブロック作動中") {
+                        //                manager.isCurrentlyBlocked()
+                        if manager.isCurrentlyBlocked() {
+                            print("現在ブロックされています")
+                        } else {
+                            print("現在ブロックされていません")
+                        }
+                    }
+                    Button("取得_全てのブロックスケジュール") {
+                        fetchAllMonitoringActivities()
+                    }
+
+                    ScrollView { // ScrollView を追加
+                        VStack(alignment: .leading) { // VStack を ScrollView 内に配置
+                            ForEach(WeekDays.allCases) { day in
+                                HStack {
+                                    Text(day.displayName)
+                                    Spacer()
+                                    // チェックボックス形式で選択状態を表示
+                                    if manager.weekDays.contains(day) {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.blue)
+                                    } else {
+                                        Image(systemName: "circle")
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                                .padding()
+                                .onTapGesture {
+                                    // 選択状態をトグル
+                                    if manager.weekDays.contains(day) {
+                                        manager.weekDays.removeAll { $0 == day }
+                                    } else {
+                                        manager.weekDays.append(day)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: 200) // 必要に応じて高さを調整
+                    .border(Color.gray, width: 1)
                 }
-            }
-            .frame(maxWidth: .infinity, maxHeight: 200) // 必要に応じて高さを調整
-            .border(Color.gray, width: 1)
+                .familyActivityPicker(isPresented: $showActivityPicker, selection: $manager.discouragedSelections)
+
         }
-        .familyActivityPicker(isPresented: $showActivityPicker, selection: $manager.discouragedSelections)
+//        .onAppear {
+//            // 初回ロードのアクション（必要に応じて）
+//            if manager.diaryTask == nil {
+//                manager.loadInitialData()
+//            }
+//        }
+
 
     }
 
+    private func fetchAllMonitoringActivities() {
+        let activities = center.activities
+
+            for activityName in activities {
+                if let schedule = center.schedule(for: activityName) {
+                    print("アクティビティ名: \(activityName.rawValue)")
+                    print("スケジュール開始: \(schedule.intervalStart)")
+                    print("スケジュール終了: \(schedule.intervalEnd)")
+                    print("繰り返し: \(schedule.repeats)")
+                    // イベントを取得
+                                let events = center.events(for: activityName)
+                                if events.isEmpty {
+                                    print("関連イベントなし")
+                                } else {
+                                    print("関連イベント:")
+                                    for (eventName, event) in events {
+                                        print("  イベント名: \(eventName.rawValue)")
+                                        print("    閾値: \(event.threshold)")
+//                                        print("    アプリケーション: \(event.applications.isEmpty ? "なし" : event.applications)")
+//                                        print("    カテゴリ: \(event.categories.isEmpty ? "なし" : event.categories)")
+//                                        print("    Webドメイン: \(event.webDomains.isEmpty ? "なし" : event.webDomains)")
+//                                        print("    全てのアクティビティを含む: \(event.includesAllActivity)")
+                                    }
+                                }
+                    print("-------------------------")
+                } else {
+                    print("スケジュールが見つかりません: \(activityName.rawValue)")
+                }
+            }
+    }
+
+
     private func startMonitoringWithEvent() {
-        print("Start Monitoring with DeviceActivityEvent")
+        print("Start Monitoring")
 //        let weekDays: [WeekDays] = [.mon, .tue, .sat]
 
         let result = manager.savedSelection()
@@ -132,21 +201,28 @@ struct ShieldView: View {
                 return
             }
 
+        //指定した曜日以外のモニタリングをストップ----
+        // 現在のスケジュールを取得
+        let allScheduledActivities = center.activities
+        // 選択された曜日に関連しないスケジュールを取得
+        let selectedScheduleNames = weekDays.map { DeviceActivityName("diary_\($0)") }
+        let schedulesToRemove = allScheduledActivities.filter { !selectedScheduleNames.contains($0) }
+
+        center.stopMonitoring(schedulesToRemove)
+        //--------------------------------
+
         let startComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime)
         var endComponents = Calendar.current.dateComponents([.hour, .minute], from: endTime)
-
         // 開始から終了までの時間を計算
         let elapsedComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime, to: endTime)
 //        print("hour:\(String(describing: elapsedComponents.hour)) minute:\(String(describing: elapsedComponents.minute))")
-        
         // 全体の経過分数を計算
         let elapsedMinutes = (elapsedComponents.hour ?? 0) * 60 + (elapsedComponents.minute ?? 0)
-
         print("経過時間（分単位）: \(elapsedMinutes)")
 
-        // warningTime を設定
+        //15分未満の場合,warningTimeを設定してintervalWillEndWarningを
+        //実行させる（DeviceActivityScheduleは15分間隔を空けないといけない仕様なので）
         var warningTime = DateComponents(minute: 0)
-        //15分未満の場合（DeviceActivityScheduleは15分間隔を空けないといけないので）
         if elapsedMinutes > 0 && elapsedMinutes < 15 {
             warningTime = DateComponents(minute: 15 - elapsedMinutes)
 
@@ -185,9 +261,9 @@ struct ShieldView: View {
         //            print("スケジュール登録エラー: \(error)")
         //        }
         for weekDay in weekDays {
-            let scheduleName = DeviceActivityName("\(weekDay)Schedule")
+            let scheduleName = DeviceActivityName("diary_\(weekDay)")
             // 1. 既存のスケジュールを停止
-            center.stopMonitoring([scheduleName])
+//            center.stopMonitoring([scheduleName])
 
             var startWithWeekday = startComponents
             var endWithWeekday = endComponents
@@ -249,3 +325,9 @@ struct ShieldView: View {
 
 }
 
+struct DiaryTask: Codable {
+    var startTime: Date
+    var endTime: Date
+    var weekDays: [Int]
+    var characterCount: Int
+}

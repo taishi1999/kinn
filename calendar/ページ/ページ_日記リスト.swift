@@ -38,6 +38,7 @@ import SwiftUI
 struct ページ_日記リスト: View {
     @ObservedObject var viewModel: TaskViewModel
     @Environment(\.managedObjectContext) var viewContext  // ここでviewContextを定義
+
     @FetchRequest(
         entity: DiaryEntry.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \DiaryEntry.createdAt, ascending: false)]
@@ -315,8 +316,6 @@ struct ページ_日記リスト: View {
                     }
                     .padding(.horizontal, geometry.size.width <= 375 ? 16 : 20)
                     .padding(.bottom,/*44+*/geometry.size.width <= 375 ? 8 : 10)
-
-
                 }
                 //開発用なのでelseは後で消す
                 .onAppear {

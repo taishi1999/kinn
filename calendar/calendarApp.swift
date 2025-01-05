@@ -3,194 +3,6 @@ import FamilyControls
 import ManagedSettings
 import CoreData
 
-//texteditorにplaceholderを表示するコンポーネント
-//struct TextEditorWithPlaceholder: View {
-//
-//    @FocusState private var focusedField: Field?
-//
-//    enum Field {
-//        case textEditor
-//    }
-//
-//    @Binding var text: String
-//    private let placeholderText: String
-//
-//    // パディングの変数を定義
-//    private let editorPadding: CGFloat = 4
-//    private var placeholderLeadingPadding: CGFloat {
-//            editorPadding + 5 // editorPadding + 5 で設定
-//        }
-//    private var placeholderTopPadding: CGFloat {
-//        editorPadding + 8 // editorPadding + 5 で設定
-//    }
-//
-//    init(_ placeholder: String, text: Binding<String>) {
-//        self._text = text
-//        self.placeholderText = placeholder
-//    }
-//
-//    var body: some View {
-//        ZStack(alignment: .topLeading) {
-//            // TextEditor
-//            TextEditor(text: $text)
-//                .focused($focusedField, equals: .textEditor)
-//                .onAppear {
-//                    focusedField = .textEditor // 初期状態でTextEditorにフォーカスを当てる
-//                }
-//                .padding(editorPadding) // パディング値を変数で管理
-//
-//            // プレースホルダー表示
-//            if text.isEmpty {
-//                Text(placeholderText)
-//                    .foregroundColor(.gray)
-//                    .padding(.leading, placeholderLeadingPadding) // 左側のパディング
-//                    .padding(.top, placeholderTopPadding) // 上側のパディング
-//            }
-//        }
-////        .border(Color.gray, width: 1)
-//    }
-//}
-
-//struct 日記作成画面: View {
-//    @State private var diaryText: String = ""  // @Stateでテキストを管理
-//
-//    var body: some View {
-//        VStack(spacing: 16) {
-//            Text("日記を書く")
-//                .font(.title)
-//                .fontWeight(.bold)
-//
-//            // TextEditorWithPlaceholderの表示
-//            TextEditorWithPlaceholder("ここに日記を入力してください", text: $diaryText)  // $を使ってBindingを渡す
-//                .frame(height: 200)
-//                .border(Color.gray, width: 1) // 枠線を追加
-//
-//            Button(action: {
-//                print("保存されたテキスト: \(diaryText)")
-//            }) {
-//                Text("保存")
-//                    .padding()
-//                    .background(Color.blue)
-//                    .foregroundColor(.white)
-//                    .cornerRadius(8)
-//            }
-//        }
-//        .padding()
-//    }
-//}
-//
-//struct 日記作成画面_Previews: PreviewProvider {
-//    static var previews: some View {
-//        日記作成画面()
-//    }
-//}
-//struct 日記エディタ2: View {
-//    @Environment(\.managedObjectContext) private var viewContext  // Core Dataのコンテキスト
-//    @State private var bodyText: String = ""
-//
-//    var body: some View {
-//        VStack {
-//            TextEditor(text: $bodyText)
-//                .frame(height: 300)
-//                .padding()
-//                .background(Color.gray.opacity(0.2))
-//                .cornerRadius(10)
-//
-//            Button(action: saveDiary) {
-//                Text("Save Diary")
-//                    .padding()
-//                    .background(Color.blue)
-//                    .foregroundColor(.white)
-//                    .cornerRadius(8)
-//            }
-//        }
-//        .padding()
-//    }
-//
-//    private func saveDiary() {
-//        let newDiary = calendar.DiaryEntry(context: viewContext)
-//        newDiary.body = bodyText
-//        newDiary.createdAt = Date()
-//
-//        do {
-//            try viewContext.save()  // Core Dataに保存
-//            bodyText = ""  // 保存後に本文をクリア
-//        } catch {
-//            print("Failed to save diary: \(error.localizedDescription)")
-//        }
-//    }
-//}
-//
-//struct 日記エディタ2_Previews: PreviewProvider {
-//    static var previews: some View {
-//        // In-Memory Core Dataコンテキストを使用してプレビュー
-//        let dataController = DataController(inMemory: true)
-//        let viewContext = dataController.container.viewContext
-//
-//        // ダミーデータの作成
-//        for _ in 0..<5 {
-//            let newDiary = DiaryEntry(context: viewContext)
-//            newDiary.body = "This is a sample diary entry."
-//            newDiary.createdAt = Date()
-//        }
-//
-//        do {
-//            try viewContext.save()  // プレビュー用にデータを保存
-//        } catch {
-//            print("Failed to save preview data: \(error.localizedDescription)")
-//        }
-//
-//        return 日記エディタ2()
-//            .environment(\.managedObjectContext, viewContext)  // Core Dataのコンテキストを設定
-//    }
-//}
-
-//struct 日記エディタ: View {
-//    @State private var diaryText = "" // TextEditor用の状態変数
-//
-//    var body: some View {
-//        GeometryReader { geometry in
-//            VStack(spacing: 0) {
-//                日付タイトル() // 日付と曜日を表示するコンポーネント
-//Divider()
-//                // 残りのスペースを全てTextEditorで埋める
-//                TextEditorWithPlaceholder("今日はどんな一日？", text: $diaryText)
-//                    .frame(maxHeight: .infinity) // 残りの空間を全て埋める
-//                    .padding(.horizontal)
-//            }
-//            .frame(maxWidth: .infinity, maxHeight: .infinity) // 画面全体にフィットさせる
-//        }
-////        .edgesIgnoringSafeArea(.bottom) // 下部の余白も含めてフィット
-//    }
-//}
-//
-//struct 日付タイトル: View {
-//    var body: some View {
-//        VStack {
-//            Text(getDayOfWeek()) // 曜日を表示
-//                .font(.headline)
-//                .padding(.bottom, 2)
-//
-//            Text(getTodayDay()) // 今日の日付 (日) を表示
-//                .font(.largeTitle)
-//        }
-//        .padding()
-//    }
-//
-//    // 今日の曜日を取得
-//    func getDayOfWeek() -> String {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "EEEE" // 曜日を表示
-//        return dateFormatter.string(from: Date())
-//    }
-//
-//    // 今日の日付の「日」だけを取得
-//    func getTodayDay() -> String {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "d" // 日のみ表示
-//        return dateFormatter.string(from: Date())
-//    }
-//}
 
 //いったんコメントアウト(screentime apiのために)
 //@main
@@ -232,10 +44,10 @@ struct MyApp: App {
             //http://pedroesli.com/2023-11-13-screen-time-api/のやり方
 //            ShieldView()
             //DAMextensionのテスト
-            ActivitySelectionView()
+//            ActivitySelectionView()
 //            LocalNotificationView()
             //本丸
-//            アプリルート(viewModel: taskViewModel)
+            アプリルート(viewModel: taskViewModel)
                             .preferredColorScheme(.dark)
                             .environment(\.managedObjectContext, dataController.container.viewContext)
 
@@ -951,5 +763,194 @@ struct SelectAppView: View {
 //            MainTabView()
 //            MainView()
 //        }
+//    }
+//}
+
+//texteditorにplaceholderを表示するコンポーネント
+//struct TextEditorWithPlaceholder: View {
+//
+//    @FocusState private var focusedField: Field?
+//
+//    enum Field {
+//        case textEditor
+//    }
+//
+//    @Binding var text: String
+//    private let placeholderText: String
+//
+//    // パディングの変数を定義
+//    private let editorPadding: CGFloat = 4
+//    private var placeholderLeadingPadding: CGFloat {
+//            editorPadding + 5 // editorPadding + 5 で設定
+//        }
+//    private var placeholderTopPadding: CGFloat {
+//        editorPadding + 8 // editorPadding + 5 で設定
+//    }
+//
+//    init(_ placeholder: String, text: Binding<String>) {
+//        self._text = text
+//        self.placeholderText = placeholder
+//    }
+//
+//    var body: some View {
+//        ZStack(alignment: .topLeading) {
+//            // TextEditor
+//            TextEditor(text: $text)
+//                .focused($focusedField, equals: .textEditor)
+//                .onAppear {
+//                    focusedField = .textEditor // 初期状態でTextEditorにフォーカスを当てる
+//                }
+//                .padding(editorPadding) // パディング値を変数で管理
+//
+//            // プレースホルダー表示
+//            if text.isEmpty {
+//                Text(placeholderText)
+//                    .foregroundColor(.gray)
+//                    .padding(.leading, placeholderLeadingPadding) // 左側のパディング
+//                    .padding(.top, placeholderTopPadding) // 上側のパディング
+//            }
+//        }
+////        .border(Color.gray, width: 1)
+//    }
+//}
+
+//struct 日記作成画面: View {
+//    @State private var diaryText: String = ""  // @Stateでテキストを管理
+//
+//    var body: some View {
+//        VStack(spacing: 16) {
+//            Text("日記を書く")
+//                .font(.title)
+//                .fontWeight(.bold)
+//
+//            // TextEditorWithPlaceholderの表示
+//            TextEditorWithPlaceholder("ここに日記を入力してください", text: $diaryText)  // $を使ってBindingを渡す
+//                .frame(height: 200)
+//                .border(Color.gray, width: 1) // 枠線を追加
+//
+//            Button(action: {
+//                print("保存されたテキスト: \(diaryText)")
+//            }) {
+//                Text("保存")
+//                    .padding()
+//                    .background(Color.blue)
+//                    .foregroundColor(.white)
+//                    .cornerRadius(8)
+//            }
+//        }
+//        .padding()
+//    }
+//}
+//
+//struct 日記作成画面_Previews: PreviewProvider {
+//    static var previews: some View {
+//        日記作成画面()
+//    }
+//}
+//struct 日記エディタ2: View {
+//    @Environment(\.managedObjectContext) private var viewContext  // Core Dataのコンテキスト
+//    @State private var bodyText: String = ""
+//
+//    var body: some View {
+//        VStack {
+//            TextEditor(text: $bodyText)
+//                .frame(height: 300)
+//                .padding()
+//                .background(Color.gray.opacity(0.2))
+//                .cornerRadius(10)
+//
+//            Button(action: saveDiary) {
+//                Text("Save Diary")
+//                    .padding()
+//                    .background(Color.blue)
+//                    .foregroundColor(.white)
+//                    .cornerRadius(8)
+//            }
+//        }
+//        .padding()
+//    }
+//
+//    private func saveDiary() {
+//        let newDiary = calendar.DiaryEntry(context: viewContext)
+//        newDiary.body = bodyText
+//        newDiary.createdAt = Date()
+//
+//        do {
+//            try viewContext.save()  // Core Dataに保存
+//            bodyText = ""  // 保存後に本文をクリア
+//        } catch {
+//            print("Failed to save diary: \(error.localizedDescription)")
+//        }
+//    }
+//}
+//
+//struct 日記エディタ2_Previews: PreviewProvider {
+//    static var previews: some View {
+//        // In-Memory Core Dataコンテキストを使用してプレビュー
+//        let dataController = DataController(inMemory: true)
+//        let viewContext = dataController.container.viewContext
+//
+//        // ダミーデータの作成
+//        for _ in 0..<5 {
+//            let newDiary = DiaryEntry(context: viewContext)
+//            newDiary.body = "This is a sample diary entry."
+//            newDiary.createdAt = Date()
+//        }
+//
+//        do {
+//            try viewContext.save()  // プレビュー用にデータを保存
+//        } catch {
+//            print("Failed to save preview data: \(error.localizedDescription)")
+//        }
+//
+//        return 日記エディタ2()
+//            .environment(\.managedObjectContext, viewContext)  // Core Dataのコンテキストを設定
+//    }
+//}
+
+//struct 日記エディタ: View {
+//    @State private var diaryText = "" // TextEditor用の状態変数
+//
+//    var body: some View {
+//        GeometryReader { geometry in
+//            VStack(spacing: 0) {
+//                日付タイトル() // 日付と曜日を表示するコンポーネント
+//Divider()
+//                // 残りのスペースを全てTextEditorで埋める
+//                TextEditorWithPlaceholder("今日はどんな一日？", text: $diaryText)
+//                    .frame(maxHeight: .infinity) // 残りの空間を全て埋める
+//                    .padding(.horizontal)
+//            }
+//            .frame(maxWidth: .infinity, maxHeight: .infinity) // 画面全体にフィットさせる
+//        }
+////        .edgesIgnoringSafeArea(.bottom) // 下部の余白も含めてフィット
+//    }
+//}
+//
+//struct 日付タイトル: View {
+//    var body: some View {
+//        VStack {
+//            Text(getDayOfWeek()) // 曜日を表示
+//                .font(.headline)
+//                .padding(.bottom, 2)
+//
+//            Text(getTodayDay()) // 今日の日付 (日) を表示
+//                .font(.largeTitle)
+//        }
+//        .padding()
+//    }
+//
+//    // 今日の曜日を取得
+//    func getDayOfWeek() -> String {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "EEEE" // 曜日を表示
+//        return dateFormatter.string(from: Date())
+//    }
+//
+//    // 今日の日付の「日」だけを取得
+//    func getTodayDay() -> String {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "d" // 日のみ表示
+//        return dateFormatter.string(from: Date())
 //    }
 //}
