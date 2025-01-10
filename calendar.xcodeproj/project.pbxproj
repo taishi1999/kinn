@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F74270FC2D2E252D001A98C6 /* diaryModel_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74270FB2D2E252D001A98C6 /* diaryModel_test.swift */; };
 		F74357DC2D0C4A4600D5ED9F /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79998C22C9FB689001A5FEB /* DataController.swift */; };
 		F74357DE2D0C4A5600D5ED9F /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79998D72C9FFD90001A5FEB /* ContentViewModel.swift */; };
 		F74357E02D0C4A6F00D5ED9F /* MyTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79AF0C62CA53C2900DBFAEC /* MyTask+CoreDataClass.swift */; };
@@ -147,6 +148,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F74270FB2D2E252D001A98C6 /* diaryModel_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryModel_test.swift; sourceTree = "<group>"; };
 		F74357E92D0C4BA200D5ED9F /* mainSheldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainSheldView.swift; sourceTree = "<group>"; };
 		F77D29D62CCC772400BC7D2E /* パーツ_ボタン_日記作成.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_ボタン_日記作成.swift"; sourceTree = "<group>"; };
 		F77D29D82CCC788E00BC7D2E /* ページ_日記エディタ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ページ_日記エディタ.swift"; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 				F7ED67C52D125B57007BD0DE /* ShieldView.swift */,
 				F7ED67CF2D126A95007BD0DE /* ApplicationProfile.swift */,
 				F7ED67D12D126AAF007BD0DE /* DataBase.swift */,
+				F74270FB2D2E252D001A98C6 /* diaryModel_test.swift */,
 			);
 			path = ScreenTimeApiTest;
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 				F7C1D26B2D02E703007F3DE4 /* FamilyControllerView_test.swift in Sources */,
 				F799EFF52CF30CEA00497356 /* アプリルート.swift in Sources */,
 				F7B4D5062CCE118800E1BD54 /* 日付フォーマット.swift in Sources */,
+				F74270FC2D2E252D001A98C6 /* diaryModel_test.swift in Sources */,
 				F7EFA7562CFF365D00B1D26D /* テスト.swift in Sources */,
 				F79AF0C92CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift in Sources */,
 				F78EB7542C494A2100AB3683 /* dropdown_default.swift in Sources */,

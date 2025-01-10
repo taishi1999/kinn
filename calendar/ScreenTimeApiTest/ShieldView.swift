@@ -2,23 +2,22 @@ import SwiftUI
 import FamilyControls
 import DeviceActivity // 必須のフレームワーク
 
-extension DeviceActivityName {
-    static let daily = DeviceActivityName("daily") // 静的プロパティを定義
-}
+//extension DeviceActivityName {
+//    static let daily = DeviceActivityName("daily") // 静的プロパティを定義
+//}
 struct ShieldView: View {
     @ObservedObject var manager: ShieldManager
     //    @StateObject private var manager = ShieldManager()
     @State private var showActivityPicker = false
     private let center = DeviceActivityCenter()
-
-
+    @ObservedObject var diaryTaskManager = DiaryTaskManager.shared
+    let weekDays: [String] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     //    @State private var startTime: Date = Date() // 初期値として現在時刻を設定
     //    @State private var endTime: Date = Date().addingTimeInterval(60 * 60) // 初期値として1時間後を設定
     //    private let userDefaultsKey = "ScreenTimeSelection_DAMExtension"
     //    private let appGroupDefaults = UserDefaults(suiteName: "group.com.karasaki.kinn.date")
 
     var body: some View {
-        VStack {
 //            if manager.diaryTask == nil {
 //                // ローディングビュー
 //                VStack {
@@ -33,23 +32,54 @@ struct ShieldView: View {
 //            } else {
                 // 通常のUI
                 VStack {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("開始時間")
-                            .font(.subheadline)
+                    HStack{
+                        VStack() {
+                            Text("開始時間")
+                                .font(.subheadline)
 
-                        DatePicker("開始時間", selection: $manager.startTime, displayedComponents: .hourAndMinute)
+                            DatePicker("開始時間", selection: Binding(
+                                get: { diaryTaskManager.diaryTask.startTime },
+                                set: { diaryTaskManager.diaryTask.startTime = $0 }
+                            ), displayedComponents: .hourAndMinute)
                             .labelsHidden()
+                        }
+                        // 終了時間の設定
+                        VStack() {
+                            Text("終了時間")
+                                .font(.subheadline)
+                            DatePicker("終了時間", selection: Binding(
+                                get: { diaryTaskManager.diaryTask.endTime },
+                                set: { diaryTaskManager.diaryTask.endTime = $0 }
+                            ), displayedComponents: .hourAndMinute)
+                            .labelsHidden()
+
+                        }
+
+                        VStack {
+                            Text("文字数")
+                                .font(.subheadline)
+                            TextField("数値を入力", text: Binding(
+                                get: { String(diaryTaskManager.diaryTask.characterCount) }, // Int → String
+                                set: { newValue in
+                                    if let intValue = Int(newValue) { // String → Int
+                                        diaryTaskManager.diaryTask.characterCount = intValue
+                                    }
+                                }
+                            ))
+                            .keyboardType(.numberPad)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding()
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+                                    Button("完了") {
+                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                    }
+                                }
+                            }
+
+                        }
                     }
-                    .padding()
-                    // 終了時間の設定
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("終了時間")
-                            .font(.subheadline)
-                        DatePicker("終了時間", selection: $manager.endTime, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
-                        
-                    }
-                    .padding()
 
                     Button {
                         showActivityPicker = true
@@ -76,26 +106,50 @@ struct ShieldView: View {
 //                        if let loadedDiaryTask: DiaryTask = manager.loadTask(withKey: "diary", as: DiaryTask.self) {
 //                            print("Loaded DiaryTask: \(loadedDiaryTask)")
 //                        }
-                                        manager.saveSelection(selection: manager.discouragedSelections,startTime: manager.startTime,endTime: manager.endTime, weekDays: manager.weekDays)
+//                        manager.saveSelection(selection: manager.discouragedSelections,startTime: manager.startTime,endTime: manager.endTime, weekDays: manager.weekDays)
+                        diaryTaskManager.diaryTask.selectionID="selection_1"
+
+                        diaryTaskManager.saveDiaryTask(
+                            diaryTaskManager.diaryTask,
+                            selection: diaryTaskManager.selection,
+                            taskKey: "diary",
+                            selectionKey: "selection_1"
+                        )
+
+
                     }
 
                     Button("get") {
-                        let result = manager.savedSelection()
-
-                        if let selection = result.selection {
-                            print("Saved selection: \(selection)")
-                            if let startTime = result.startTime {
-                                print("Start time: \(startTime)")
-                            }
-                            if let endTime = result.endTime {
-                                print("End time: \(endTime)")
-                            }
-                            if let weekDays = result.weekDays {
-                                print("weekdays: \(weekDays)")
-                            }
+                        if let loadedTask = DiaryTaskManager.loadDiaryTask(forKey: "diary") {
+                            diaryTaskManager.diaryTask = loadedTask
+//                            loadedTask.selectionID
+                            print("DiaryTask loaded: \(loadedTask)")
+                            // selectionID を使って FamilyActivitySelection をロード
+                                    if let loadedSelection = DiaryTaskManager.loadFamilyActivitySelection(forKey: loadedTask.selectionID) {
+                                        print("FamilyActivitySelection loaded: \(loadedSelection)")
+                                    } else {
+                                        print("No FamilyActivitySelection found for key: \(loadedTask.selectionID)")
+                                    }
                         } else {
-                            print("No selection found")
+                            print("No DiaryTask found.")
                         }
+
+//                        let result = manager.savedSelection()
+
+//                        if let selection = result.selection {
+//                            print("Saved selection: \(selection)")
+//                            if let startTime = result.startTime {
+//                                print("Start time: \(startTime)")
+//                            }
+//                            if let endTime = result.endTime {
+//                                print("End time: \(endTime)")
+//                            }
+//                            if let weekDays = result.weekDays {
+//                                print("weekdays: \(weekDays)")
+//                            }
+//                        } else {
+//                            print("No selection found")
+//                        }
                     }
 
                     Button("unlock") {
@@ -116,12 +170,12 @@ struct ShieldView: View {
 
                     ScrollView { // ScrollView を追加
                         VStack(alignment: .leading) { // VStack を ScrollView 内に配置
-                            ForEach(WeekDays.allCases) { day in
+                            ForEach(weekDays, id: \.self) { day in
                                 HStack {
-                                    Text(day.displayName)
+                                    Text(day)
                                     Spacer()
                                     // チェックボックス形式で選択状態を表示
-                                    if manager.weekDays.contains(day) {
+                                    if diaryTaskManager.diaryTask.weekDays.contains(day) {
                                         Image(systemName: "checkmark.circle.fill")
                                             .foregroundColor(.blue)
                                     } else {
@@ -132,10 +186,10 @@ struct ShieldView: View {
                                 .padding()
                                 .onTapGesture {
                                     // 選択状態をトグル
-                                    if manager.weekDays.contains(day) {
-                                        manager.weekDays.removeAll { $0 == day }
+                                    if diaryTaskManager.diaryTask.weekDays.contains(day) {
+                                        diaryTaskManager.diaryTask.weekDays.removeAll { $0 == day }
                                     } else {
-                                        manager.weekDays.append(day)
+                                        diaryTaskManager.diaryTask.weekDays.append(day)
                                     }
                                 }
                             }
@@ -144,9 +198,9 @@ struct ShieldView: View {
                     .frame(maxWidth: .infinity, maxHeight: 200) // 必要に応じて高さを調整
                     .border(Color.gray, width: 1)
                 }
-                .familyActivityPicker(isPresented: $showActivityPicker, selection: $manager.discouragedSelections)
+                .familyActivityPicker(isPresented: $showActivityPicker, selection: $diaryTaskManager.selection)
 
-        }
+
 //        .onAppear {
 //            // 初回ロードのアクション（必要に応じて）
 //            if manager.diaryTask == nil {
@@ -190,31 +244,49 @@ struct ShieldView: View {
 
 
     private func startMonitoringWithEvent() {
-        print("Start Monitoring")
+        print("モニタリングスタート")
 //        let weekDays: [WeekDays] = [.mon, .tue, .sat]
+//        let result = manager.savedSelection()
+//        guard let startTime = result.startTime,
+//                  let endTime = result.endTime,
+//                  let weekDays = result.weekDays else { // weekDays を取得
+//                print("開始時間、終了時間、または曜日が見つかりません")
+//                return
+//            }
+        let weekDays: [WeekDays] = diaryTaskManager.diaryTask.weekDays.compactMap { weekDayString in
+            WeekDays.allCases.first { $0.shortName == weekDayString }
+        }
+        let rawValues = weekDays.map { $0.rawValue }
+        print("Raw values: \(rawValues)")
+        print("weekDays: \(weekDays),  diaryTaskManager.diaryTask.weekDays:\(diaryTaskManager.diaryTask.weekDays)")
 
-        let result = manager.savedSelection()
-        guard let startTime = result.startTime,
-                  let endTime = result.endTime,
-                  let weekDays = result.weekDays else { // weekDays を取得
-                print("開始時間、終了時間、または曜日が見つかりません")
-                return
-            }
 
-        //指定した曜日以外のモニタリングをストップ----
+        //指定した曜日以外のモニタリングをストップ------------------------------
         // 現在のスケジュールを取得
         let allScheduledActivities = center.activities
         // 選択された曜日に関連しないスケジュールを取得
         let selectedScheduleNames = weekDays.map { DeviceActivityName("diary_\($0)") }
         let schedulesToRemove = allScheduledActivities.filter { !selectedScheduleNames.contains($0) }
+        print("スケジュールを削除する必要がある項目: \(schedulesToRemove)")
+
+        // 各スケジュール名を詳細に出力（配列内の要素を個別に表示）
+        for schedule in schedulesToRemove {
+            print("削除対象のスケジュール: \(schedule)")
+        }
 
         center.stopMonitoring(schedulesToRemove)
-        //--------------------------------
+        //--------------------------------------------------------------
 
-        let startComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime)
-        var endComponents = Calendar.current.dateComponents([.hour, .minute], from: endTime)
+//        let startComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime)
+        let startComponents = Calendar.current.dateComponents([.hour, .minute], from: diaryTaskManager.diaryTask.startTime)
+
+//        var endComponents = Calendar.current.dateComponents([.hour, .minute], from: endTime)
+        var endComponents = Calendar.current.dateComponents([.hour, .minute], from: diaryTaskManager.diaryTask.endTime
+        )
+        let elapsedComponents = calculateElapsedTime(from: diaryTaskManager.diaryTask.startTime, to: diaryTaskManager.diaryTask.endTime)
         // 開始から終了までの時間を計算
-        let elapsedComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime, to: endTime)
+//        let elapsedComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime, to: endTime)
+
 //        print("hour:\(String(describing: elapsedComponents.hour)) minute:\(String(describing: elapsedComponents.minute))")
         // 全体の経過分数を計算
         let elapsedMinutes = (elapsedComponents.hour ?? 0) * 60 + (elapsedComponents.minute ?? 0)
@@ -233,33 +305,6 @@ struct ShieldView: View {
             }
         }
 
-        //        // 単一のスケジュール
-        //        let schedule = DeviceActivitySchedule(
-        //            intervalStart: startComponents,
-        //            intervalEnd: endComponents,
-        //            repeats: true,
-        //            warningTime: warningTime
-        //        )
-
-        // イベント: 開始から5分後に発動
-        //        let event = DeviceActivityEvent(
-        //            applications: [], // 監視対象アプリケーション（空でOK）
-        //            categories: [],   // 監視対象カテゴリ（空でOK）
-        //            webDomains: [],   // 監視対象ドメイン（空でOK）
-        //            threshold: DateComponents(minute: 5) // 5分後にイベント発動
-        //        )
-        //
-        //        do {
-        //            // スケジュールとイベントを登録
-        //            try center.startMonitoring(
-        //                .init("testSchedule"), // スケジュール名
-        //                during: schedule
-        //                //                events: [DeviceActivityEvent.Name("fiveMinuteEvent"): event] // イベント名
-        //            )
-        //            print("スケジュールとイベントが登録されました")
-        //        } catch {
-        //            print("スケジュール登録エラー: \(error)")
-        //        }
         for weekDay in weekDays {
             let scheduleName = DeviceActivityName("diary_\(weekDay)")
             // 1. 既存のスケジュールを停止
@@ -302,6 +347,8 @@ struct ShieldView: View {
         }
     }
 
+
+
 //    private func startMonitoring() {
 //        print("startMonitoring")
 //        let schedule = DeviceActivitySchedule(
@@ -325,9 +372,58 @@ struct ShieldView: View {
 
 }
 
-struct DiaryTask: Codable {
-    var startTime: Date
-    var endTime: Date
-    var weekDays: [Int]
-    var characterCount: Int
+//struct DiaryTask: Codable {
+//    var startTime: Date
+//    var endTime: Date
+//    var weekDays: [Int]
+//    var characterCount: Int
+//}
+
+func calculateElapsedTime(from startTime: Date, to endTime: Date) -> DateComponents {
+    let calendar = Calendar.current
+    let today = calendar.startOfDay(for: Date()) // 今日の日付を取得して時刻をリセット
+
+    // startTime の時刻を今日の日付に合わせる
+    let startComponents = calendar.dateComponents([.hour, .minute], from: startTime)
+    let adjustedStartTime = calendar.date(bySettingHour: startComponents.hour ?? 0,
+                                          minute: startComponents.minute ?? 0,
+                                          second: 0,
+                                          of: today) ?? today
+
+    // endTime の時刻を今日の日付に合わせる
+    let endComponents = calendar.dateComponents([.hour, .minute], from: endTime)
+    let adjustedEndTime = calendar.date(bySettingHour: endComponents.hour ?? 0,
+                                        minute: endComponents.minute ?? 0,
+                                        second: 0,
+                                        of: today) ?? today
+
+    // startTime と endTime を指定して時間差を計算
+    return calendar.dateComponents([.hour, .minute], from: adjustedStartTime, to: adjustedEndTime)
 }
+//        // 単一のスケジュール
+//        let schedule = DeviceActivitySchedule(
+//            intervalStart: startComponents,
+//            intervalEnd: endComponents,
+//            repeats: true,
+//            warningTime: warningTime
+//        )
+
+// イベント: 開始から5分後に発動
+//        let event = DeviceActivityEvent(
+//            applications: [], // 監視対象アプリケーション（空でOK）
+//            categories: [],   // 監視対象カテゴリ（空でOK）
+//            webDomains: [],   // 監視対象ドメイン（空でOK）
+//            threshold: DateComponents(minute: 5) // 5分後にイベント発動
+//        )
+//
+//        do {
+//            // スケジュールとイベントを登録
+//            try center.startMonitoring(
+//                .init("testSchedule"), // スケジュール名
+//                during: schedule
+//                //                events: [DeviceActivityEvent.Name("fiveMinuteEvent"): event] // イベント名
+//            )
+//            print("スケジュールとイベントが登録されました")
+//        } catch {
+//            print("スケジュール登録エラー: \(error)")
+//        }

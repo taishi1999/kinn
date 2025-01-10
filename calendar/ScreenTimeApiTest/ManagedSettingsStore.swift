@@ -6,10 +6,10 @@ class ShieldManager: ObservableObject {
     static let shared = ShieldManager()
 //    @Published var diaryTask: DiaryTask?
 
-    @Published var discouragedSelections = FamilyActivitySelection()
-    @Published var startTime = Date()
-    @Published var endTime = Date()
-    @Published var weekDays: [WeekDays] = []
+//    @Published var discouragedSelections = FamilyActivitySelection()
+//    @Published var startTime = Date()
+//    @Published var endTime = Date()
+//    @Published var weekDays: [WeekDays] = []
     // 現在のブロック状態を監視するフラグ
     @Published var isBlocked: Bool = false
 
@@ -24,11 +24,11 @@ class ShieldManager: ObservableObject {
     private let endTimeKey = "endTimeKey"
 
     init() {
-        let result = savedSelection()
-        discouragedSelections = result.selection ?? FamilyActivitySelection()
-        startTime = result.startTime ?? Date() // 既存の保存値、または現在時刻
-        endTime = result.endTime ?? Date().addingTimeInterval(60 * 60) // 既存の保存値、または1時間後
-        weekDays = result.weekDays ?? []
+//        let result = savedSelection()
+//        discouragedSelections = result.selection ?? FamilyActivitySelection()
+//        startTime = result.startTime ?? Date() // 既存の保存値、または現在時刻
+//        endTime = result.endTime ?? Date().addingTimeInterval(60 * 60) // 既存の保存値、または1時間後
+//        weekDays = result.weekDays ?? []
 
 
 //        self.diaryTask = loadTask(withKey: "diary", as: DiaryTask.self)
@@ -224,25 +224,25 @@ class ShieldManager: ObservableObject {
     }
 }
 
-//struct ActivityData: Codable {
-//    let selection: FamilyActivitySelection
-//    let startTime: Date
-//    let endTime: Date
-//}
-//enum WeekDays: Int, CaseIterable {
-//    case sun = 1
-//    case mon = 2
-//    case tue = 3
-//    case wed = 4
-//    case thu = 5
-//    case fri = 6
-//    case sat = 7
-//}
 enum WeekDays: Int, CaseIterable, Identifiable {
     case sun = 1
     case mon, tue, wed, thu, fri, sat
 
     var id: Int { rawValue } // Picker 用の Identifiable 準拠
+
+    // 英語の略称を追加
+    var shortName: String {
+        switch self {
+        case .sun: return "Sun"
+        case .mon: return "Mon"
+        case .tue: return "Tue"
+        case .wed: return "Wed"
+        case .thu: return "Thu"
+        case .fri: return "Fri"
+        case .sat: return "Sat"
+        }
+    }
+
     var displayName: String {
         switch self {
         case .sun: return "日曜日"
