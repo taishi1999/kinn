@@ -36,7 +36,7 @@ class DiaryTaskManager: ObservableObject {
 //                selection: FamilyActivitySelection(),
                 startTime: DiaryTaskManager.defaultStartTime(), // 初期値を12:00
                 endTime: DiaryTaskManager.defaultEndTime(),
-                weekDays: [],
+                weekDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
                 characterCount: 100
             )
         }
@@ -101,21 +101,34 @@ class DiaryTaskManager: ObservableObject {
         }
     }
 
+    func loadTaskAndSelection() {
+            if let loadedTask = DiaryTaskManager.loadDiaryTask(forKey: "diary") {
+                self.diaryTask = loadedTask
+                print("DiaryTask loaded: \(loadedTask)")
 
-//    func deleteDiaryTask() {
-//        // アプリグループのUserDefaultsを使用
-//        let appGroupDefaults = UserDefaults(suiteName: "group.com.karasaki.kinn.date")
-//        appGroupDefaults?.removeObject(forKey: DiaryTaskManager.diaryTaskKey)
-//        diaryTask = DiaryTask(
-//            type: "", // 空文字列
-//            selectionID: "",
-////            selection: FamilyActivitySelection(),
-//            startTime: DiaryTaskManager.defaultStartTime(),
-//            endTime: DiaryTaskManager.defaultEndTime(),
-//            weekDays: [],
-//            characterCount: 0
-//        )
-//    }
+                // selectionID を使って FamilyActivitySelection をロード
+                if let loadedSelection = DiaryTaskManager.loadFamilyActivitySelection(forKey: loadedTask.selectionID) {
+                    print("FamilyActivitySelection loaded: \(loadedSelection)")
+                } else {
+                    print("No FamilyActivitySelection found for key: \(loadedTask.selectionID)")
+                }
+            } else {
+                print("No DiaryTask found.")
+            }
+        
+        }
+
+    func deleteDiaryTask(taskKey: String, selectionKey: String) {
+        // アプリグループのUserDefaultsを使用
+        let appGroupDefaults = UserDefaults(suiteName: "group.com.karasaki.kinn.date")
+
+        // DiaryTask の削除
+        appGroupDefaults?.removeObject(forKey: taskKey)
+        print("DiaryTask を削除しました (キー: \(taskKey))")
+        // FamilyActivitySelection の削除
+        appGroupDefaults?.removeObject(forKey: selectionKey)
+        print("FamilyActivitySelection を削除しました (キー: \(selectionKey))")
+    }
 
 }
 

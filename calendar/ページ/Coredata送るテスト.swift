@@ -3,205 +3,105 @@ import Combine
 import SwiftSVG
 import FamilyControls
 
-struct CustomNavigationBar: View {
-    let title: String
-    let onBack: (() -> Void)?
-    let onAction: (() -> Void)?
-
-    var body: some View {
-        HStack {
-            if let onBack = onBack {
-                Button(action: onBack) {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.white)
-                }
-            } else {
-                Spacer()
-            }
-
-            Spacer()
-
-            Text(title)
-                .font(.headline)
-                .foregroundColor(.white)
-
-            Spacer()
-
-            if let onAction = onAction {
-                Button(action: onAction) {
-                    Image(systemName: "ellipsis")
-                        .foregroundColor(.white)
-                }
-            } else {
-                Spacer()
-            }
-        }
-        .padding(.horizontal)
-        .padding(.vertical, 16) // 上下のパディングを設定
-        .background(Color.blue)
-    }
-}
-
-//struct CustomNavigationBar_Previews: PreviewProvider {
-//    static var previews: some View {
-//
-//        オンボ_時間設定()
-//
-//        //            CustomNavigationBar(
-//        //                title: "プレビュー",
-//        //                onBack: nil,
-//        //                onAction: nil
-//        //            )
-//        //            .previewDisplayName("Without Buttons")
-//
-//            .previewLayout(.sizeThatFits) // サイズを内容に合わせる
-//    }
-//}
-
 enum OnboardingStep {
     case blockAppPicker, timeSetting, characterCountSetting
 }
 
 struct OnboardingView: View {
+    @ObservedObject var diaryTaskManager: DiaryTaskManager
     @ObservedObject var viewModel: TaskViewModel
-    @State private var path = NavigationPath()
-
+//    @State private var path = NavigationPath()
+    @Binding var path: NavigationPath
     @State private var currentStep: OnboardingStep = .blockAppPicker
 
-    @State private var activitySelection = FamilyActivitySelection()
+//    @State private var activitySelection = FamilyActivitySelection()
     @State private var navigateToNext = false // 次の画面への遷移フラグ
     var onComplete: () -> Void
     @StateObject private var taskData = TaskData() // データを保持する
     @State private var isLoading = false // ナビゲーションを有効/無効にするフラグ
     @State private var showAlert = false // アラート表示フラグ
 
+//    @ObservedObject var diaryTaskManager = DiaryTaskManager.shared
+
+    @ObservedObject var center = AuthorizationCenter.shared
+
+//    init(viewModel: TaskViewModel, onComplete: @escaping () -> Void) {
+//        self.viewModel = viewModel
+//        self.onComplete = onComplete
+//        self.path = NavigationPath(["A"])
+//
+//        let status = center.authorizationStatus
+//            print("Authorization Status: \(status)")
+//
+//            if status == .approved {
+//                print("approveです")
+//                _path = State(initialValue: NavigationPath(["A"]))
+//            } else {
+//                print("elseです")
+//                _path = State(initialValue: NavigationPath())
+//            }
+//    }
+    
     var body: some View {
         NavigationStack(path: $path) {
-            オンボ_スクリーンタイム(path: $path) // 1番目に表示したいビューをここに設定
-                .navigationDestination(for: String.self) { destination in
-                    switch destination {
-                    case "A":
-                        オンボ_アプリピッカー(activitySelection: $activitySelection, /*taskData: taskData,*/ onComplete: onComplete, path: $path)
-                    case "B":
-                        オンボ_時間設定(taskData: taskData, path: $path)
-                    case "C":
-                        オンボ_文字数設定(taskData: taskData, isLoading: $isLoading, path: $path, updateTask: updateTask/*, isNavigationEnabled: $isNavigationEnabled*/)
-                    default:
-                        EmptyView()
+//            オンボ_認証(path: .constant(path), center: center)
+            オンボ_認証( 
+                path: Binding<NavigationPath?>(
+                get: { path },
+                set: { newValue in
+                    if let newValue = newValue {
+                        path = newValue
+                    } else {
+                        path = NavigationPath() // 初期化
                     }
                 }
+            ), 
+                center: center)
+
+//            Group {
+//                if center.authorizationStatus == .approved {
+//                    // 認証済みの場合
+//                    オンボ_アプリピッカー(/*activitySelection: $activitySelection,*/ onComplete: onComplete, path: $path, diaryTaskManager: diaryTaskManager)
+//                } else {
+//                    // 認証が必要な場合
+//                    オンボ_認証(path: .constant(path), center: center)
+//
+//                }
+//            }
+            .navigationDestination(for: String.self) { destination in
+                switch destination {
+                case "A":
+                    オンボ_アプリピッカー(/*activitySelection: $activitySelection,*/ /*taskData: taskData,*/ onComplete: onComplete, path: $path,diaryTaskManager: diaryTaskManager)
+                        .navigationBarBackButtonHidden(true)//上記バー非表示
+//                        .onAppear {
+//                                        Task {
+//                                            try await center.requestAuthorization(for: .individual)
+//                                        }
+//                                    }
+                case "B":
+                    オンボ_時間設定(taskData: taskData, path: $path,diaryTaskManager: diaryTaskManager)
+                        .navigationBarBackButtonHidden(true)
+                case "C":
+                    オンボ_文字数設定(taskData: taskData, isLoading: $isLoading, path: $path, updateTask: updateTask,diaryTaskManager: diaryTaskManager/*, isNavigationEnabled: $isNavigationEnabled*/)
+                        .navigationBarBackButtonHidden(true)
+                default:
+                    EmptyView()
+                }
+            }
         }
         .disabled(isLoading)
         .alert(isPresented: $showAlert) {
-                    Alert(
-                        title: Text("エラー"),
-                        message: Text("alertMessage"),
-                        dismissButton: .default(Text("OK"))
-                    )
-                }
-
-        
-
-        //        NavigationStack {
-        //            switch currentStep {
-        //            case .blockAppPicker:
-        //                オンボ_アプリピッカー(
-        //                    activitySelection: $activitySelection,
-        //                    taskData: taskData,
-        //                    onComplete: onComplete,
-        //                    onNext: {
-        //                        currentStep = .timeSetting
-        //                    }
-        //                )
-        //            case .timeSetting:
-        //                オンボ_時間設定(taskData: taskData) {
-        //                    currentStep = .characterCountSetting
-        //                }
-        //            case .characterCountSetting:
-        //                オンボ_文字数設定 {
-        //                    print("Onboarding Completed")
-        //                }
-        //            }
-        //            //            VStack(spacing: 0) {
-        //            //                Button("Complete Onboarding") {
-        //            //                    onComplete()
-        //            //                }
-        //            //                .padding()
-        //            //                .background(Color.blue)
-        //            //                .foregroundColor(.white)
-        //            //                .cornerRadius(8)
-        //            //
-        //            //
-        //            //                Spacer()
-        //            //                    .frame(height:20)
-        //            //                VStack(spacing: 8) {
-        //            //                    Text("ブロックしたいアプリを\n選択しましょう")
-        //            //                        .font(.title2)
-        //            //                        .fontWeight(.bold)
-        //            //                        .multilineTextAlignment(.center)
-        //            //                        .frame(maxWidth: .infinity)
-        //            //                    Text("あとから変更できます")
-        //            //                        .fontWeight(.bold)
-        //            //                        .foregroundStyle(Color.secondary)
-        //            //                }
-        //            //                Spacer()
-        //            //                    .frame(height: 40)
-        //            //                ZStack {
-        //            //                    Image("iPhone15_Pro_app_picker_png") // 画像ファイル名（拡張子不要）
-        //            //                        .resizable()
-        //            //                        .scaledToFit()
-        //            //                        .frame(maxWidth: .infinity)
-        //            //                    VStack(spacing:0) {
-        //            //                        Spacer()
-        //            //                        パーツ_ライナーグラデーション(height: 100)
-        //            //                        VStack{
-        //            //                            Spacer().frame(height:24)
-        //            //                            Button("Select Activities") {
-        //            //                                isPresented = true // ピッカーを表示
-        //            //                            }
-        //            //                            .familyActivityPicker(
-        //            //                                isPresented: $isPresented,
-        //            //                                selection: $activitySelection // 選択結果を一時保存
-        //            //                            ).onChange(of: isPresented) { newValue in
-        //            //                                if !newValue {
-        //            //                                    // FamilyActivityPickerが閉じられたときに実行
-        //            //                                    print("Selected Activities: \(activitySelection)")
-        //            //                                    navigateToNext = true
-        //            //                                }
-        //            //                            }
-        //            //                            NavigationLink(destination: オンボ_時間設定(taskData: taskData)) {
-        //            //                                Text("アプリを選択する") // ボタンの内容
-        //            //                                    .padding(.vertical, 16)
-        //            //                                    .frame(maxWidth: .infinity)
-        //            //                                    .background(Color.buttonOrange)
-        //            //                                    .foregroundColor(.white)
-        //            //                                    .fontWeight(.bold)
-        //            //                                    .cornerRadius(12)
-        //            //
-        //            //                            }
-        //            //                            .padding(.bottom, 20)
-        //            //
-        //            //
-        //            //                            Text("a")
-        //            //                                .foregroundStyle(.primary)
-        //            //                                .opacity(00)
-        //            //                        }
-        //            //                        .background(Color(.systemBackground))
-        //            //
-        //            //                    }
-        //            //                }
-        //            //                Spacer()
-        //            //                    .frame(height: 20)
-        //            //            }
-        //            //            .toolbar {
-        //            //                ToolbarItem(placement: .principal) {
-        //            //                    Text("")
-        //            //                }
-        //            //            }
-        //            //            .navigationBarTitleDisplayMode(.inline)
-        //            //            .padding(.horizontal, 20)
-        //
-        //        }
+            Alert(
+                title: Text("エラー"),
+                message: Text("alertMessage"),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+//        .onAppear {
+//            print("Initial Path: \(path)")
+//            path.append("A")
+//            print("Updated Path: \(path)")
+//        }
     }
 
     // タスク更新メソッド
@@ -230,201 +130,230 @@ struct OnboardingView: View {
     }
 }
 
-struct オンボ_スクリーンタイム: View {
-    @State private var isPresented = false
+struct オンボ_認証: View {
+    @State private var isLoading = false
+    //    let center = AuthorizationCenter.shared
+//    @Binding var path: NavigationPath
+    @Binding var path: NavigationPath?
 
-//    var onComplete: () -> Void
-    //    var onNext: () -> Void
-    @Binding var path: NavigationPath
+
+    /*var path: Binding<NavigationPath?>*/ // nil 許容のナビゲーションパス
+    //    @ObservedObject var diaryTaskManager: DiaryTaskManager
 
     @State private var navigateToNext = false
+    @State private var cancellable: AnyCancellable? // Combineのキャンセラ
+    @ObservedObject var center: AuthorizationCenter
+    @Environment(\.dismiss) private var dismiss
+    //nil許容のために必要
+    init(path: Binding<NavigationPath?> = .constant(nil), center: AuthorizationCenter) {
+            self._path = path
+            self.center = center
+        }
 
     var body: some View {
         VStack(spacing: 0) {
-//            Button("Complete Onboarding") {
-//                onComplete()
-//            }
-//            .padding()
-//            .background(Color.blue)
-//            .foregroundColor(.white)
-//            .cornerRadius(8)
-
+//           
             Spacer()
-                .frame(height: 20)
-
-            VStack(spacing: 8) {
+                .frame(height: 16)
+            Image("iPhone15_Pro_ScreenTime_Cutted")
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
+            Spacer()
+                .frame(height: 16)
+            VStack() {
                 Text("スクリーンタイムへのアクセスを\n許可してください")
                     .font(.title2)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
-
             }
 
-            Spacer()
-                .frame(height: 24)
-            Image("iPhone15_Pro_ScreenTime_Cutted")
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity)
             ZStack {
-                    VStack {
-
-//                        Button("Go to A") {
-//                            path.append("A") // 次の画面へ遷移
-//                        }
-                        Text("アプリやサイトをブロックするためには\nスクリーンタイムへの許可が必要です")
-                            .font(.callout)
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.secondary)
-                            .multilineTextAlignment(.center)
-                            .frame(maxWidth: .infinity)
-                        Spacer().frame(height: 16)
-                        パーツ_共通ボタン(ボタンテキスト: "アプリを選択する", action: {isPresented = true})
-//                            .familyActivityPicker(
-//                                isPresented: $isPresented,
-//                                selection: $activitySelection
-//                            )
-//                            .onChange(of: isPresented) { newValue in
-//                                if !newValue {
-//                                    print("Selected Activities: \(activitySelection)")
-//                                    navigateToNext = true
-//                                }
-//                            }
-//                        NavigationLink(destination: オンボ_時間設定(taskData: taskData), isActive: $navigateToNext) {
-//                            Text("アプリを選択する")
-//                                .padding(.vertical, 16)
-//                                .frame(maxWidth: .infinity)
-//                                .background(Color.buttonOrange)
-//                                .foregroundColor(.white)
-//                                .fontWeight(.bold)
-//                                .cornerRadius(12)
-//                        }
-//                        .padding(.bottom, 20)
-
-//                        Text("a")
-//                            .foregroundStyle(.primary)
-//                            .opacity(0)
-//                            .padding(.vertical, 20)
-                        Spacer().frame(height: 16)
-
+                VStack {
+                    Spacer().frame(height: 16)
+                    if path != nil {
+                        Button("Go to A") {
+                            print("Navigating to A")
+                            path!.append("A")
+                            print("Current path: \(String(describing: path))") // デバッグ用
+                        }
                     }
-                    .background(Color(.systemBackground))
+//                    Button("Go to A") {
+//                        print("Navigating to A")
+//                        path.append("A")
+//                        print("Current path: \(path)") // デバッグ用
+//                    }
 
+//                    if path.wrappedValue != nil {
+//                        Button("Go to A") {
+//                            if var unwrappedPath = path.wrappedValue {
+//                                unwrappedPath.append("A")
+//                                path.wrappedValue = unwrappedPath // 再代入
+//                            }
+//                        }
+//                    }
+                    Text("アプリをブロックするには\nスクリーンタイムへの許可が必要です")
+                        .font(.callout)
+                    //                            .fontWeight(.bold)
+                        .foregroundStyle(Color.secondary)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                    Spacer().frame(height: 16)
+                    パーツ_共通ボタン(ボタンテキスト: "許可する",isLoading: isLoading, action: {
+                        Task {
+                            do {
+                                isLoading = true
+                                try await center.requestAuthorization(for: .individual)
+                                
+                                DispatchQueue.main.async {
+                                    print("完了")
+                                    isLoading = false
+                                    path?.append("A")
+                                    dismiss()
+//                                    if var path = path.wrappedValue {
+//                                        path.append("A")
+//                                    }
+                                }
+                            } catch {
+                                print("Failed to get authorization: \(error)")
+                                isLoading = false
+                            }
+                        }
+                    })
+                    Spacer().frame(height: 16)
+                }
+                .background(Color(.systemBackground))
             }
 
-//            Spacer()
-//                .frame(height: 20)
+            //            Spacer()
+            //                .frame(height: 20)
         }
-//        .toolbar {
-//            ToolbarItem(placement: .principal) {
-//                Text("")
-//            }
-//        }
-//        .navigationBarTitleDisplayMode(.inline)
         .padding(.horizontal, 20)
+//        .task {
+//            await checkAuthorizationAndNavigate()
+//        }
     }
-}
 
+    private func checkAuthorizationAndNavigate() async {
+            // 非同期で認証状態を確認
+            do {
+                try await center.requestAuthorization(for: .individual)
+
+//                DispatchQueue.main.async {
+//                    if center.authorizationStatus == .approved {
+//                        print("approveです")
+//                        path?.append("A")
+//                    }
+//                    else{
+//                        print("elseです")
+//                    }
+//                }
+            } catch {
+                print("認証リクエスト中にエラーが発生しました: \(error)")
+            }
+        }
+
+    //    private func startMonitoringAuthorizationStatus() {
+    //            cancellable = center.$authorizationStatus
+    //                .sink { status in
+    //                    print("認証状態が変更されました: \(status)")
+    //                    // 認証状態が確定したら isLoading を終了
+    //                    isLoading = false
+    //                }
+    //        }
+}
 
 struct オンボ_アプリピッカー: View {
     @State private var isPresented = false
-    @Binding var activitySelection: FamilyActivitySelection
-//    @ObservedObject var taskData: TaskData
+//    @Binding var activitySelection: FamilyActivitySelection
+    //    @ObservedObject var taskData: TaskData
     var onComplete: () -> Void
     //    var onNext: () -> Void
     @Binding var path: NavigationPath
+    @ObservedObject var diaryTaskManager: DiaryTaskManager
 
     @State private var navigateToNext = false
 
     var body: some View {
         VStack(spacing: 0) {
-//            Button("Complete Onboarding") {
-//                onComplete()
-//            }
-//            .padding()
-//            .background(Color.blue)
-//            .foregroundColor(.white)
-//            .cornerRadius(8)
-
             Spacer()
-                .frame(height: 20)
-
+                .frame(height: 16)
+            Image("iPhone15_Pro_app_picker")
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
+            Spacer()
+                .frame(height: 16)
             VStack(spacing: 8) {
                 Text("ブロックしたいアプリを\n選択しましょう")
                     .font(.title2)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
-                Text("あとから変更できます")
-                    .fontWeight(.bold)
-                    .foregroundStyle(Color.secondary)
             }
-
-            Spacer()
-                .frame(height: 32)
-            Image("iPhone15_Pro_ScreenTime_Access")
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity)
             ZStack {
                 VStack(spacing: 0) {
-//                    Spacer()
-//                    パーツ_ライナーグラデーション(height: 40)
-
                     VStack {
                         Spacer().frame(height: 16)
 
                         Button("Go to B") {
                             path.append("B") // 次の画面へ遷移
                         }
-                        パーツ_共通ボタン(ボタンテキスト: "アプリを選択する", action: {isPresented = true})
+                        Text("あとから変更できます")
+                            .font(.callout)
+                        //                            .fontWeight(.bold)
+                            .foregroundStyle(Color.secondary)
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity)
+                        パーツ_共通ボタン(ボタンテキスト: "アプリを選択する", action: {
+                            isPresented = true
+                        })
                             .familyActivityPicker(
                                 isPresented: $isPresented,
-                                selection: $activitySelection
+                                selection: $diaryTaskManager.selection
                             )
-                            .onChange(of: isPresented) { newValue in
-                                if !newValue {
-                                    print("Selected Activities: \(activitySelection)")
-                                    navigateToNext = true
+                            .onChange(of: diaryTaskManager.selection) { newSelection in
+//                                print("選択されたアプリ: \(newSelection.applications)")
+//                                print("選択されたカテゴリ: \(newSelection.categories)")
+//                                print("選択されたウェブドメイン: \(newSelection.webDomains)")
+                                if isSelectionExist(initialSelection: newSelection){
+                                    path.append("B")
                                 }
+//                                if !newSelection.applications.isEmpty ||
+//                                            !newSelection.categories.isEmpty ||
+//                                            !newSelection.webDomains.isEmpty {
+//                                            path.append("B")
+//                                        }
                             }
-//                        NavigationLink(destination: オンボ_時間設定(taskData: taskData), isActive: $navigateToNext) {
-//                            Text("アプリを選択する")
-//                                .padding(.vertical, 16)
-//                                .frame(maxWidth: .infinity)
-//                                .background(Color.buttonOrange)
-//                                .foregroundColor(.white)
-//                                .fontWeight(.bold)
-//                                .cornerRadius(12)
-//                        }
-//                        .padding(.bottom, 20)
+                        Spacer().frame(height: 16)
 
-                        Text("a")
-                            .foregroundStyle(.primary)
-                            .opacity(0)
-                            .padding(.vertical, 20)
+                        //                        Text("a")
+                        //                            .foregroundStyle(.primary)
+                        //                            .opacity(0)
+                        //                            .padding(.vertical, 20)
                     }
                     .background(Color(.systemBackground))
                 }
             }
 
-//            Spacer()
-//                .frame(height: 20)
+            //            Spacer()
+            //                .frame(height: 20)
         }
-//        .toolbar {
-//            ToolbarItem(placement: .principal) {
-//                Text("")
-//            }
-//        }
-//        .navigationBarTitleDisplayMode(.inline)
         .padding(.horizontal, 20)
     }
+}
+
+func isSelectionExist(initialSelection: FamilyActivitySelection) -> Bool {
+   return !initialSelection.applications.isEmpty ||
+          !initialSelection.categories.isEmpty ||
+          !initialSelection.webDomains.isEmpty
 }
 
 struct オンボ_時間設定: View {
     @ObservedObject var taskData: TaskData
     @Binding var path: NavigationPath
+    @ObservedObject var diaryTaskManager: DiaryTaskManager
 
     var body: some View {
         VStack(spacing: 0) {
@@ -439,19 +368,21 @@ struct オンボ_時間設定: View {
                     .frame(maxWidth: .infinity, alignment: .leading) // 左寄せのフレーム設定
 
                 Text("あとから変更できます")
-                    .fontWeight(.bold)
+                //                    .fontWeight(.bold)
                     .foregroundStyle(Color.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading) // 左寄せのフレーム設定
             }
 
             Spacer()
                 .frame(height:40)
-            パーツ_時刻選択(開始時刻: $taskData.startTime, 終了時刻: $taskData.endTime)
+            パーツ_時刻選択(開始時刻: $diaryTaskManager.diaryTask.startTime, 終了時刻: $diaryTaskManager.diaryTask.endTime)
+            //            パーツ_時刻選択(開始時刻: $taskData.startTime, 終了時刻: $taskData.endTime)
                 .background(Color.darkButton_normal)
                 .cornerRadius(12)
             Spacer()
                 .frame(height:32)
-            パーツ_曜日選択ビュー(繰り返し曜日: $taskData.repeatDays)
+//            パーツ_曜日選択ビュー(繰り返し曜日: $taskData.repeatDays)
+            パーツ_曜日選択ビュー(繰り返し曜日: $diaryTaskManager.diaryTask.weekDays)
                 .background(Color.darkButton_normal)
                 .cornerRadius(12)
             Spacer()
@@ -461,39 +392,14 @@ struct オンボ_時間設定: View {
             ZStack {
                 VStack{
                     パーツ_共通ボタン(ボタンテキスト: "つぎへ", action: {path.append("C")})
-
-//                    NavigationLink(destination: オンボ_文字数設定(taskData: taskData)) {
-//                        Text("次へ") // ボタンの内容
-//                            .padding(.vertical, 16)
-//                            .frame(maxWidth: .infinity)
-//                            .background(Color.buttonOrange)
-//                            .foregroundColor(.white)
-//                            .fontWeight(.bold)
-//                            .cornerRadius(12)
-//
-//                    }
-//                    .padding(.vertical, 20)
-
-
-                    Text("a")
-                        .foregroundStyle(.primary)
-                        .opacity(0)
-                        .padding(.vertical, 20)
+                    Spacer().frame(height: 16)
                 }
                 .background(Color(.systemBackground))
-
-
             }
-//            Spacer()
-//                .frame(height: 20)
+            //            Spacer()
+            //                .frame(height: 20)
 
         }
-//        .toolbar {
-//            ToolbarItem(placement: .principal) {
-//                Text("")
-//            }
-//        }
-//        .navigationBarTitleDisplayMode(.inline)
         .padding(.horizontal, 20)
     }
 }
@@ -502,11 +408,12 @@ struct オンボ_文字数設定: View {
     @FocusState private var isFocused: Bool
     private let maxLength: Int = 4
     @ObservedObject var taskData: TaskData
-//    @State private var isLoading = false
+    //    @State private var isLoading = false
     @Binding var isLoading: Bool
     @Binding var path: NavigationPath
-//    @Binding var isNavigationEnabled: Bool
+    //    @Binding var isNavigationEnabled: Bool
     var updateTask: (@escaping (Bool) -> Void) -> Void // クロージャを引数に追加
+    @ObservedObject var diaryTaskManager: DiaryTaskManager
 
     var body: some View {
         VStack(spacing: 0) {
@@ -521,23 +428,36 @@ struct オンボ_文字数設定: View {
                     .frame(maxWidth: .infinity, alignment: .leading) // 左寄せのフレーム設定
 
                 Text("あとから変更できます")
-                    .fontWeight(.bold)
+                //                    .fontWeight(.bold)
                     .foregroundStyle(Color.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading) // 左寄せのフレーム設定
             }
 
             VStack {
                 Spacer()
+                Button("save") {
+                    diaryTaskManager.diaryTask.selectionID="selection_1"
 
+                    diaryTaskManager.saveDiaryTask(
+                        diaryTaskManager.diaryTask,
+                        selection: diaryTaskManager.selection,
+                        taskKey: "diary",
+                        selectionKey: "selection_1"
+                    )
+
+                    //ロード
+                    diaryTaskManager.loadTaskAndSelection()
+                }
+                Button("delete") {
+                    diaryTaskManager.deleteDiaryTask(taskKey: "diary", selectionKey: "selection_1")
+                }
                 HStack(alignment: .bottom, spacing: 4) {
                     TextField(
-                        "10",
-                        text: Binding(
-                            get: { String(taskData.characterCount) }, // Int -> String
-                            set: { newValue in
-                                if let intValue = Int(newValue), intValue >= 0 {
-                                    taskData.characterCount = intValue // String -> Int
-                                }
+                        "1",
+                        text: Binding<String>(
+                            get: { String(diaryTaskManager.diaryTask.characterCount) },
+                            set: {
+                                diaryTaskManager.diaryTask.characterCount = Int($0.prefix(maxLength)) ?? 0
                             }
                         )
                     )
@@ -549,13 +469,13 @@ struct オンボ_文字数設定: View {
                     .onAppear {
                         isFocused = true
                     }
-                    .onReceive(Just(taskData.characterCount.description)) { _ in
-                        // 最大文字数の制限を適用
-                        if taskData.characterCount.description.count > maxLength {
-                            let limitedValue = Int(taskData.characterCount.description.prefix(maxLength)) ?? taskData.characterCount
-                            taskData.characterCount = limitedValue
-                        }
-                    }
+                    //                    .onReceive(Just(diaryTaskManager.diaryTask.characterCount.description)) { _ in
+                    //                        // 最大文字数の制限を適用
+                    //                        if diaryTaskManager.diaryTask.characterCount.description.count > maxLength {
+                    //                            let limitedValue = Int(diaryTaskManager.diaryTask.characterCount.description.prefix(maxLength)) ?? diaryTaskManager.diaryTask.characterCount
+                    //                            diaryTaskManager.diaryTask.characterCount = limitedValue
+                    //                        }
+                    //                    }
 
                     // 右側に「文字」を表示
                     Text("文字")
@@ -567,26 +487,29 @@ struct オンボ_文字数設定: View {
 
                 Spacer() // 下のスペース
             }
-            ZStack {
-                VStack {
-                    パーツ_ボタン_ローディング(isLoading: $isLoading,ボタンテキスト: "完了", action: {updateTask { success in
-                        if success {
-                            print("success:::\(success)")
-                            path.append("D")
-                        }
-                    }})
-                }
+
+            VStack {
+                パーツ_ボタン_ローディング(isLoading: $isLoading,ボタンテキスト: "完了", action: {updateTask { success in
+                    if success {
+                        print("success:::\(success)")
+                        path.append("D")
+                    }
+                }})
+                Spacer().frame(height: 16)
             }
+
+
+
         }
-//        .toolbar {
-//            ToolbarItem(placement: .principal) {
-//                Text("")
-//            }
-//        }
-//        .navigationBarTitleDisplayMode(.inline)
+        //        .toolbar {
+        //            ToolbarItem(placement: .principal) {
+        //                Text("")
+        //            }
+        //        }
+        //        .navigationBarTitleDisplayMode(.inline)
         .padding(.horizontal, 20)
 
-         // ローディング中に画面操作を無効化
+        // ローディング中に画面操作を無効化
         //        .blur(radius: isLoading ? 3 : 0) // ローディング中は画面をぼかす
         //        .animation(.easeInOut, value: isLoading)
     }
@@ -650,3 +573,58 @@ struct ビュー_ブロック状態監視_Previews: PreviewProvider {
         )
     }
 }
+
+//struct CustomNavigationBar: View {
+//    let title: String
+//    let onBack: (() -> Void)?
+//    let onAction: (() -> Void)?
+//
+//    var body: some View {
+//        HStack {
+//            if let onBack = onBack {
+//                Button(action: onBack) {
+//                    Image(systemName: "chevron.left")
+//                        .foregroundColor(.white)
+//                }
+//            } else {
+//                Spacer()
+//            }
+//
+//            Spacer()
+//
+//            Text(title)
+//                .font(.headline)
+//                .foregroundColor(.white)
+//
+//            Spacer()
+//
+//            if let onAction = onAction {
+//                Button(action: onAction) {
+//                    Image(systemName: "ellipsis")
+//                        .foregroundColor(.white)
+//                }
+//            } else {
+//                Spacer()
+//            }
+//        }
+//        .padding(.horizontal)
+//        .padding(.vertical, 16) // 上下のパディングを設定
+//        .background(Color.blue)
+//    }
+//}
+
+//struct CustomNavigationBar_Previews: PreviewProvider {
+//    static var previews: some View {
+//
+//        オンボ_時間設定()
+//
+//        //            CustomNavigationBar(
+//        //                title: "プレビュー",
+//        //                onBack: nil,
+//        //                onAction: nil
+//        //            )
+//        //            .previewDisplayName("Without Buttons")
+//
+//            .previewLayout(.sizeThatFits) // サイズを内容に合わせる
+//    }
+//}

@@ -5,7 +5,7 @@ import CoreData
 
 
 //いったんコメントアウト(screentime apiのために)
-//@main
+@main
 struct MyApp: App {
     //    let center = AuthorizationCenter.shared
     @StateObject private var dataController = DataController()  // Core Dataのコントローラ
@@ -46,11 +46,12 @@ struct MyApp: App {
             //DAMextensionのテスト
 //            ActivitySelectionView()
 //            LocalNotificationView()
-            //本丸
+            //textfield
+//            TextInputWithLimitView()
             アプリルート(viewModel: taskViewModel)
                             .preferredColorScheme(.dark)
                             .environment(\.managedObjectContext, dataController.container.viewContext)
-
+                            
 //                .onAppear {
 //                                    checkFirstLaunch()
 //                                }
@@ -73,7 +74,7 @@ struct MyApp: App {
             //                }
         }
     }
-
+    
     private func checkFirstLaunch() {
             // UserDefaultsで初回起動かどうかを判別
             let hasLaunchedBefore = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")

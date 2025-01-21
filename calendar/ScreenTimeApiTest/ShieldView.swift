@@ -11,7 +11,9 @@ struct ShieldView: View {
     @State private var showActivityPicker = false
     private let center = DeviceActivityCenter()
     @ObservedObject var diaryTaskManager = DiaryTaskManager.shared
-    let weekDays: [String] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+//    let weekDays: [String] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    let weekDays: [String] = WeekDays.allCases.map { $0.shortName }
+
     //    @State private var startTime: Date = Date() // 初期値として現在時刻を設定
     //    @State private var endTime: Date = Date().addingTimeInterval(60 * 60) // 初期値として1時間後を設定
     //    private let userDefaultsKey = "ScreenTimeSelection_DAMExtension"
@@ -120,19 +122,20 @@ struct ShieldView: View {
                     }
 
                     Button("get") {
-                        if let loadedTask = DiaryTaskManager.loadDiaryTask(forKey: "diary") {
-                            diaryTaskManager.diaryTask = loadedTask
-//                            loadedTask.selectionID
-                            print("DiaryTask loaded: \(loadedTask)")
-                            // selectionID を使って FamilyActivitySelection をロード
-                                    if let loadedSelection = DiaryTaskManager.loadFamilyActivitySelection(forKey: loadedTask.selectionID) {
-                                        print("FamilyActivitySelection loaded: \(loadedSelection)")
-                                    } else {
-                                        print("No FamilyActivitySelection found for key: \(loadedTask.selectionID)")
-                                    }
-                        } else {
-                            print("No DiaryTask found.")
-                        }
+                        diaryTaskManager.loadTaskAndSelection()
+//                        if let loadedTask = DiaryTaskManager.loadDiaryTask(forKey: "diary") {
+//                            diaryTaskManager.diaryTask = loadedTask
+////                            loadedTask.selectionID
+//                            print("DiaryTask loaded: \(loadedTask)")
+//                            // selectionID を使って FamilyActivitySelection をロード
+//                                    if let loadedSelection = DiaryTaskManager.loadFamilyActivitySelection(forKey: loadedTask.selectionID) {
+//                                        print("FamilyActivitySelection loaded: \(loadedSelection)")
+//                                    } else {
+//                                        print("No FamilyActivitySelection found for key: \(loadedTask.selectionID)")
+//                                    }
+//                        } else {
+//                            print("No DiaryTask found.")
+//                        }
 
 //                        let result = manager.savedSelection()
 

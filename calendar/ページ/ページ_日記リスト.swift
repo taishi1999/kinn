@@ -1,41 +1,7 @@
 import SwiftUI
-//import CoreData
-
-// coredataのViewModelの作成
-//class TaskViewModel: ObservableObject {
-//    @Published var coredata_MyTask: MyTask  // 非オプショナルに変更
-//
-//    init(context: NSManagedObjectContext) {
-//        // 既存のタスクがあるか確認
-//        let fetchRequest: NSFetchRequest<MyTask> = MyTask.fetchRequest()
-//        fetchRequest.fetchLimit = 1  // 1件のみ取得
-//        if let existingTask = try? context.fetch(fetchRequest).first {
-//            // 既存のタスクがある場合はそれを使用
-//            self.coredata_MyTask = existingTask
-//        } else {
-//            // 新しいタスクを作成し、初期値を設定
-//            let newTask = MyTask(context: context)
-//            newTask.taskType = "diary"
-//            newTask.startTime = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date()) ?? Date()
-//            newTask.endTime = newTask.startTime.addingTimeInterval(3600)
-//            newTask.repeatDays = "0,1,2,3,4,5,6"
-//            newTask.characterCount = 78
-//            self.coredata_MyTask = newTask
-//
-//            // 非同期で保存
-//            DispatchQueue.main.async {
-//                do {
-//                    try context.save()
-//                    print("Task saved successfully!")
-//                } catch {
-//                    print("Failed to save task: \(error.localizedDescription)")
-//                }
-//            }
-//        }
-//    }
-//}
 
 struct ページ_日記リスト: View {
+    @ObservedObject var diaryTaskManager: DiaryTaskManager
     @ObservedObject var viewModel: TaskViewModel
     @Environment(\.managedObjectContext) var viewContext  // ここでviewContextを定義
 
@@ -48,14 +14,6 @@ struct ページ_日記リスト: View {
     var diarytask: FetchedResults<MyTask>
 
     @State private var timer: Timer?
-    // タスクのプロパティを一時的に保存する変数
-//    @State private var taskType: TaskType = .diary
-//    @State private var startTime: Date = Date()
-//    @State private var endTime: Date = Date().addingTimeInterval(3600)
-//    @State private var repeatDays: Set<Int> = []
-//    @State private var characterCount: Int = 0
-//    @State private var selectedTask: MyTask?  // 一時的なState変数
-    //    let titleLineLimit: Int  // 変数で行数を指定
     @State private var フラグ_日記エディタ表示 = false  // シートの表示状態を管理
     @State private var フラグ_ブロック画面表示 = false
     @State private var フラグ_セッティング画面表示 = false
@@ -65,10 +23,6 @@ struct ページ_日記リスト: View {
     let generator = UIImpactFeedbackGenerator(style: .medium)
 
     @State private var listPositionX: CGFloat = 0.0
-
-//    init(viewModel: TaskViewModel) {
-//            self.viewModel = viewModel
-//        }
 
     private var safeAreaInsets: UIEdgeInsets {
         let scenes = UIApplication.shared.connectedScenes
@@ -94,53 +48,25 @@ struct ページ_日記リスト: View {
     }
 
     @State private var showPopover = true // ポップオーバー表示フラグ
-    //    @State var characterCount = 270
-
-//    func deleteAllTasks(context: NSManagedObjectContext) {
-//        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = MyTask.fetchRequest()
-//        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-//
-//        do {
-//            try context.execute(deleteRequest)
-//            try context.save()
-//            print("All tasks have been deleted.")
-//
-//            // キャッシュをリフレッシュ
-//            context.refreshAllObjects()
-//        } catch let error as NSError {
-//            print("Could not delete all tasks. \(error), \(error.userInfo)")
-//        }
-//    }
-
-
-
-    //最初にcoredataをfetchするために必要
-    //実行するたびにTaskViewModelがcoredataにデータを追加しちゃう
-
-//    init(context: NSManagedObjectContext) {
-//            // 既存のタスクをフェッチ
-//            let fetchRequest: NSFetchRequest<MyTask> = MyTask.fetchRequest()
-//            fetchRequest.fetchLimit = 1  // 1件だけ取得
-//            let existingTask = try? context.fetch(fetchRequest).first  // 最初のタスクを取得
-//            self.viewModel = TaskViewModel(context: context, task: existingTask)
-//        }
-
-//    init(viewContext: NSManagedObjectContext) {
-//        print("ページ_日記リスト.init")
-//        let firstTask = try? viewContext.fetch(MyTask.fetchRequest()).first
-//        _viewModel = StateObject(wrappedValue: TaskViewModel(context: viewContext, task: firstTask))
-//    }
 
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
                 ZStack{
+//                    VStack{
+//                        Text("タイプ: \(String(describing: viewModel.coredata_MyTask.taskType))")
+//                        Text("開始時間: \(viewModel.coredata_MyTask.startTime)")
+//                        Text("終了時間: \(viewModel.coredata_MyTask.endTime)")
+//                        Text("文字: \(viewModel.coredata_MyTask.characterCount)")
+//                        Text("繰り返し: \(String(describing: viewModel.coredata_MyTask.repeatDays))")
+//                    }
                     VStack{
-                        Text("タイプ: \(String(describing: viewModel.coredata_MyTask.taskType))")
-                        Text("開始時間: \(viewModel.coredata_MyTask.startTime)")
-                        Text("終了時間: \(viewModel.coredata_MyTask.endTime)")
-                        Text("文字: \(viewModel.coredata_MyTask.characterCount)")
-                        Text("繰り返し: \(String(describing: viewModel.coredata_MyTask.repeatDays))")
+                        Text("タイプ: \(String(describing: diaryTaskManager.diaryTask.type))")
+                        Text("開始時間: \(diaryTaskManager.diaryTask.startTime)")
+                        Text("終了時間: \(diaryTaskManager.diaryTask.endTime)")
+                        Text("文字: \(diaryTaskManager.diaryTask.characterCount)")
+                        Text("繰り返し: \(String(describing: diaryTaskManager.diaryTask.weekDays))")
+                        Text("selection: \(diaryTaskManager.selection)")
                     }
 
                     ScrollView {
@@ -267,8 +193,6 @@ struct ページ_日記リスト: View {
                                     // FullScreenCoverが閉じたときに実行する関数
                                     ブロック監視タイマー()
                                 }) {
-//                                    Coredata送るテスト(task: firstTask)
-
                                     ページ_タスク作成(
                                         task: viewModel.coredata_MyTask,viewModel: viewModel
                                     )
@@ -522,6 +446,7 @@ struct ページ_日記リスト_Previews: PreviewProvider {
         let dataController = DataController(inMemory: true)
         let viewContext = dataController.container.viewContext
         let deviceSizeManager = DeviceSizeManager() // DeviceSizeManagerのインスタンスを作成
+        @ObservedObject var diaryTaskManager = DiaryTaskManager.shared
 
         // プレビュー用のダミーデータを用意
         let dates: [Date] = [
@@ -569,7 +494,7 @@ struct ページ_日記リスト_Previews: PreviewProvider {
 
         return ZStack {
             // リストを下に表示
-            ページ_日記リスト(viewModel: viewModel)
+            ページ_日記リスト(diaryTaskManager: diaryTaskManager, viewModel: viewModel)
                 .environment(\.managedObjectContext, viewContext)
                 .environmentObject(deviceSizeManager) // DeviceSizeManagerを注入
         }

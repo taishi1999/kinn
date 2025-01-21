@@ -1,3 +1,4 @@
+//設定用
 import SwiftUI
 import Combine
 
@@ -65,5 +66,96 @@ struct パーツ_文字数入力欄_Previews: PreviewProvider {
 
     static var previews: some View {
         パーツ_文字数入力欄(value: $text)
+    }
+}
+
+//オンボーディング用
+import UIKit
+
+struct CharacterCountTextField: UIViewRepresentable {
+    @Binding var text: String
+    var characterLimit: Int
+    var focusOnAppear: Bool // フォーカス設定
+
+    func makeUIView(context: Context) -> NoPasteTextField {
+        let textField = NoPasteTextField()
+        textField.delegate = context.coordinator
+        textField.textAlignment = .center
+        textField.keyboardType = .numberPad
+        textField.font = UIFont.systemFont(ofSize: 34, weight: .bold)
+        
+        textField.layer.borderColor = UIColor.gray.cgColor // ボーダーの色
+            textField.layer.borderWidth = 1.0 // ボーダーの幅
+            textField.layer.cornerRadius = 8.0 // ボーダーの角を丸くする（必要に応じて設定）
+        // ツールバー
+//        let toolbar = UIToolbar()
+//        toolbar.sizeToFit()
+//        let doneButton = UIBarButtonItem(title: "完了", style: .done, target: context.coordinator, action: #selector(context.coordinator.dismissKeyboard))
+//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//        toolbar.items = [flexibleSpace, doneButton]
+//        textField.inputAccessoryView = toolbar
+
+        DispatchQueue.main.async {
+            if focusOnAppear {
+                textField.becomeFirstResponder() // フォーカスを設定
+            }
+        }
+
+        return textField
+    }
+
+    func updateUIView(_ uiView: NoPasteTextField, context: Context) {
+        uiView.text = text
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self, characterLimit: characterLimit)
+    }
+
+    class Coordinator: NSObject, UITextFieldDelegate {
+        var parent: CharacterCountTextField
+        var characterLimit: Int
+
+        init(_ parent: CharacterCountTextField, characterLimit: Int) {
+            self.parent = parent
+            self.characterLimit = characterLimit
+        }
+
+        @objc func dismissKeyboard() {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
+
+        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            let currentText = textField.text ?? ""
+            let prospectiveText = (currentText as NSString).replacingCharacters(in: range, with: string)
+
+            if prospectiveText.isEmpty || prospectiveText.count <= characterLimit {
+                if prospectiveText == "0" {
+                    DispatchQueue.main.async {
+                        self.parent.text = "1"
+                        textField.text = "1"
+                    }
+                    return false
+                }
+                parent.text = prospectiveText
+                return true
+            }
+            return false
+        }
+
+        func textFieldDidChangeSelection(_ textField: UITextField) {
+            DispatchQueue.main.async {
+                self.parent.text = textField.text ?? ""
+            }
+        }
+    }
+}
+
+class NoPasteTextField: UITextField {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if action == #selector(paste(_:)) {
+            return false // ペーストを無効化
+        }
+        return super.canPerformAction(action, withSender: sender)
     }
 }

@@ -1,4 +1,95 @@
 import SwiftUI
+import FamilyControls
+
+struct アプリルート: View {
+    @StateObject var viewModel: TaskViewModel
+    @AppStorage("isOnboardingCompleted") private var isOnboardingCompleted: Bool = false
+    @Environment(\.scenePhase) private var scenePhase
+    let center = AuthorizationCenter.shared
+    @State private var path = NavigationPath()
+    @State private var showSheet = false
+
+    @ObservedObject var diaryTaskManager = DiaryTaskManager.shared
+    var body: some View {
+        Group {
+            if !isOnboardingCompleted {
+                OnboardingView(diaryTaskManager: diaryTaskManager, viewModel: viewModel, path: $path, onComplete: {
+                    isOnboardingCompleted = true
+                    print("isOnboardingCompleted = true")
+                })
+            } else {
+                ページ_日記リスト(diaryTaskManager: diaryTaskManager,viewModel: viewModel)
+            }
+
+            // デバッグ用のリセットボタン
+            Button("Reset Onboarding (Debug)") {
+                isOnboardingCompleted = false // AppStorageをリセット
+                print("isOnboardingCompleted = false")
+            }
+            .padding()
+            .background(Color.red)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+        }
+        .sheet(isPresented: $showSheet) {
+            オンボ_認証(center: center)
+                .interactiveDismissDisabled(true)
+        }
+
+        //        .onChange(of: path) { newPath in
+        //                        if newPath.count > 0 {
+        //                            print("次の画面に遷移しました: \(newPath)")
+        //                        }
+        //                    }
+        .onChange(of: scenePhase) { newPhase in
+            switch newPhase {
+            case .active:
+                print("アプリがアクティブになりました")
+
+                //オンボードが完了、またはオンボ_認証以外の時、showSheetでオンボ_認証を表示してない場合に実行
+
+                if (isOnboardingCompleted || path.count > 0) && !showSheet{
+                    Task {
+                        await requestAuthorizationIfNeeded()
+                    }
+                }
+            case .inactive, .background:
+                print("アプリが非アクティブまたはバックグラウンドに移動しました")
+            @unknown default:
+                break
+            }
+        }
+    }
+    private func requestAuthorizationIfNeeded() async {
+        do {
+            try await center.requestAuthorization(for: .individual)
+            print("認証リクエスト成功")
+        } catch let error as FamilyControlsError {
+            switch error {
+            case .authorizationCanceled:
+                print("認証がキャンセルされました")
+                DispatchQueue.main.async {
+                    showSheet = true // シートを表示
+                }
+            case .restricted:
+                print("使用が制限されています")
+            case .unavailable:
+                print("Family Controls が利用できません")
+            case .invalidAccountType:
+                print("無効なアカウントタイプです")
+            case .networkError:
+                print("ネットワークエラーが発生しました")
+            case .authorizationConflict:
+                print("既に他のアプリが管理を行っています")
+            default:
+                print("その他のエラー: \(error.localizedDescription)")
+            }
+        } catch {
+            print("予期しないエラー: \(error.localizedDescription)")
+        }
+    }
+
+}
 
 //struct UserDefaultsExampleView: View {
 //    @State private var savedValue: Bool = UserDefaults.standard.bool(forKey: "Boolean") // 初期値読み込み
@@ -66,32 +157,5 @@ import SwiftUI
 //}
 
 
-struct アプリルート: View {
-    @StateObject var viewModel: TaskViewModel
-    @AppStorage("isOnboardingCompleted") private var isOnboardingCompleted: Bool = false // AppStorageを使用
-    
 
-    var body: some View {
-        VStack {
-            if !isOnboardingCompleted {
-                OnboardingView(viewModel: viewModel, onComplete: {
-                    isOnboardingCompleted = true // AppStorageで状態を更新
-                    print("isOnboardingCompleted = true")
-                })
-            } else {
-                ページ_日記リスト(viewModel: viewModel)
-            }
-
-//            // デバッグ用のリセットボタン
-//            Button("Reset Onboarding (Debug)") {
-//                isOnboardingCompleted = false // AppStorageをリセット
-//                print("isOnboardingCompleted = false")
-//            }
-//            .padding()
-//            .background(Color.red)
-//            .foregroundColor(.white)
-//            .cornerRadius(8)
-        }
-    }
-}
 

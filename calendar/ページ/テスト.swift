@@ -21,86 +21,86 @@ import UserNotifications
 //    }
 //}
 //-----------------
-import DeviceActivity
-import UserNotifications
-
-
-// Optionally override any of the functions below.
-// Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
-class DeviceActivityMonitorExtension: DeviceActivityMonitor {
-
-    func scheduleNotification(with title: String) {
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if granted {
-                let content = UNMutableNotificationContent()
-                content.title = title // Using the custom title here
-                content.body = "Here is the body text of the notification."
-                content.sound = UNNotificationSound.default
-
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false) // 5 seconds from now
-
-                let request = UNNotificationRequest(identifier: "MyNotification", content: content, trigger: trigger)
-
-                center.add(request) { error in
-                    if let error = error {
-                        print("Error scheduling notification: \(error)")
-                    }
-                }
-            } else {
-                print("Permission denied. \(error?.localizedDescription ?? "")")
-            }
-        }
-    }
-
-    override func intervalDidStart(for activity: DeviceActivityName) {
-        super.intervalDidStart(for: activity)
-
-        // Handle the start of the interval.
-        print("Interval began")
-        scheduleNotification(with: "interval did start")
-    }
-
-    override func intervalDidEnd(for activity: DeviceActivityName) {
-        super.intervalDidEnd(for: activity)
-
-        // Handle the end of the interval.
-        print("Interval ended")
-        scheduleNotification(with: "interval did end")
-    }
-
-    override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
-        super.eventDidReachThreshold(event, activity: activity)
-
-        // Handle the event reaching its threshold.
-        print("Threshold reached")
-        scheduleNotification(with: "event did reach threshold warning")
-    }
-
-    override func intervalWillStartWarning(for activity: DeviceActivityName) {
-        super.intervalWillStartWarning(for: activity)
-
-        // Handle the warning before the interval starts.
-        print("Interval will start")
-        scheduleNotification(with: "interval will start warning")
-    }
-
-    override func intervalWillEndWarning(for activity: DeviceActivityName) {
-        super.intervalWillEndWarning(for: activity)
-
-        // Handle the warning before the interval ends.
-        print("Interval will end")
-        scheduleNotification(with: "interval will end warning")
-    }
-
-    override func eventWillReachThresholdWarning(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
-        super.eventWillReachThresholdWarning(event, activity: activity)
-
-        // Handle the warning before the event reaches its threshold.
-        print("Interval will reach threshold")
-        scheduleNotification(with: "event will reach threshold warning")
-    }
-}
+//import DeviceActivity
+//import UserNotifications
+//
+//
+//// Optionally override any of the functions below.
+//// Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
+//class DeviceActivityMonitorExtension: DeviceActivityMonitor {
+//
+//    func scheduleNotification(with title: String) {
+//        let center = UNUserNotificationCenter.current()
+//        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+//            if granted {
+//                let content = UNMutableNotificationContent()
+//                content.title = title // Using the custom title here
+//                content.body = "Here is the body text of the notification."
+//                content.sound = UNNotificationSound.default
+//
+//                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false) // 5 seconds from now
+//
+//                let request = UNNotificationRequest(identifier: "MyNotification", content: content, trigger: trigger)
+//
+//                center.add(request) { error in
+//                    if let error = error {
+//                        print("Error scheduling notification: \(error)")
+//                    }
+//                }
+//            } else {
+//                print("Permission denied. \(error?.localizedDescription ?? "")")
+//            }
+//        }
+//    }
+//
+//    override func intervalDidStart(for activity: DeviceActivityName) {
+//        super.intervalDidStart(for: activity)
+//
+//        // Handle the start of the interval.
+//        print("Interval began")
+//        scheduleNotification(with: "interval did start")
+//    }
+//
+//    override func intervalDidEnd(for activity: DeviceActivityName) {
+//        super.intervalDidEnd(for: activity)
+//
+//        // Handle the end of the interval.
+//        print("Interval ended")
+//        scheduleNotification(with: "interval did end")
+//    }
+//
+//    override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
+//        super.eventDidReachThreshold(event, activity: activity)
+//
+//        // Handle the event reaching its threshold.
+//        print("Threshold reached")
+//        scheduleNotification(with: "event did reach threshold warning")
+//    }
+//
+//    override func intervalWillStartWarning(for activity: DeviceActivityName) {
+//        super.intervalWillStartWarning(for: activity)
+//
+//        // Handle the warning before the interval starts.
+//        print("Interval will start")
+//        scheduleNotification(with: "interval will start warning")
+//    }
+//
+//    override func intervalWillEndWarning(for activity: DeviceActivityName) {
+//        super.intervalWillEndWarning(for: activity)
+//
+//        // Handle the warning before the interval ends.
+//        print("Interval will end")
+//        scheduleNotification(with: "interval will end warning")
+//    }
+//
+//    override func eventWillReachThresholdWarning(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
+//        super.eventWillReachThresholdWarning(event, activity: activity)
+//
+//        // Handle the warning before the event reaches its threshold.
+//        print("Interval will reach threshold")
+//        scheduleNotification(with: "event will reach threshold warning")
+//    }
+//}
 
 import SwiftUI
 import FamilyControls
@@ -368,8 +368,53 @@ struct ScreenD: View {
 }
 
 // プレビュー
-struct NavigationPathExample_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationPathExample()
+//struct NavigationPathExample_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationPathExample()
+//    }
+//}
+import SwiftUI
+
+struct TextInputWithLimitView: View {
+    @State private var text: String = "10"
+    let characterLimit = 4 // 文字数制限
+    let focusOnAppear = true // 初期化時にフォーカスするかどうか
+
+    var body: some View {
+        VStack {
+            HStack{
+                CharacterCountTextField(
+                    text: $text,
+                    characterLimit: characterLimit,
+                    focusOnAppear: focusOnAppear
+                )
+                .frame(width: 24) // 横幅を固定
+    //            .frame(height: 40)
+    //            .padding()
+                Text("文字")
+            }
+
+
+            Button(action: {
+                print("Submitted text: \(text)")
+            }) {
+                Text("Submit")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(text.isEmpty ? Color.gray : Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .disabled(text.isEmpty)
+            .padding()
+        }
+        .padding()
     }
 }
+
+struct TextInputWithLimitView_Previews: PreviewProvider {
+    static var previews: some View {
+        TextInputWithLimitView()
+    }
+}
+

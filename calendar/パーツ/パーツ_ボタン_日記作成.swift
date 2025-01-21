@@ -36,6 +36,7 @@ struct パーツ_共通ボタン: View {
         }
     }
 }
+
 struct パーツ_ボタン_ローディング: View {
     @Binding var isLoading: Bool
     var ボタンテキスト: String

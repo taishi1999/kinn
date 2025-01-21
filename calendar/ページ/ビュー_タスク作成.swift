@@ -326,7 +326,7 @@ struct ビュー_タスク作成: View {
                                 return traitCollection.userInterfaceStyle == .dark ? .systemGray5 : .systemGray5
                             }), lineWidth: 1)
                             .frame(height: 1)
-                        パーツ_曜日選択ビュー(繰り返し曜日: $repeatDays)
+//                        パーツ_曜日選択ビュー(繰り返し曜日: $repeatDays)
                     },
                 cornerRadius: 16,
                 padding: 16,
