@@ -3,6 +3,7 @@ import SwiftUI
 struct パーツ_共通ボタン: View {
     var ボタンテキスト: String
     var isLoading: Bool = false
+    var isDisabled: Bool = false
     var action: (() -> Void)?
     var generator = UIImpactFeedbackGenerator(style: .medium)
 
@@ -23,13 +24,15 @@ struct パーツ_共通ボタン: View {
             }
             .padding(.vertical, 14)
             .frame(maxWidth: .infinity)
-            .background(Color.buttonOrange)
+            .background(Color.buttonGreen)
             .foregroundColor(.white)
             .fontWeight(.bold)
             .cornerRadius(12)
             .shadow(color: Color.black.opacity(0.6), radius: 12, x: 0, y: 4)
+//            .opacity(isLoading || isDisabled ? 0.5 : 1.0)
         }
-        .disabled(isLoading)
+        .disabled(isLoading || isDisabled)
+        .buttonStyle(PlainButtonStyle())
 //        .padding()
         .onAppear {
             generator.prepare()
@@ -39,6 +42,7 @@ struct パーツ_共通ボタン: View {
 
 struct パーツ_ボタン_ローディング: View {
     @Binding var isLoading: Bool
+    var isDisabled: Bool = false
     var ボタンテキスト: String
     var action: (() -> Void)?
 
@@ -46,6 +50,7 @@ struct パーツ_ボタン_ローディング: View {
         パーツ_共通ボタン(
             ボタンテキスト: ボタンテキスト,
             isLoading: isLoading,
+            isDisabled: isDisabled,
             action: {
                 isLoading = true
                 action?()

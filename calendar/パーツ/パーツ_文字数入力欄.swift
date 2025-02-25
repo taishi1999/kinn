@@ -1,6 +1,71 @@
 //設定用
 import SwiftUI
 import Combine
+//Button {
+//    isPresented = true
+//} label: {
+//    HStack {
+//        Text("ブロックするアプリ")
+//            .foregroundColor(.primary)
+//        Spacer()
+//        Text("選択")
+//            .foregroundColor(Color(.gray))
+//        Image(systemName: "chevron.down")
+//            .font(.system(size: 16, weight: .medium))
+//            .fontWeight(.regular)
+//            .foregroundColor(Color(.systemGray2))
+//            .frame(width: 20, height: 20)
+//    }
+//    .padding(.vertical,8)
+//}
+//.familyActivityPicker(
+//    isPresented: $isPresented,
+//    selection: $selection
+//)
+struct パーツ_文字数入力欄_v2: View {
+    @Binding var characterCount: Int
+    @FocusState private var isFocused: Bool
+
+    var body: some View {
+        Button{
+            isFocused = true
+        } label: {
+            HStack(spacing: 4) {
+                Text("文字数")
+                    .foregroundColor(.primary)
+                Spacer()
+                TextField(
+                    "1",
+                    text: Binding<String>(
+                        get: { String(characterCount) },
+                        set: { characterCount = Int($0.prefix(4)) ?? 0 }
+                    )
+                )
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button(action: {
+                                    isFocused = false
+                                }) {
+                                    Text("完了")
+                                        .font(.system(size: 16, weight: .bold))
+                                }
+                    }
+                }
+                .keyboardType(.numberPad) // 数字入力専用のキーボードを設定
+                .fixedSize()
+                .font(.callout)
+                .focused($isFocused) // フォーカスの状態をバインド
+
+                Text("文字")
+                    .font(.callout) // Callout サイズ
+                    .foregroundColor(.secondary)
+//                    .padding(.vertical, 6)
+            }
+            .padding(.vertical,8)
+        }
+    }
+}
 
 struct パーツ_文字数入力欄: View {
     @FocusState private var isTextFieldFocused: Bool
@@ -10,13 +75,17 @@ struct パーツ_文字数入力欄: View {
 
     var body: some View {
         VStack {
-            TextField("10", text: Binding(
+            TextField("1", text: Binding(
                 get: { String(value) },
-                set: { newValue in
-                    // 新しい値をテキストに設定
-                    value = Int(newValue) ?? value
+//                set: { newValue in
+//                    // 新しい値をテキストに設定
+//                    value = Int(newValue) ?? value
+//                }
+                set: {
+                    value = Int($0.prefix(maxLength)) ?? 0
                 }
             ))
+
             .keyboardType(.numberPad)
 //            .textFieldStyle(RoundedBorderTextFieldStyle())
             .multilineTextAlignment(.center)
@@ -34,30 +103,23 @@ struct パーツ_文字数入力欄: View {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
                     Button("完了") {
+//                        dismiss()
                         isTextFieldFocused = false
-                        showFilter = true
-                        if value < 10 {
-                            value = 10
-                        }
+//                        showFilter = true
+//                        if value < 10 {
+//                            value = 10
+//                        }
                     }
                 }
             }
-            .overlay(
-                showFilter ? Color.black.opacity(0.001)
-                    .onTapGesture {
-                        isTextFieldFocused = true
-                        showFilter = false
-                    } : nil
-            )
             // onReceiveで入力制限を設定
-            .onReceive(Just(value), perform: { _ in
-                let textString = String(value)  // 現在のテキストを文字列で取得
-                if textString.count > maxLength {
-                    value = Int(textString.prefix(maxLength)) ?? value  // 4桁に切り詰め
-                }
-            })
+//            .onReceive(Just(value), perform: { _ in
+//                let textString = String(value)  // 現在のテキストを文字列で取得
+//                if textString.count > maxLength {
+//                    value = Int(textString.prefix(maxLength)) ?? value  // 4桁に切り詰め
+//                }
+//            })
         }
-
     }
 }
 

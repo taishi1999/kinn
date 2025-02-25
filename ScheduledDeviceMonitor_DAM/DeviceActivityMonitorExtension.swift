@@ -17,12 +17,21 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         super.intervalDidStart(for: activity)
         NSLog("intervalDidStart")
 
-        if let selection =  ShieldManager.shared.savedSelection().selection {
-            NSLog("Saved selection: \(selection)")
-            ShieldManager.shared.shieldActivities(selection: selection)
+        if let loadedSelection = DiaryTaskManager.loadFamilyActivitySelection(forKey: "selection_1") {
+            // 取得した FamilyActivitySelection を NSLog で出力
+//            NSLog("FamilyActivitySelection loaded: \(loadedSelection)")
+            ShieldManager.shared.shieldActivities(selection: loadedSelection)
+//            NotificationScheduler.shared.scheduleNotificationInFiveSeconds()
         } else {
-            NSLog("No selection found")
+            NSLog("Failed to load FamilyActivitySelection for key: selection_1")
         }
+
+//        if let selection =  ShieldManager.shared.savedSelection().selection {
+//            NSLog("Saved selection: \(selection)")
+//            ShieldManager.shared.shieldActivities(selection: selection)
+//        } else {
+//            NSLog("No selection found")
+//        }
     }
 
     override func intervalDidEnd(for activity: DeviceActivityName) {
@@ -48,7 +57,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
 
     override func intervalWillStartWarning(for activity: DeviceActivityName) {
         super.intervalWillStartWarning(for: activity)
-
+        NSLog("intervalWillStartWarning")
         // Handle the warning before the interval starts.
     }
 

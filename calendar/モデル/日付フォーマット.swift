@@ -36,13 +36,15 @@ public func 日付フォーマット(_ date: Date) -> String {
 
         // 昨日の場合
     } else if Calendar.current.isDateInYesterday(entryDate) {
-        return "昨日(\(曜日取得(date)))"
+        return "昨日"
+//        return "昨日(\(曜日取得(date)))"
 
         // 6日前まで
     }
     else if dayDifference <= 6 {
         //        return 曜日取得(date) + "曜日"  // 曜日に「曜日」を追加
-        return "\(dayDifference)日前(\(曜日取得(date)))"
+//        return "\(dayDifference)日前(\(曜日取得(date)))"
+        return "\(曜日取得(date))曜日"
 
         // それ以降
     } 
@@ -65,9 +67,13 @@ public func 年付き日付フォーマット(_ date: Date, 詳しいフォー�
 
     // 今年かどうかとフォーマットの種類で分岐
     if currentYear == entryYear {
-        dateFormatter.dateFormat = 詳しいフォーマット ? "MM月dd日'(\(weekday))'" : "MM/dd'(\(weekday))'"
+        dateFormatter.dateFormat = 詳しいフォーマット ? "M月d日 \(weekday)曜日" : "M/d \(weekday)曜日"
+
+//        dateFormatter.dateFormat = 詳しいフォーマット ? "MM月dd日 '(\(weekday))'" : "MM/dd '(\(weekday))'"
     } else {
-        dateFormatter.dateFormat = 詳しいフォーマット ? "yyyy年MM月dd日'(\(weekday))'" : "yyyy/MM/dd'(\(weekday))'"
+        dateFormatter.dateFormat = 詳しいフォーマット ? "yyyy年M月d日 \(weekday)曜日" : "yyyy/M/d \(weekday)曜日"
+
+//        dateFormatter.dateFormat = 詳しいフォーマット ? "yyyy年MM月dd日 '(\(weekday))'" : "yyyy/MM/dd '(\(weekday))'"
     }
 
     return dateFormatter.string(from: date)

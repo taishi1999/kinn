@@ -55,6 +55,7 @@ struct DateFormatterUtility {
 
 struct DateCheckerView: View {
     @ObservedObject var viewModel: モデル_スケジュール管理
+
     @StateObject private var timerManager = モデル_タイマー管理()
     @State private var isFullScreenPresented = false
 
@@ -142,13 +143,13 @@ struct DateCheckerView_Previews: PreviewProvider {
         let calendar = Calendar.current
         let now = Date()
 
-        let startTime_date = calendar.date(bySettingHour: 11, minute: 0, second: 0, of: now)!
-        let endTime_date = calendar.date(bySettingHour: 11, minute: 59, second: 0, of: calendar.date(byAdding: .day, value: 0, to: now)!)!
+        let startTime_date = calendar.date(bySettingHour: 16, minute: 23, second: 0, of: now)!
+        let endTime_date = calendar.date(bySettingHour: 16, minute: 23, second: 5, of: calendar.date(byAdding: .day, value: 0, to: now)!)!
 
         return DateCheckerView(
             startTime_date: startTime_date,
             endTime_date: endTime_date,
-            repeatDays: [0, 1, 2, 3, 4, 5, 6]
+            repeatDays: [1, 2, 3, 4, 5, 6,7]
         )
     }
 }
@@ -594,4 +595,364 @@ func jstDateString(for date: Date) -> String {
     formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
     formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
     return "JST: \(formatter.string(from: date))"
+}
+
+import SwiftUI
+
+import SwiftUI
+
+struct タスク時間判定: View {
+    let startTime: Date
+    let endTime: Date
+    let weekDays: [Int] // 1(日) 〜 7(土)
+
+    @State private var remainingTime: TimeInterval = 0
+    @State private var timer: Timer?
+
+    var isWithinTaskTime: Bool {
+        return checkIfWithinTaskTime()
+    }
+
+    var body: some View {
+        VStack {
+            Text(isWithinTaskTime ? "✅ タスク時間内" : "❌ タスク時間外")
+                .font(.title)
+                .foregroundColor(isWithinTaskTime ? .green : .red)
+
+            Text("開始時間: \(formattedTime(startTime))")
+            Text("終了時間: \(formattedTime(endTime))")
+
+            Text("次の時間まで: \(formattedTimeInterval(remainingTime))")
+                .font(.headline)
+                .foregroundColor(.blue)
+        }
+        .padding()
+        .onAppear {
+            startTimer()
+        }
+        .onDisappear {
+            stopTimer()
+        }
+    }
+
+    private func checkIfWithinTaskTime() -> Bool {
+        let now = Date()
+        let calendar = Calendar.current
+
+        let todayWeekday = calendar.component(.weekday, from: now)
+        if !weekDays.contains(todayWeekday) {
+            return false
+        }
+
+        let nowTime = getMinutesSinceMidnight(from: now)
+        let startTimeMinutes = getMinutesSinceMidnight(from: startTime)
+        let endTimeMinutes = getMinutesSinceMidnight(from: endTime)
+
+        if startTimeMinutes <= endTimeMinutes {
+            return nowTime >= startTimeMinutes && nowTime < endTimeMinutes
+        } else {
+            return nowTime >= startTimeMinutes || nowTime < endTimeMinutes
+        }
+    }
+
+    private func getMinutesSinceMidnight(from date: Date) -> Int {
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        let minute = calendar.component(.minute, from: date)
+        return hour * 60 + minute
+    }
+
+    private func formattedTime(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: date)
+    }
+
+    private func formattedTimeInterval(_ interval: TimeInterval) -> String {
+        let hours = Int(interval) / 3600
+        let minutes = (Int(interval) % 3600) / 60
+        let seconds = Int(interval) % 60
+        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+
+    private func updateRemainingTime() {
+        let now = Date()
+        let calendar = Calendar.current
+        let todayWeekday = calendar.component(.weekday, from: now)
+
+        if isWithinTaskTime {
+            print("タスク時間")
+            // ✅ タスク時間内なら、`endTime` までの時間を計算（翌日またぎを考慮）
+            let nextEndTime = getNextValidTime(baseDate: now, targetTime: endTime, canBeNextDay: true)
+            remainingTime = nextEndTime.timeIntervalSince(now)
+        } else {
+            print("タスク時間外")
+            // ✅ タスク時間外なら、次の `startTime` までの時間を計算
+            if weekDays.contains(todayWeekday) {
+
+                print("🔍 今日の曜日 (\(todayWeekday)) はタスクの有効な曜日に含まれています")
+                print("🕒 現在時刻: \(formattedTime(now))")
+
+                remainingTime = startTime.timeIntervalSince(now)
+                print("✅ 開始時間までの残り時間 (after): \(formattedTimeInterval(remainingTime))")
+                print("---------------")
+            } else {
+
+                print("🔍 今日の曜日 (\(todayWeekday)) はタスクの有効な曜日に含まれていません")
+                print("🕒 現在時刻: \(formattedTime(now))")
+                remainingTime = timeUntilNextStartDay(from: now, weekDays: weekDays)
+                print("✅ 次の開始曜日までの残り時間 (after): \(formattedTimeInterval(remainingTime))")
+                print("---------------")
+            }
+
+        }
+
+        if remainingTime < 0 {
+            remainingTime = 0
+        }
+    }
+
+    /// ✅ **翌日またぎを考慮して `startTime` または `endTime` を計算**
+    private func getNextValidTime(baseDate: Date, targetTime: Date, canBeNextDay: Bool) -> Date {
+        let calendar = Calendar.current
+        let targetHour = calendar.component(.hour, from: targetTime)
+        let targetMinute = calendar.component(.minute, from: targetTime)
+
+        var nextTime = calendar.date(bySettingHour: targetHour, minute: targetMinute, second: 0, of: baseDate)!
+
+        // ✅ `targetTime` が過去なら翌日に設定
+        if canBeNextDay && nextTime < baseDate {
+            nextTime = calendar.date(byAdding: .day, value: 1, to: nextTime)!
+        }
+        return nextTime
+    }
+
+    private func timeUntilNextStartDay(from date: Date, weekDays: [Int]) -> TimeInterval {
+        let calendar = Calendar.current
+        let todayWeekday = calendar.component(.weekday, from: date)
+
+        let sortedWeekDays = weekDays.sorted()
+        let nextDay = sortedWeekDays.first(where: { $0 > todayWeekday }) ?? (sortedWeekDays.first! + 7)
+
+        let daysUntilNext = (nextDay - todayWeekday + 7) % 7
+        let nextStartDate = calendar.date(byAdding: .day, value: daysUntilNext, to: date)!
+        let nextStartDateWithTime = getNextValidTime(baseDate: nextStartDate, targetTime: startTime, canBeNextDay: false)
+
+        return nextStartDateWithTime.timeIntervalSince(date)
+    }
+
+    private func startTimer() {
+        stopTimer()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            updateRemainingTime()
+        }
+    }
+
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+}
+
+struct タスク時間判定_Previews: PreviewProvider {
+    static var previews: some View {
+        let calendar = Calendar.current
+        let now = Date()
+        let startTime = calendar.date(bySettingHour: 12, minute: 0, second: 0, of: now)! // 今日の22:00
+        let endTime = calendar.date(bySettingHour: 18, minute: 29, second: 0, of: now)! // 翌日の6:00
+        let weekDays = [1, 2,3, 5] // 日・火・木に有効
+
+        return タスク時間判定(startTime: startTime, endTime: endTime, weekDays: weekDays)
+    }
+}
+
+
+import SwiftUI
+// MARK: - メインの View
+
+struct AssignTimeView: View {
+    @State private var startDate: Date = createTime(hour: 9, minute: 0)
+    @State private var endDate: Date = createTime(hour: 8, minute: 53)
+    @State private var weekdays: [Int] = [2, 4, 5, 6] // 月・水・金
+
+    @State private var nextEventText: String = "次のイベントはありません"
+    @State private var remainingTimeText: String = ""
+    @State private var nextEventDate: Date? = nil
+    @State private var timer: Timer? = nil
+    @State private var interval: TimeInterval = 0  // ← @Stateで管理
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Text(nextEventText)
+                .font(.title2)
+                .padding()
+
+            Text(remainingTimeText)
+                .font(.headline)
+                .foregroundColor(.gray)
+
+        }
+        .onAppear {
+            // findNextEventを実行して結果を updateUI に渡す
+            if let (date, label) = findNextEvent(
+                startDate: startDate,
+                endDate: endDate,
+                weekdays: weekdays
+            ) {
+//                updateUI(for: date, label: label)
+                startCountdown(for: date)
+            }
+        }
+        .onDisappear {
+            timer?.invalidate()
+        }
+    }
+
+//    /// UI を更新し、カウントダウンを開始
+//    func updateUI(for eventDate: Date, label: String) {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "MM/dd (E) HH:mm"
+//
+//        // label は "start" か "end" のみ
+//        nextEventText = "\(label) \(formatter.string(from: eventDate))"
+//        nextEventDate = eventDate
+//    }
+
+    /// カウントダウンタイマー
+    func startCountdown(for eventDate: Date) {
+        timer?.invalidate()  // 既存のタイマーを停止
+
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+//            guard let eventDate = nextEventDate else {
+//                timer?.invalidate()
+//                return
+//            }
+
+            let now = Date()
+
+            // イベント時刻を過ぎたら再検索
+            if now >= eventDate {
+                timer?.invalidate()
+                if let (newDate, newLabel) = findNextEvent(
+                    startDate: startDate,
+                    endDate: endDate,
+                    weekdays: weekdays
+                ) {
+//                    updateUI(for: newDate, label: newLabel)
+                } else {
+                    // 見つからないなら表示をリセット
+                    nextEventText = "次のイベントはありません"
+                    remainingTimeText = ""
+                }
+            } else {
+                interval = eventDate.timeIntervalSince(now)
+
+                // カウントダウン残り時間を表示（外部関数を呼び出し）
+                remainingTimeText = "あと \(calculateTimeRemaining(interval))"
+            }
+        }
+    }
+}
+
+// MARK: - Preview
+
+struct AssignTimeView_Previews: PreviewProvider {
+    static var previews: some View {
+        AssignTimeView()
+    }
+}
+// MARK: - 外部に切り離した関数
+
+/// 指定した startDate, endDate, weekdays をもとに
+/// 「最初に見つかった未来の開始 or 終了の (日付, ラベル)」を返す関数。
+func findNextEvent(startDate: Date,
+                   endDate: Date,
+                   weekdays: [Int]) -> (Date, String)? {
+    let calendar = Calendar.current
+    let now = Date()
+    let today = Date()
+
+    // 今日の前日〜7日後を範囲に設定
+    guard let startOfRange = calendar.date(byAdding: .day, value: -1, to: today),
+          let endOfRange   = calendar.date(byAdding: .day, value: 7,  to: today)
+    else {
+        return nil
+    }
+
+    // startDate, endDate から hour/minute を取り出す
+    let startComponents = calendar.dateComponents([.hour, .minute], from: startDate)
+    let endComponents   = calendar.dateComponents([.hour, .minute], from: endDate)
+
+    var current = startOfRange
+
+    // 日付を 1日ずつ進めてチェック
+    while current <= endOfRange {
+        // current の曜日 (1:日, 2:月, ... 7:土)
+        let assignedWeekday = calendar.component(.weekday, from: current)
+
+        // weekdays に含まれない場合はスキップ
+        if !weekdays.contains(assignedWeekday) {
+            guard let nextDate = calendar.date(byAdding: .day, value: 1, to: current) else { break }
+            current = nextDate
+            continue
+        }
+
+        // current + start の時刻
+        var startDC = calendar.dateComponents([.year, .month, .day], from: current)
+        startDC.hour   = startComponents.hour
+        startDC.minute = startComponents.minute
+        guard let assignedStart = calendar.date(from: startDC) else { break }
+
+        // current + end の時刻
+        var endDC = calendar.dateComponents([.year, .month, .day], from: current)
+        endDC.hour   = endComponents.hour
+        endDC.minute = endComponents.minute
+        guard var assignedEnd = calendar.date(from: endDC) else { break }
+
+        // start > end の場合は end を翌日に
+        if assignedStart > assignedEnd {
+            assignedEnd = calendar.date(byAdding: .day, value: 1, to: assignedEnd)!
+        }
+
+        // 現在 < assignedStart なら開始が次のイベント
+        if now < assignedStart {
+            return (assignedStart, "start")
+        }
+
+        // 現在 < assignedEnd なら終了が次のイベント
+        if now < assignedEnd {
+            return (assignedEnd, "end")
+        }
+
+        // ここまで来たら次の日へ
+        guard let nextDate = calendar.date(byAdding: .day, value: 1, to: current) else { break }
+        current = nextDate
+    }
+
+    // 見つからなかった場合
+    return nil
+}
+
+/// 残り時間を「xx時間 xx分 xx秒」の文字列で返す関数
+func calculateTimeRemaining(_ interval: TimeInterval) -> String {
+    // interval は「残り秒数」(浮動小数)
+    // 例: interval = 3785.3 (約 1時間 03分 05秒)
+
+    let totalSeconds = Int(interval)  // 小数点以下を切り捨て
+    let hours = totalSeconds / 3600
+    let minutes = (totalSeconds % 3600) / 60
+    let seconds = totalSeconds % 60
+
+    return String(format: "%d:%02d:%02d", hours, minutes, seconds)
+}
+
+// MARK: - ヘルパー関数
+
+/// 時刻だけ設定して返す (当日の date)
+func createTime(hour: Int, minute: Int) -> Date {
+    let calendar = Calendar.current
+    return calendar.date(bySettingHour: hour,
+                         minute: minute,
+                         second: 0,
+                         of: Date()) ?? Date()
 }

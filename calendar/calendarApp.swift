@@ -8,6 +8,8 @@ import CoreData
 @main
 struct MyApp: App {
     //    let center = AuthorizationCenter.shared
+//    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     @StateObject private var dataController = DataController()  // Core Dataのコントローラ
 
     @State private var linktext = "Here is a link: https://www.apple.com"  // 静的でなく通常の@Stateプロパティに変更
@@ -48,6 +50,8 @@ struct MyApp: App {
 //            LocalNotificationView()
             //textfield
 //            TextInputWithLimitView()
+//            MainDiaryView()
+//            SettingsView()
             アプリルート(viewModel: taskViewModel)
                             .preferredColorScheme(.dark)
                             .environment(\.managedObjectContext, dataController.container.viewContext)

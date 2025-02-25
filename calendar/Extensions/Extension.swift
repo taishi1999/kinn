@@ -8,6 +8,7 @@ extension Color {
     static let darkButton_thin = Color(red: 14/255, green: 14/255, blue: 14/255)  // 追加した色
 
     static let buttonOrange = Color(red: 166/255, green: 102/255, blue: 0/255)  // 淡いオレンジ色
+    static let buttonGreen = Color(red: 16/255, green: 128/255, blue: 72/255)
     static var ThemeColor: Color {
         return Color(UIColor { traitCollection in
             return traitCollection.userInterfaceStyle == .dark ? .black : .white
@@ -22,4 +23,12 @@ extension Date {
         let components = calendar.dateComponents([.year, .month, .day, .hour], from: self)
         return calendar.date(from: components) ?? self
     }
+
+    func formattedTime() -> String {
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: self)
+        let minute = calendar.component(.minute, from: self)
+        return String(format: "%02d:%02d", hour, minute)
+    }
 }
+

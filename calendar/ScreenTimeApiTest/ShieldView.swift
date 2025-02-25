@@ -90,12 +90,12 @@ struct ShieldView: View {
                     }
                     .buttonStyle(.borderedProminent)
 
-                    Button("Apply Shielding") {
-                        //                startMonitoring()
-                        startMonitoringWithEvent()
-                        //                manager.shieldActivities()
-                    }
-                    .buttonStyle(.bordered)
+//                    Button("Apply Shielding") {
+//                        //                startMonitoring()
+//                        startMonitoringWithEvent()
+//                        //                manager.shieldActivities()
+//                    }
+//                    .buttonStyle(.bordered)
 
                     Button("save") {
                         //                let diaryTask = DiaryTask(
@@ -109,14 +109,14 @@ struct ShieldView: View {
 //                            print("Loaded DiaryTask: \(loadedDiaryTask)")
 //                        }
 //                        manager.saveSelection(selection: manager.discouragedSelections,startTime: manager.startTime,endTime: manager.endTime, weekDays: manager.weekDays)
-                        diaryTaskManager.diaryTask.selectionID="selection_1"
-
-                        diaryTaskManager.saveDiaryTask(
-                            diaryTaskManager.diaryTask,
-                            selection: diaryTaskManager.selection,
-                            taskKey: "diary",
-                            selectionKey: "selection_1"
-                        )
+//                        diaryTaskManager.diaryTask.selectionID="selection_1"
+//
+//                        diaryTaskManager.saveDiaryTask(
+//                            diaryTaskManager.diaryTask,
+//                            selection: diaryTaskManager.selection,
+//                            taskKey: "diary",
+//                            selectionKey: "selection_1"
+//                        )
 
 
                     }
@@ -246,109 +246,109 @@ struct ShieldView: View {
     }
 
 
-    private func startMonitoringWithEvent() {
-        print("モニタリングスタート")
-//        let weekDays: [WeekDays] = [.mon, .tue, .sat]
-//        let result = manager.savedSelection()
-//        guard let startTime = result.startTime,
-//                  let endTime = result.endTime,
-//                  let weekDays = result.weekDays else { // weekDays を取得
-//                print("開始時間、終了時間、または曜日が見つかりません")
-//                return
+//    private func startMonitoringWithEvent() {
+//        print("モニタリングスタート")
+////        let weekDays: [WeekDays] = [.mon, .tue, .sat]
+////        let result = manager.savedSelection()
+////        guard let startTime = result.startTime,
+////                  let endTime = result.endTime,
+////                  let weekDays = result.weekDays else { // weekDays を取得
+////                print("開始時間、終了時間、または曜日が見つかりません")
+////                return
+////            }
+//        let weekDays: [WeekDays] = diaryTaskManager.diaryTask.weekDays.compactMap { weekDayString in
+//            WeekDays.allCases.first { $0.shortName == weekDayString }
+//        }
+//        let rawValues = weekDays.map { $0.rawValue }
+//        print("Raw values: \(rawValues)")
+//        print("weekDays: \(weekDays),  diaryTaskManager.diaryTask.weekDays:\(diaryTaskManager.diaryTask.weekDays)")
+//
+//
+//        //指定した曜日以外のモニタリングをストップ------------------------------
+//        // 現在のスケジュールを取得
+//        let allScheduledActivities = center.activities
+//        // 選択された曜日に関連しないスケジュールを取得
+//        let selectedScheduleNames = weekDays.map { DeviceActivityName("diary_\($0)") }
+//        let schedulesToRemove = allScheduledActivities.filter { !selectedScheduleNames.contains($0) }
+//        print("スケジュールを削除する必要がある項目: \(schedulesToRemove)")
+//
+//        // 各スケジュール名を詳細に出力（配列内の要素を個別に表示）
+//        for schedule in schedulesToRemove {
+//            print("削除対象のスケジュール: \(schedule)")
+//        }
+//
+//        center.stopMonitoring(schedulesToRemove)
+//        //--------------------------------------------------------------
+//
+////        let startComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime)
+//        let startComponents = Calendar.current.dateComponents([.hour, .minute], from: diaryTaskManager.diaryTask.startTime)
+//
+////        var endComponents = Calendar.current.dateComponents([.hour, .minute], from: endTime)
+//        var endComponents = Calendar.current.dateComponents([.hour, .minute], from: diaryTaskManager.diaryTask.endTime
+//        )
+//        let elapsedComponents = calculateElapsedTime(from: diaryTaskManager.diaryTask.startTime, to: diaryTaskManager.diaryTask.endTime)
+//        // 開始から終了までの時間を計算
+////        let elapsedComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime, to: endTime)
+//
+////        print("hour:\(String(describing: elapsedComponents.hour)) minute:\(String(describing: elapsedComponents.minute))")
+//        // 全体の経過分数を計算
+//        let elapsedMinutes = (elapsedComponents.hour ?? 0) * 60 + (elapsedComponents.minute ?? 0)
+//        print("経過時間（分単位）: \(elapsedMinutes)")
+//
+//        //15分未満の場合,warningTimeを設定してintervalWillEndWarningを
+//        //実行させる（DeviceActivityScheduleは15分間隔を空けないといけない仕様なので）
+//        var warningTime = DateComponents(minute: 0)
+//        if elapsedMinutes > 0 && elapsedMinutes < 15 {
+//            warningTime = DateComponents(minute: 15 - elapsedMinutes)
+//
+//            // endComponents を startComponents の 15 分後に設定
+//            if let startDate = Calendar.current.date(from: startComponents) {
+//                let adjustedEndDate = Calendar.current.date(byAdding: .minute, value: 15, to: startDate)
+//                endComponents = Calendar.current.dateComponents([.hour, .minute], from: adjustedEndDate ?? startDate)
 //            }
-        let weekDays: [WeekDays] = diaryTaskManager.diaryTask.weekDays.compactMap { weekDayString in
-            WeekDays.allCases.first { $0.shortName == weekDayString }
-        }
-        let rawValues = weekDays.map { $0.rawValue }
-        print("Raw values: \(rawValues)")
-        print("weekDays: \(weekDays),  diaryTaskManager.diaryTask.weekDays:\(diaryTaskManager.diaryTask.weekDays)")
-
-
-        //指定した曜日以外のモニタリングをストップ------------------------------
-        // 現在のスケジュールを取得
-        let allScheduledActivities = center.activities
-        // 選択された曜日に関連しないスケジュールを取得
-        let selectedScheduleNames = weekDays.map { DeviceActivityName("diary_\($0)") }
-        let schedulesToRemove = allScheduledActivities.filter { !selectedScheduleNames.contains($0) }
-        print("スケジュールを削除する必要がある項目: \(schedulesToRemove)")
-
-        // 各スケジュール名を詳細に出力（配列内の要素を個別に表示）
-        for schedule in schedulesToRemove {
-            print("削除対象のスケジュール: \(schedule)")
-        }
-
-        center.stopMonitoring(schedulesToRemove)
-        //--------------------------------------------------------------
-
-//        let startComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime)
-        let startComponents = Calendar.current.dateComponents([.hour, .minute], from: diaryTaskManager.diaryTask.startTime)
-
-//        var endComponents = Calendar.current.dateComponents([.hour, .minute], from: endTime)
-        var endComponents = Calendar.current.dateComponents([.hour, .minute], from: diaryTaskManager.diaryTask.endTime
-        )
-        let elapsedComponents = calculateElapsedTime(from: diaryTaskManager.diaryTask.startTime, to: diaryTaskManager.diaryTask.endTime)
-        // 開始から終了までの時間を計算
-//        let elapsedComponents = Calendar.current.dateComponents([.hour, .minute], from: startTime, to: endTime)
-
-//        print("hour:\(String(describing: elapsedComponents.hour)) minute:\(String(describing: elapsedComponents.minute))")
-        // 全体の経過分数を計算
-        let elapsedMinutes = (elapsedComponents.hour ?? 0) * 60 + (elapsedComponents.minute ?? 0)
-        print("経過時間（分単位）: \(elapsedMinutes)")
-
-        //15分未満の場合,warningTimeを設定してintervalWillEndWarningを
-        //実行させる（DeviceActivityScheduleは15分間隔を空けないといけない仕様なので）
-        var warningTime = DateComponents(minute: 0)
-        if elapsedMinutes > 0 && elapsedMinutes < 15 {
-            warningTime = DateComponents(minute: 15 - elapsedMinutes)
-
-            // endComponents を startComponents の 15 分後に設定
-            if let startDate = Calendar.current.date(from: startComponents) {
-                let adjustedEndDate = Calendar.current.date(byAdding: .minute, value: 15, to: startDate)
-                endComponents = Calendar.current.dateComponents([.hour, .minute], from: adjustedEndDate ?? startDate)
-            }
-        }
-
-        for weekDay in weekDays {
-            let scheduleName = DeviceActivityName("diary_\(weekDay)")
-            // 1. 既存のスケジュールを停止
-//            center.stopMonitoring([scheduleName])
-
-            var startWithWeekday = startComponents
-            var endWithWeekday = endComponents
-
-            // 曜日を追加
-            startWithWeekday.weekday = weekDay.rawValue
-            //翌日になった場合、次の日の曜日を設定
-            if elapsedMinutes <= 0 {
-                    // 次の曜日を計算
-                    let nextWeekdayRawValue = (weekDay.rawValue % 7) + 1
-                    endWithWeekday.weekday = nextWeekdayRawValue
-                print("次の曜日: \(nextWeekdayRawValue)")
-                } else {
-                    // 同じ曜日のまま
-                    endWithWeekday.weekday = weekDay.rawValue
-                }
-            // スケジュールを作成
-            let schedule = DeviceActivitySchedule(
-                intervalStart: startWithWeekday,
-                intervalEnd: endWithWeekday,
-                repeats: true, // 毎週繰り返し
-                warningTime: warningTime
-            )
-
-            do {
-                // スケジュールとイベントを登録
-//                try center.startMonitoring(
-//                    .init("\(weekDay)Schedule"), // 各曜日ごとのスケジュール名
-//                    during: schedule
-//                )
-                try center.startMonitoring(scheduleName, during: schedule)
-                print("\(weekDay) のスケジュールが登録されました")
-            } catch {
-                print("\(weekDay) のスケジュール登録エラー: \(error.localizedDescription)")
-            }
-        }
-    }
+//        }
+//
+//        for weekDay in weekDays {
+//            let scheduleName = DeviceActivityName("diary_\(weekDay)")
+//            // 1. 既存のスケジュールを停止
+////            center.stopMonitoring([scheduleName])
+//
+//            var startWithWeekday = startComponents
+//            var endWithWeekday = endComponents
+//
+//            // 曜日を追加
+//            startWithWeekday.weekday = weekDay.rawValue
+//            //翌日になった場合、次の日の曜日を設定
+//            if elapsedMinutes <= 0 {
+//                    // 次の曜日を計算
+//                    let nextWeekdayRawValue = (weekDay.rawValue % 7) + 1
+//                    endWithWeekday.weekday = nextWeekdayRawValue
+//                print("次の曜日: \(nextWeekdayRawValue)")
+//                } else {
+//                    // 同じ曜日のまま
+//                    endWithWeekday.weekday = weekDay.rawValue
+//                }
+//            // スケジュールを作成
+//            let schedule = DeviceActivitySchedule(
+//                intervalStart: startWithWeekday,
+//                intervalEnd: endWithWeekday,
+//                repeats: true, // 毎週繰り返し
+//                warningTime: warningTime
+//            )
+//
+//            do {
+//                // スケジュールとイベントを登録
+////                try center.startMonitoring(
+////                    .init("\(weekDay)Schedule"), // 各曜日ごとのスケジュール名
+////                    during: schedule
+////                )
+//                try center.startMonitoring(scheduleName, during: schedule)
+//                print("\(weekDay) のスケジュールが登録されました")
+//            } catch {
+//                print("\(weekDay) のスケジュール登録エラー: \(error.localizedDescription)")
+//            }
+//        }
+//    }
 
 
 
@@ -382,27 +382,28 @@ struct ShieldView: View {
 //    var characterCount: Int
 //}
 
-func calculateElapsedTime(from startTime: Date, to endTime: Date) -> DateComponents {
-    let calendar = Calendar.current
-    let today = calendar.startOfDay(for: Date()) // 今日の日付を取得して時刻をリセット
+//func calculateElapsedTime(from startTime: Date, to endTime: Date) -> DateComponents {
+//    let calendar = Calendar.current
+//    let today = calendar.startOfDay(for: Date()) // 今日の日付を取得して時刻をリセット
+//
+//    // startTime の時刻を今日の日付に合わせる
+//    let startComponents = calendar.dateComponents([.hour, .minute], from: startTime)
+//    let adjustedStartTime = calendar.date(bySettingHour: startComponents.hour ?? 0,
+//                                          minute: startComponents.minute ?? 0,
+//                                          second: 0,
+//                                          of: today) ?? today
+//
+//    // endTime の時刻を今日の日付に合わせる
+//    let endComponents = calendar.dateComponents([.hour, .minute], from: endTime)
+//    let adjustedEndTime = calendar.date(bySettingHour: endComponents.hour ?? 0,
+//                                        minute: endComponents.minute ?? 0,
+//                                        second: 0,
+//                                        of: today) ?? today
+//
+//    // startTime と endTime を指定して時間差を計算
+//    return calendar.dateComponents([.hour, .minute], from: adjustedStartTime, to: adjustedEndTime)
+//}
 
-    // startTime の時刻を今日の日付に合わせる
-    let startComponents = calendar.dateComponents([.hour, .minute], from: startTime)
-    let adjustedStartTime = calendar.date(bySettingHour: startComponents.hour ?? 0,
-                                          minute: startComponents.minute ?? 0,
-                                          second: 0,
-                                          of: today) ?? today
-
-    // endTime の時刻を今日の日付に合わせる
-    let endComponents = calendar.dateComponents([.hour, .minute], from: endTime)
-    let adjustedEndTime = calendar.date(bySettingHour: endComponents.hour ?? 0,
-                                        minute: endComponents.minute ?? 0,
-                                        second: 0,
-                                        of: today) ?? today
-
-    // startTime と endTime を指定して時間差を計算
-    return calendar.dateComponents([.hour, .minute], from: adjustedStartTime, to: adjustedEndTime)
-}
 //        // 単一のスケジュール
 //        let schedule = DeviceActivitySchedule(
 //            intervalStart: startComponents,

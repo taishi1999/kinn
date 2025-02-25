@@ -22,6 +22,6 @@ struct パーツ_時刻選択: View {
                 displayedComponents: [.hourAndMinute]
             )
         }
-        .padding()
+//        .padding()
     }
 }

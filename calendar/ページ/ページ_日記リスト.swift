@@ -4,6 +4,7 @@ struct ページ_日記リスト: View {
     @ObservedObject var diaryTaskManager: DiaryTaskManager
     @ObservedObject var viewModel: TaskViewModel
     @Environment(\.managedObjectContext) var viewContext  // ここでviewContextを定義
+    @AppStorage("task_disabled") private var localIsDisabled: Bool = false
 
     @FetchRequest(
         entity: DiaryEntry.entity(),
@@ -22,7 +23,11 @@ struct ページ_日記リスト: View {
 
     let generator = UIImpactFeedbackGenerator(style: .medium)
 
-    @State private var listPositionX: CGFloat = 0.0
+//    @State private var listPositionX: CGFloat = 0.0
+
+    @State private var permissionStatus: UNAuthorizationStatus = .notDetermined
+    @State private var interval: TimeInterval = 0  // ← @Stateで管理
+    @State private var remainingTimeText: String = ""
 
     private var safeAreaInsets: UIEdgeInsets {
         let scenes = UIApplication.shared.connectedScenes
@@ -49,8 +54,20 @@ struct ページ_日記リスト: View {
 
     @State private var showPopover = true // ポップオーバー表示フラグ
 
+//    private func messageForNextEventLabel(_ label: String) -> String {
+//        switch label {
+//        case "start":
+//            return "開始まで"
+//        case "end":
+//            return "終了まで"
+//        default:
+//            return "予定がありません"
+//        }
+//    }
+
+    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             GeometryReader { geometry in
                 ZStack{
 //                    VStack{
@@ -129,135 +146,178 @@ struct ページ_日記リスト: View {
 
                     VStack {
                         HStack {
-                            //                            パーツ_文字数入力欄(text: $characterCount)
-                            Button(action: {
-                                viewModel.deleteAllTasks(context: viewContext)
-//                                deleteAllTasks(context: viewContext)
-                            }) {
-                                Text("Delete All Tasks")
-                                    .padding()
-                                    .background(Color.red)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(8)
-                            }
+                            Spacer()
+                                .frame(width: 24 + 16, height: 24 + 16)
+                            Spacer()
+                            Text(diaryTaskManager.isBlocked ? "ブロック中" : "ブロックなし")
+                                .padding()
+                                .background(.black)
+
+                            Spacer()
+                            //設定
+                                NavigationLink(destination: {
+                                    ページ_設定(diaryTaskManager: diaryTaskManager/*, interval: $interval*/)
+
+                                }, label: {
+                                    Image("setting_outlined_icon")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .colorMultiply(Color.primary)
+                                        .frame(width: 24, height: 24)
+                                        .padding(8)
+                                        .background(Color.darkButton_thin.opacity(0.7))
+                                        .cornerRadius(.infinity)
+                                        // .shadow(color: Color.black.opacity(0.6), radius: 12, x: 0, y: 4)
+                                })
+                                .buttonStyle(PlainButtonStyle())
+                        }
+//                        .padding(.vertical, 8)
+                        .padding(.horizontal, geometry.size.width <= 375 ? 16 : 20)
+
+                        //                    .background(Color.gray.opacity(0.8)) // 背景色を設定
+                        .frame(maxWidth: .infinity)
+//                        .background(.bar)
+
+                        Button("全てのローカル通知出力") {
+                            printAllPendingNotifications()
+                        }
+
+                        Button("全てのスケジュール出力") {
+                            getAllScheduledActivities()
+                        }
+
+//                            Button(action: {
+//                                viewModel.deleteAllTasks(context: viewContext)
+////                                deleteAllTasks(context: viewContext)
+//                            }) {
+//                                Text("Delete All Tasks")
+//                                    .padding()
+//                                    .background(Color.red)
+//                                    .foregroundColor(.white)
+//                                    .cornerRadius(8)
+//                            }
 //                            NavigationLink(destination: Coredata送るテスト(task: firstTask)) {
 //                                Text("保存された予定")
 //                                    .padding()
 //                                    .background(Color.green)
 //                                    .foregroundColor(.white)
 //                                    .cornerRadius(8)
-                            NavigationLink(destination: TaskListView()) {
-                                Text("View Saved Tasks")
-                                    .padding()
-                                    .background(Color.green)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(8)
-                            }
-                            Button(action: {
-                                // ボタンがタップされたときにフラグを変更
-                                フラグ_ブロック画面表示 = true
-                            }) {
-                                Text("ブロック画面を表示")
-                                    .font(.headline)
-                                    .padding()
-                                    .background(Color.blue)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
-                            }.fullScreenCover(isPresented: $フラグ_ブロック画面表示) {
-                                ページ_ブロック画面(action: {
-                                    フラグ_日記エディタ表示 = true // フラグを変更
-                                }) // フルスクリーンで表示するビュー
-                            }
-                            Spacer()
-                            //設定
-                            ZStack(alignment: .topTrailing) {
-                                Button(action: {
-//                                    if let firstTask = diarytask.first {
-//                                                       selectedTask = firstTask  // 最初のタスクを選択
-//
-//                                                   }
-                                    フラグ_セッティング画面表示 = true // ボタンタップ時にフルスクリーン表示
-                                }) {
-                                    Image("setting_outlined_icon")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .colorMultiply(Color.buttonOrange)
-                                        .frame(width: 24, height: 24)
-                                        .padding(8)
-                                        .background(Color.darkButton_thin.opacity(0.7))
-                                        .cornerRadius(.infinity)
-                                    //                                        .shadow(color: Color.black.opacity(0.6), radius: 12, x: 0, y: 4)
-                                }
-                                .buttonStyle(PlainButtonStyle()) // デフォルトの青いエフェクトを消す
-                                .fullScreenCover(isPresented: $フラグ_セッティング画面表示, onDismiss: {
-                                    // FullScreenCoverが閉じたときに実行する関数
-                                    ブロック監視タイマー()
-                                }) {
-                                    ページ_タスク作成(
-                                        task: viewModel.coredata_MyTask,viewModel: viewModel
-                                    )
-                                }
-                                // 通知アイコンの小さい円
-                                //                                Circle()
-                                //                                    .fill(Color.buttonOrange)
-                                //                                    .frame(width: 6, height: 6)
-                                //                                    .offset(x: -2, y: 2)
-                            }
+//                            NavigationLink(destination: TaskListView()) {
+//                                Text("View Saved Tasks")
+//                                    .padding()
+//                                    .background(Color.green)
+//                                    .foregroundColor(.white)
+//                                    .cornerRadius(8)
+//                            }
+
+                        Button(action: {
+                            // ボタンがタップされたときにフラグを変更
+                            フラグ_ブロック画面表示 = true
+                        }) {
+                            Text("ブロック画面を表示")
+                                .font(.headline)
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                        }.fullScreenCover(isPresented: $diaryTaskManager.isBlocked/*$フラグ_ブロック画面表示*/) {
+                            ページ_ブロック画面(action: {
+                                フラグ_日記エディタ表示 = true // フラグを変更
+                            }) // フルスクリーンで表示するビュー
                         }
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, geometry.size.width <= 375 ? 16 : 20)
-
-                        //                    .background(Color.gray.opacity(0.8)) // 背景色を設定
-                        .frame(maxWidth: .infinity)
-
                         Spacer() // リストを下に配置
                     }
                     VStack(spacing: 0) {
+
                         Spacer()
-                        パーツ_ボタン_日記作成( action: {
-                            フラグ_日記エディタ表示 = true // フラグを変更
-                        },/*フラグ_日記エディタ表示: $フラグ_日記エディタ表示, */startTime: $viewModel.coredata_MyTask.startTime, endTime: $viewModel.coredata_MyTask.endTime,repeatDays: Binding<[Int]>(
-                            get: {
-                                // Stringを[Int]に変換
-                                (viewModel.coredata_MyTask.repeatDays ?? "")
-                                    .split(separator: ",")
-                                    .compactMap { Int($0) }
-                            },
-                            set: { newRepeatDays in
-                                // [Int]をStringに変換して保存
-                                viewModel.coredata_MyTask.repeatDays = newRepeatDays.map { String($0) }.joined(separator: ",")
-                            }
-                        )) 
-                            .sheet(isPresented: $フラグ_日記エディタ表示) {
-                                NavigationView {
-                                    ページ_日記エディタ {
-                                        フラグ_日記エディタ表示 = false  // 保存完了後にシートを閉じる
-                                    }
-                                    .navigationBarTitleDisplayMode(.inline)
+                        HStack(spacing: 4) {
+                            if !localIsDisabled {
+                                    Image(systemName: "hourglass.tophalf.filled")
+                                        .font(.system(size: 12))
+
+                                    Text(diaryTaskManager.nextEventLabel == "end" ? "Loading..." :
+                                            diaryTaskManager.nextEventLabel == "none" ? "--:--:--" :
+                                            "\(calculateTimeRemaining(diaryTaskManager.interval))")
+                                } else {
+                                    Text("一時停止中")
+                                        .foregroundColor(.secondary)
                                 }
-                                .presentationDetents([.large])
+
+                        }
+                        .font(.caption)
+                        .fontWeight(.bold )
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
+                        .background(Color.darkButton_thin.opacity(0.8))
+                        //            .background(Color.black.opacity(0.8))
+                        .cornerRadius(.infinity)
+                        .padding(.vertical, 8)
+
+
+                        パーツ_共通ボタン(ボタンテキスト: "今日の日記を書く", action:{
+                            フラグ_日記エディタ表示 = true // フラグを変更
+                        })
+
+//                        パーツ_ボタン_日記作成( action: {
+//                            フラグ_日記エディタ表示 = true // フラグを変更
+//                        },/*フラグ_日記エディタ表示: $フラグ_日記エディタ表示, */startTime: $viewModel.coredata_MyTask.startTime, endTime: $viewModel.coredata_MyTask.endTime,repeatDays: Binding<[Int]>(
+//                            get: {
+//                                // Stringを[Int]に変換
+//                                (viewModel.coredata_MyTask.repeatDays ?? "")
+//                                    .split(separator: ",")
+//                                    .compactMap { Int($0) }
+//                            },
+//                            set: { newRepeatDays in
+//                                // [Int]をStringに変換して保存
+//                                viewModel.coredata_MyTask.repeatDays = newRepeatDays.map { String($0) }.joined(separator: ",")
+//                            }
+//                        ))
+                        .fullScreenCover(isPresented: $フラグ_日記エディタ表示) {
+                            NavigationView {
+                                ページ_日記エディタ {
+                                    フラグ_日記エディタ表示 = false  // 保存完了後にシートを閉じる
+                                }
+                                .navigationBarTitleDisplayMode(.inline)
                             }
+                        }
+
                     }
                     .padding(.horizontal, geometry.size.width <= 375 ? 16 : 20)
                     .padding(.bottom,/*44+*/geometry.size.width <= 375 ? 8 : 10)
                 }
                 //開発用なのでelseは後で消す
                 .onAppear {
-                    ブロック監視タイマー()
+//                    diaryTaskManager.startCountdown()  // ✅ interval を更新
+
+//                    let weekDays: [WeekDays] = convertToWeekDays(from: diaryTaskManager.diaryTask.weekDays)
+//                    let rawValues = weekDays.map { $0.rawValue }
+//
+//                    if let (date, label) = findNextEvent(
+//                        startDate: diaryTaskManager.diaryTask.startTime,
+//                        endDate: diaryTaskManager.diaryTask.endTime, weekdays: rawValues
+//                    ) {
+////print("\(date), \(label)")
+////                        updateUI(for: date, label: label)
+//                        startCountdown(for: date)
+//                    }
+////                    ブロック監視タイマー()
+//                    requestNotificationPermission()
 
                 }
-
             }
         }
     }
 
+    private func convertToJapaneseDays(from englishDays: [String]) -> [String] {
+        let mapping: [String: String] = WeekDays.allCases.reduce(into: [:]) { result, weekDay in
+            result[weekDay.shortName.lowercased()] = String(weekDay.displayName.prefix(1)) // 先頭1文字を取得
+        }
 
-    // カウントダウンを更新する関数
-//    private func updateCountdown() {
-//        if countdownTime > 0 {
-//            countdownTime -= 1
-//        }
-//    }
+        return englishDays.compactMap { mapping[$0.lowercased()] }
+    }
+
+     
+
 
     // カウントダウンの残り時間を "00:00:00" の形式でフォーマット
     private func formattedCountdownTime() -> String {
@@ -325,54 +385,6 @@ struct ページ_日記リスト: View {
             }
         }
     }
-    
-
-    //    func formatDate(_ date: Date) -> String {
-    //        let calendar = Calendar.current
-    //        let today = calendar.startOfDay(for: Date())
-    //        let entryDate = calendar.startOfDay(for: date)
-    //
-    //        let components = calendar.dateComponents([.day], from: entryDate, to: today)
-    //        let dayDifference = components.day ?? 0
-    //
-    //        let weekdayFormatter = DateFormatter()
-    //        weekdayFormatter.locale = Locale(identifier: "ja_JP")  // 日本語に設定
-    //        weekdayFormatter.dateFormat = "EEE"  // 曜日を1文字で表示する形式
-    //
-    //        // 今日の場合
-    //        if calendar.isDateInToday(entryDate) {
-    //            let timeFormatter = DateFormatter()
-    //            timeFormatter.locale = Locale(identifier: "ja_JP")
-    //            timeFormatter.dateFormat = "HH:mm"
-    //            return timeFormatter.string(from: date)  // 今日なら時刻を表示
-    //
-    //        // 昨日の場合
-    //        } else if calendar.isDateInYesterday(entryDate) {
-    //            return "昨日"  // 昨日
-    //
-    //        // 6日前まで
-    //        } else if dayDifference <= 6 {
-    //            return weekdayFormatter.string(from: date) + "曜日"  // 6日前までは曜日+曜日を表示
-    //        }
-    // else {
-    //            let currentYear = calendar.component(.year, from: today)
-    //            let entryYear = calendar.component(.year, from: entryDate)
-    //
-    //            let dateFormatter = DateFormatter()
-    //            dateFormatter.locale = Locale(identifier: "ja_JP")  // 日本語に設定
-    //
-    //            // 曜日を取得してフォーマットに追加
-    //            let weekday = weekdayFormatter.string(from: date)
-    //
-    //            // 今年の場合は "MM/dd (金)"、それ以外は "yyyy/MM/dd (金)"
-    //            if currentYear == entryYear {
-    //                dateFormatter.dateFormat = "MM/dd'('\(weekday)')'"
-    //            } else {
-    //                dateFormatter.dateFormat = "yyyy/MM/dd'('\(weekday)')'"
-    //            }
-    //            return dateFormatter.string(from: date)
-    //        }
-    //    }
 
     // 日記エントリを月ごとにグループ化
     func groupedByMonthAndYear() -> [(key: String, entries: [DiaryEntry])] {
@@ -558,3 +570,90 @@ class DeviceSizeManager: ObservableObject {
 //        CustomScrollView()
 //    }
 //}
+
+//   private func startCountdown(for eventDate: Date) {
+//        timer?.invalidate()  // 既存のタイマーを停止
+//
+//        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+////            guard let eventDate = nextEventDate else {
+////                timer?.invalidate()
+////                return
+////            }
+//
+//            let now = Date()
+//            let weekDays: [WeekDays] = convertToWeekDays(from: diaryTaskManager.diaryTask.weekDays)
+//            let rawValues = weekDays.map { $0.rawValue }
+//            // イベント時刻を過ぎたら再検索
+//            if now >= eventDate {
+//                timer?.invalidate()
+//                if let (newDate, newLabel) = findNextEvent(
+//                    startDate: diaryTaskManager.diaryTask.startTime,
+//                    endDate: diaryTaskManager.diaryTask.endTime,
+//                    weekdays: rawValues
+//                ) {
+//                    print("newDate: \(newDate), newLabel: \(newLabel)")
+////                    updateUI(for: newDate, label: newLabel)
+//                } else {
+//                    // 見つからないなら表示をリセット
+////                    nextEventText = "次のイベントはありません"
+////                    remainingTimeText = ""
+//                }
+//            } else {
+//                interval = eventDate.timeIntervalSince(now)
+////print("interval: \(interval)")
+//                remainingTimeText = "\(calculateTimeRemaining(interval))"
+////                remainingTimeText = "\(calculateTimeRemaining(interval))"
+//
+//                print("remainingtime: \(remainingTimeText)")
+//                // カウントダウン残り時間を表示（外部関数を呼び出し）
+////                remainingTimeText = "あと \(calculateTimeRemaining(interval))"
+//            }
+//        }
+//    }
+
+//    func formatDate(_ date: Date) -> String {
+//        let calendar = Calendar.current
+//        let today = calendar.startOfDay(for: Date())
+//        let entryDate = calendar.startOfDay(for: date)
+//
+//        let components = calendar.dateComponents([.day], from: entryDate, to: today)
+//        let dayDifference = components.day ?? 0
+//
+//        let weekdayFormatter = DateFormatter()
+//        weekdayFormatter.locale = Locale(identifier: "ja_JP")  // 日本語に設定
+//        weekdayFormatter.dateFormat = "EEE"  // 曜日を1文字で表示する形式
+//
+//        // 今日の場合
+//        if calendar.isDateInToday(entryDate) {
+//            let timeFormatter = DateFormatter()
+//            timeFormatter.locale = Locale(identifier: "ja_JP")
+//            timeFormatter.dateFormat = "HH:mm"
+//            return timeFormatter.string(from: date)  // 今日なら時刻を表示
+//
+//        // 昨日の場合
+//        } else if calendar.isDateInYesterday(entryDate) {
+//            return "昨日"  // 昨日
+//
+//        // 6日前まで
+//        } else if dayDifference <= 6 {
+//            return weekdayFormatter.string(from: date) + "曜日"  // 6日前までは曜日+曜日を表示
+//        }
+// else {
+//            let currentYear = calendar.component(.year, from: today)
+//            let entryYear = calendar.component(.year, from: entryDate)
+//
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.locale = Locale(identifier: "ja_JP")  // 日本語に設定
+//
+//            // 曜日を取得してフォーマットに追加
+//            let weekday = weekdayFormatter.string(from: date)
+//
+//            // 今年の場合は "MM/dd (金)"、それ以外は "yyyy/MM/dd (金)"
+//            if currentYear == entryYear {
+//                dateFormatter.dateFormat = "MM/dd'('\(weekday)')'"
+//            } else {
+//                dateFormatter.dateFormat = "yyyy/MM/dd'('\(weekday)')'"
+//            }
+//            return dateFormatter.string(from: date)
+//        }
+//    }

@@ -4,22 +4,36 @@ import FamilyControls
 struct アプリルート: View {
     @StateObject var viewModel: TaskViewModel
     @AppStorage("isOnboardingCompleted") private var isOnboardingCompleted: Bool = false
+    @AppStorage("task_disabled") private var taskDisabled: Bool = false
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.dismiss) private var dismiss
     let center = AuthorizationCenter.shared
     @State private var path = NavigationPath()
     @State private var showSheet = false
 
-    @ObservedObject var diaryTaskManager = DiaryTaskManager.shared
+//    @ObservedObject var diaryTaskManager = DiaryTaskManager.shared
+    @StateObject var diaryTaskManager = DiaryTaskManager.shared
     var body: some View {
         Group {
-            if !isOnboardingCompleted {
-                OnboardingView(diaryTaskManager: diaryTaskManager, viewModel: viewModel, path: $path, onComplete: {
-                    isOnboardingCompleted = true
-                    print("isOnboardingCompleted = true")
-                })
-            } else {
-                ページ_日記リスト(diaryTaskManager: diaryTaskManager,viewModel: viewModel)
-            }
+//            if !isOnboardingCompleted {
+//                OnboardingView(diaryTaskManager: diaryTaskManager, viewModel: viewModel, path: $path, onComplete: {
+//                    isOnboardingCompleted = true
+//                    print("isOnboardingCompleted = true")
+//                })
+//            } else {
+//                ページ_日記リスト(diaryTaskManager: diaryTaskManager,viewModel: viewModel)
+//            }
+            ページ_日記リスト(diaryTaskManager: diaryTaskManager,viewModel: viewModel)
+                .sheet(isPresented: $showSheet) {
+                    オンボ_認証(center: center,onComplete: {
+                        Task {
+                            await requestAuthorizationIfNeeded() // 🔹 シートが閉じた後に認証処理を実行
+                            showSheet=false
+                        }
+                    })
+                        .interactiveDismissDisabled(true)
+                }
+                .allowsHitTesting(isOnboardingCompleted)
 
             // デバッグ用のリセットボタン
             Button("Reset Onboarding (Debug)") {
@@ -31,10 +45,23 @@ struct アプリルート: View {
             .foregroundColor(.white)
             .cornerRadius(8)
         }
-        .sheet(isPresented: $showSheet) {
-            オンボ_認証(center: center)
-                .interactiveDismissDisabled(true)
-        }
+        .fullScreenCover(isPresented: .constant(!isOnboardingCompleted)) {
+                    OnboardingView(
+                        diaryTaskManager: diaryTaskManager,
+                        viewModel: viewModel,
+                        path: $path,
+                        onComplete: {
+                            // onCompleteが呼ばれたらシートを閉じる
+                            isOnboardingCompleted = true
+                            print("Onboarding completed!")
+                        }
+                    )
+//                    .presentationDetents([.large])
+//                    .presentationDragIndicator(.hidden)
+//                    .interactiveDismissDisabled()
+
+                }
+
 
         //        .onChange(of: path) { newPath in
         //                        if newPath.count > 0 {
@@ -46,13 +73,42 @@ struct アプリルート: View {
             case .active:
                 print("アプリがアクティブになりました")
 
-                //オンボードが完了、またはオンボ_認証以外の時、showSheetでオンボ_認証を表示してない場合に実行
+                //オンボードが完了、またはオンボーディングのオンボ_認証以外の時、showSheetでオンボ_認証を表示してない場合に実行
+//                if (isOnboardingCompleted || path.count > 0) && !showSheet{
+//                    Task {
+//                        await requestAuthorizationIfNeeded()
+//                    }
+//                }
+                
+                //タスクが有効なら
+//                if !taskDisabled {
+//                    let scheduledActivities = getAllScheduledActivities()
+//                    if scheduledActivities.isEmpty {
+//                        // 🔹 `diaryTaskManager.diaryTask.weekDays` が空でなければ
+//                        if !diaryTaskManager.diaryTask.weekDays.isEmpty {
+//                            diaryTaskManager.updateTask { result in
+//                                switch result {
+//                                case .success:
+//                                    print("[scenePhase:active]✅ タスクの更新が成功しました！")
+//                                case .failure(let error):
+//                                    print("[scenePhase:active]❌ タスクの更新に失敗: \(error.localizedDescription)")
+//                                }
+//                            }
+//                        } else {
+//                            print("[scenePhase:active] ⚠️ `diaryTaskManager.diaryTask.weekDays` が空のため `updateTask()` は実行されません。")
+//                        }
+//                    }
+//                    else{
+//                        print("[scenePhase:active] スケジュールがあります")
+//                    }
+//                }
 
-                if (isOnboardingCompleted || path.count > 0) && !showSheet{
+                if(isOnboardingCompleted && !showSheet){
                     Task {
                         await requestAuthorizationIfNeeded()
                     }
                 }
+
             case .inactive, .background:
                 print("アプリが非アクティブまたはバックグラウンドに移動しました")
             @unknown default:
@@ -60,36 +116,61 @@ struct アプリルート: View {
             }
         }
     }
+
     private func requestAuthorizationIfNeeded() async {
         do {
             try await center.requestAuthorization(for: .individual)
-            print("認証リクエスト成功")
+            print("[requestAuthorizationIfNeeded]✅認証リクエスト成功")
+            //認証済みかつタスクが有効なら
+            if !taskDisabled {
+                let scheduledActivities = getAllScheduledActivities()
+                if scheduledActivities.isEmpty {
+                    // 🔹 `diaryTaskManager.diaryTask.weekDays` が空でなければ
+                    if !diaryTaskManager.diaryTask.weekDays.isEmpty {
+                        diaryTaskManager.updateTask { result in
+                            switch result {
+                            case .success:
+                                print("[scenePhase:active]✅ タスクの更新が成功しました！")
+                            case .failure(let error):
+                                print("[scenePhase:active]❌ タスクの更新に失敗: \(error.localizedDescription)")
+                            }
+                        }
+                    } else {
+                        print("[scenePhase:active] ⚠️ `diaryTaskManager.diaryTask.weekDays` が空のため `updateTask()` は実行されません。")
+                    }
+                }
+                else{
+                    print("[scenePhase:active] スケジュールがあります")
+                }
+            }
         } catch let error as FamilyControlsError {
             switch error {
             case .authorizationCanceled:
-                print("認証がキャンセルされました")
+                print("[requestAuthorizationIfNeeded]認証がキャンセルされました")
                 DispatchQueue.main.async {
                     showSheet = true // シートを表示
                 }
             case .restricted:
-                print("使用が制限されています")
+                print("[requestAuthorizationIfNeeded]使用が制限されています")
             case .unavailable:
-                print("Family Controls が利用できません")
+                print("[requestAuthorizationIfNeeded]Family Controls が利用できません")
             case .invalidAccountType:
-                print("無効なアカウントタイプです")
+                print("[requestAuthorizationIfNeeded]無効なアカウントタイプです")
             case .networkError:
-                print("ネットワークエラーが発生しました")
+                print("[requestAuthorizationIfNeeded]ネットワークエラーが発生しました")
             case .authorizationConflict:
-                print("既に他のアプリが管理を行っています")
+                print("[requestAuthorizationIfNeeded]既に他のアプリが管理を行っています")
             default:
-                print("その他のエラー: \(error.localizedDescription)")
+                print("[requestAuthorizationIfNeeded]その他のエラー: \(error.localizedDescription)")
             }
         } catch {
-            print("予期しないエラー: \(error.localizedDescription)")
+            print("[requestAuthorizationIfNeeded]予期しないエラー: \(error.localizedDescription)")
         }
     }
-
 }
+
+
+
 
 //struct UserDefaultsExampleView: View {
 //    @State private var savedValue: Bool = UserDefaults.standard.bool(forKey: "Boolean") // 初期値読み込み
@@ -159,3 +240,52 @@ struct アプリルート: View {
 
 
 
+import SwiftUI
+
+struct MainDiaryView: View { // ContentView を MainDiaryView に変更
+    @State private var isSheetPresented: Bool
+    @State private var isInteractionDisabled: Bool = false
+    init() {
+        _isSheetPresented = State(initialValue: true)
+    }
+
+    var body: some View {
+        VStack {
+                    Text("メイン画面")
+                        .font(.largeTitle)
+                        .padding()
+
+                    Button("操作を無効化") {
+                        isInteractionDisabled = true
+                    }
+
+                    Button("操作を有効化") {
+                        isInteractionDisabled = false
+                    }
+                }
+                .allowsHitTesting(!isInteractionDisabled) // Bool に基づいて操作を有効化／無効化
+            }
+//        Text("メイン画面")
+//            .sheet(isPresented: $isSheetPresented) {
+//                OnboardingView2(isSheetPresented: $isSheetPresented)
+//            }
+    }
+
+
+struct OnboardingView2: View {
+    @Binding var isSheetPresented: Bool
+
+    var body: some View {
+        VStack {
+            Text("オンボーディング画面")
+                .font(.largeTitle)
+                .padding()
+
+            Button("閉じる") {
+                isSheetPresented = false
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.blue.opacity(0.2))
+    }
+}

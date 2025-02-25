@@ -38,6 +38,7 @@
 		F79338E02BF074A300523E28 /* calendarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79338DF2BF074A300523E28 /* calendarUITests.swift */; };
 		F79338E22BF074A300523E28 /* calendarUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79338E12BF074A300523E28 /* calendarUITestsLaunchTests.swift */; };
 		F794945F2CA40786009FEC16 /* タスクモデル.swift in Sources */ = {isa = PBXBuildFile; fileRef = F794945E2CA40786009FEC16 /* タスクモデル.swift */; };
+		F795B6892D683929005D4E15 /* IntervalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F795B6882D683929005D4E15 /* IntervalManager.swift */; };
 		F79998C32C9FB689001A5FEB /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79998C22C9FB689001A5FEB /* DataController.swift */; };
 		F79998C52C9FB729001A5FEB /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79998C42C9FB729001A5FEB /* Tasks.swift */; };
 		F79998C72C9FCB1D001A5FEB /* ビュー_予定.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79998C62C9FCB1D001A5FEB /* ビュー_予定.swift */; };
@@ -56,21 +57,27 @@
 		F79DC84F2D0A73A8003149D6 /* アラーム管理.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79DC84E2D0A73A8003149D6 /* アラーム管理.swift */; };
 		F79DC8512D0AD40A003149D6 /* Clock_Alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F79DC8502D0AD40A003149D6 /* Clock_Alarm.mp3 */; };
 		F79EC1EC2C46677500983F8A /* ビュー_タスク作成.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79EC1EB2C46677500983F8A /* ビュー_タスク作成.swift */; };
+		F7A031EF2D6AFA1100843FA8 /* menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A031EE2D6AFA1100843FA8 /* menu.swift */; };
 		F7A086CF2CC0B65300C8EE31 /* DiaryEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A086CD2CC0B65300C8EE31 /* DiaryEntry+CoreDataClass.swift */; };
 		F7A086D02CC0B65300C8EE31 /* DiaryEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A086CE2CC0B65300C8EE31 /* DiaryEntry+CoreDataProperties.swift */; };
 		F7A086D22CC0E87C00C8EE31 /* 日記.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A086D12CC0E87C00C8EE31 /* 日記.swift */; };
 		F7A11BD42C48B17D0076C73A /* dropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A11BD32C48B17D0076C73A /* dropdown.swift */; };
+		F7A2AFF22D49C962000553B3 /* diaryModel_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74270FB2D2E252D001A98C6 /* diaryModel_test.swift */; };
 		F7A42A832D0C3AC200EE2BEE /* FamilyControllerView_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C1D26A2D02E703007F3DE4 /* FamilyControllerView_test.swift */; };
+		F7A64AB62D4E185A0072F1F3 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BB06002D4CCBC500416907 /* NotificationManager.swift */; };
 		F7A65AC62CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A65AC52CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift */; };
 		F7A8487D2CBFA318006AA83B /* パーツ_パルス.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A8487C2CBFA318006AA83B /* パーツ_パルス.swift */; };
 		F7AD90602D08431500304B34 /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AD905F2D08431500304B34 /* DeviceActivity.framework */; };
 		F7AD90632D08431500304B34 /* DeviceActivityMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD90622D08431500304B34 /* DeviceActivityMonitorExtension.swift */; };
 		F7AD90682D08431500304B34 /* ScheduledDeviceMonitor_DAM.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F7AD905D2D08431500304B34 /* ScheduledDeviceMonitor_DAM.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F7AEC3CB2CEC6E8400C134A0 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F7AEC3CA2CEC6E8400C134A0 /* .gitignore */; };
-		F7B1E41A2CE053F00040EAD4 /* Coredata送るテスト.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B1E4192CE053F00040EAD4 /* Coredata送るテスト.swift */; };
+		F7B1E41A2CE053F00040EAD4 /* ページ_オンボーディング.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B1E4192CE053F00040EAD4 /* ページ_オンボーディング.swift */; };
 		F7B1E41C2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B1E41B2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift */; };
+		F7B4AF452D69B3FF006A1272 /* ScreenTimeAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B4AF442D69B3FF006A1272 /* ScreenTimeAuthorizationManager.swift */; };
 		F7B4D5062CCE118800E1BD54 /* 日付フォーマット.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B4D5052CCE118800E1BD54 /* 日付フォーマット.swift */; };
 		F7B520492CE446CE00F86232 /* ブロック状態管理.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B520482CE446CE00F86232 /* ブロック状態管理.swift */; };
+		F7BB06012D4CCBC500416907 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BB06002D4CCBC500416907 /* NotificationManager.swift */; };
+		F7BB06032D4CCD1600416907 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BB06022D4CCD1600416907 /* AppDelegate.swift */; };
 		F7BB31702CDB476200300885 /* TaskDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BB316F2CDB476200300885 /* TaskDataController.swift */; };
 		F7C1D26B2D02E703007F3DE4 /* FamilyControllerView_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C1D26A2D02E703007F3DE4 /* FamilyControllerView_test.swift */; };
 		F7C760D02CA1068200F3BF16 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C760CF2CA1068200F3BF16 /* TaskListView.swift */; };
@@ -80,8 +87,10 @@
 		F7C94EF22D0D150600F500C0 /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C94EF12D0D150600F500C0 /* ShieldConfigurationExtension.swift */; };
 		F7C94EF72D0D150600F500C0 /* ShieldConfiguration.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F7C94EED2D0D150600F500C0 /* ShieldConfiguration.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F7CA59762D13B656005D169E /* ManagedSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67C32D125ACD007BD0DE /* ManagedSettingsStore.swift */; };
+		F7CA69512D589564001FB73A /* ページ_フィードバック.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CA69502D589564001FB73A /* ページ_フィードバック.swift */; };
+		F7CA69532D58AEAE001FB73A /* setting_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CA69522D58AEAE001FB73A /* setting_test.swift */; };
 		F7D40C932D09854700E174F1 /* 通知管理.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D40C922D09854700E174F1 /* 通知管理.swift */; };
-		F7DE20932CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DE20922CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift */; };
+		F7DE20932CB40E960042A2A7 /* パーツ_アプリ選択.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DE20922CB40E960042A2A7 /* パーツ_アプリ選択.swift */; };
 		F7ED67C42D125ACD007BD0DE /* ManagedSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67C32D125ACD007BD0DE /* ManagedSettingsStore.swift */; };
 		F7ED67C62D125B57007BD0DE /* ShieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67C52D125B57007BD0DE /* ShieldView.swift */; };
 		F7ED67D02D126A95007BD0DE /* ApplicationProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED67CF2D126A95007BD0DE /* ApplicationProfile.swift */; };
@@ -178,6 +187,7 @@
 		F79338DF2BF074A300523E28 /* calendarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calendarUITests.swift; sourceTree = "<group>"; };
 		F79338E12BF074A300523E28 /* calendarUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calendarUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F794945E2CA40786009FEC16 /* タスクモデル.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "タスクモデル.swift"; sourceTree = "<group>"; };
+		F795B6882D683929005D4E15 /* IntervalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalManager.swift; sourceTree = "<group>"; };
 		F79998C22C9FB689001A5FEB /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataController.swift; path = ../DataController.swift; sourceTree = "<group>"; };
 		F79998C42C9FB729001A5FEB /* Tasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasks.swift; sourceTree = "<group>"; };
 		F79998C62C9FCB1D001A5FEB /* ビュー_予定.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ビュー_予定.swift"; sourceTree = "<group>"; };
@@ -196,6 +206,7 @@
 		F79DC84E2D0A73A8003149D6 /* アラーム管理.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "アラーム管理.swift"; sourceTree = "<group>"; };
 		F79DC8502D0AD40A003149D6 /* Clock_Alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Clock_Alarm.mp3; sourceTree = "<group>"; };
 		F79EC1EB2C46677500983F8A /* ビュー_タスク作成.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ビュー_タスク作成.swift"; sourceTree = "<group>"; };
+		F7A031EE2D6AFA1100843FA8 /* menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menu.swift; sourceTree = "<group>"; };
 		F7A086CD2CC0B65300C8EE31 /* DiaryEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiaryEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F7A086CE2CC0B65300C8EE31 /* DiaryEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiaryEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F7A086D12CC0E87C00C8EE31 /* 日記.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "日記.swift"; sourceTree = "<group>"; };
@@ -211,10 +222,13 @@
 		F7AD90642D08431500304B34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7AD90652D08431500304B34 /* ScheduledDeviceMonitor_DAM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScheduledDeviceMonitor_DAM.entitlements; sourceTree = "<group>"; };
 		F7AEC3CA2CEC6E8400C134A0 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		F7B1E4192CE053F00040EAD4 /* Coredata送るテスト.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coredata送るテスト.swift"; sourceTree = "<group>"; wrapsLines = 0; };
+		F7B1E4192CE053F00040EAD4 /* ページ_オンボーディング.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ページ_オンボーディング.swift"; sourceTree = "<group>"; wrapsLines = 0; };
 		F7B1E41B2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_ライナーグラデーション.swift"; sourceTree = "<group>"; };
+		F7B4AF442D69B3FF006A1272 /* ScreenTimeAuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeAuthorizationManager.swift; sourceTree = "<group>"; };
 		F7B4D5052CCE118800E1BD54 /* 日付フォーマット.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "日付フォーマット.swift"; sourceTree = "<group>"; };
 		F7B520482CE446CE00F86232 /* ブロック状態管理.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ブロック状態管理.swift"; sourceTree = "<group>"; };
+		F7BB06002D4CCBC500416907 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		F7BB06022D4CCD1600416907 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F7BB316F2CDB476200300885 /* TaskDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDataController.swift; sourceTree = "<group>"; };
 		F7C1D26A2D02E703007F3DE4 /* FamilyControllerView_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyControllerView_test.swift; sourceTree = "<group>"; };
 		F7C760CF2CA1068200F3BF16 /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
@@ -223,8 +237,10 @@
 		F7C94EF12D0D150600F500C0 /* ShieldConfigurationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldConfigurationExtension.swift; sourceTree = "<group>"; };
 		F7C94EF32D0D150600F500C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7C94EF42D0D150600F500C0 /* ShieldConfiguration.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldConfiguration.entitlements; sourceTree = "<group>"; };
+		F7CA69502D589564001FB73A /* ページ_フィードバック.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ページ_フィードバック.swift"; sourceTree = "<group>"; };
+		F7CA69522D58AEAE001FB73A /* setting_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setting_test.swift; sourceTree = "<group>"; };
 		F7D40C922D09854700E174F1 /* 通知管理.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "通知管理.swift"; sourceTree = "<group>"; };
-		F7DE20922CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_カスタムセグメントピッカー.swift"; sourceTree = "<group>"; };
+		F7DE20922CB40E960042A2A7 /* パーツ_アプリ選択.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "パーツ_アプリ選択.swift"; sourceTree = "<group>"; };
 		F7ED67C32D125ACD007BD0DE /* ManagedSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedSettingsStore.swift; sourceTree = "<group>"; };
 		F7ED67C52D125B57007BD0DE /* ShieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldView.swift; sourceTree = "<group>"; };
 		F7ED67CF2D126A95007BD0DE /* ApplicationProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationProfile.swift; sourceTree = "<group>"; };
@@ -393,10 +409,12 @@
 				F77D29DA2CCC794700BC7D2E /* ページ_日記リスト.swift */,
 				F78A28D42CCF8A960080FCCE /* 設定ページ.swift */,
 				F79312202CD8C10D007AA9C6 /* ページ_ブロック画面.swift */,
-				F7B1E4192CE053F00040EAD4 /* Coredata送るテスト.swift */,
+				F7B1E4192CE053F00040EAD4 /* ページ_オンボーディング.swift */,
 				F799EFF22CF30C8800497356 /* ページ_ロゴ.swift */,
 				F7EFA7552CFF365D00B1D26D /* テスト.swift */,
 				F7C1D26A2D02E703007F3DE4 /* FamilyControllerView_test.swift */,
+				F7CA69502D589564001FB73A /* ページ_フィードバック.swift */,
+				F7CA69522D58AEAE001FB73A /* setting_test.swift */,
 			);
 			name = "ページ";
 			path = "ページ";
@@ -417,12 +435,13 @@
 				F79998D12C9FE5E0001A5FEB /* パーツ_FABボタン_タスク作成.swift */,
 				F787FFB72CAF9A7B00897D89 /* パーツ_ボタン_タスク.swift */,
 				F787FFB92CAFA05C00897D89 /* パーツ_セグメントピッカー.swift */,
-				F7DE20922CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift */,
+				F7DE20922CB40E960042A2A7 /* パーツ_アプリ選択.swift */,
 				F77D29D62CCC772400BC7D2E /* パーツ_ボタン_日記作成.swift */,
 				F77D29DC2CCC903800BC7D2E /* パーツ_ボトムタブビュー.swift */,
 				F7A65AC52CDC4B6C00B3DDF5 /* パーツ_文字数入力欄.swift */,
 				F799EFEE2CF3019C00497356 /* パーツ_曜日選択.swift */,
 				F799EFF02CF3030C00497356 /* パーツ_時刻選択.swift */,
+				F7A031EE2D6AFA1100843FA8 /* menu.swift */,
 			);
 			name = "パーツ";
 			path = "パーツ";
@@ -473,6 +492,10 @@
 				F7B520482CE446CE00F86232 /* ブロック状態管理.swift */,
 				F7D40C922D09854700E174F1 /* 通知管理.swift */,
 				F79DC84E2D0A73A8003149D6 /* アラーム管理.swift */,
+				F7BB06002D4CCBC500416907 /* NotificationManager.swift */,
+				F7BB06022D4CCD1600416907 /* AppDelegate.swift */,
+				F795B6882D683929005D4E15 /* IntervalManager.swift */,
+				F7B4AF442D69B3FF006A1272 /* ScreenTimeAuthorizationManager.swift */,
 			);
 			path = "関数";
 			sourceTree = "<group>";
@@ -766,16 +789,20 @@
 			files = (
 				F77D29DD2CCC903800BC7D2E /* パーツ_ボトムタブビュー.swift in Sources */,
 				F794945F2CA40786009FEC16 /* タスクモデル.swift in Sources */,
+				F7CA69512D589564001FB73A /* ページ_フィードバック.swift in Sources */,
 				F7A11BD42C48B17D0076C73A /* dropdown.swift in Sources */,
 				F79338C92BF074A300523E28 /* Persistence.swift in Sources */,
 				F7ED67D22D126AAF007BD0DE /* DataBase.swift in Sources */,
+				F7CA69532D58AEAE001FB73A /* setting_test.swift in Sources */,
 				F7A8487D2CBFA318006AA83B /* パーツ_パルス.swift in Sources */,
+				F795B6892D683929005D4E15 /* IntervalManager.swift in Sources */,
 				F78A28D52CCF8A960080FCCE /* 設定ページ.swift in Sources */,
 				F79998CF2C9FE334001A5FEB /* Extension.swift in Sources */,
+				F7B4AF452D69B3FF006A1272 /* ScreenTimeAuthorizationManager.swift in Sources */,
 				F79DC84F2D0A73A8003149D6 /* アラーム管理.swift in Sources */,
 				F799EFEF2CF3019C00497356 /* パーツ_曜日選択.swift in Sources */,
 				F79998D82C9FFD90001A5FEB /* ContentViewModel.swift in Sources */,
-				F7B1E41A2CE053F00040EAD4 /* Coredata送るテスト.swift in Sources */,
+				F7B1E41A2CE053F00040EAD4 /* ページ_オンボーディング.swift in Sources */,
 				F79AF0C82CA53C2900DBFAEC /* MyTask+CoreDataClass.swift in Sources */,
 				F7A086CF2CC0B65300C8EE31 /* DiaryEntry+CoreDataClass.swift in Sources */,
 				F77D29D92CCC788E00BC7D2E /* ページ_日記エディタ.swift in Sources */,
@@ -784,7 +811,9 @@
 				F7C1D26B2D02E703007F3DE4 /* FamilyControllerView_test.swift in Sources */,
 				F799EFF52CF30CEA00497356 /* アプリルート.swift in Sources */,
 				F7B4D5062CCE118800E1BD54 /* 日付フォーマット.swift in Sources */,
+				F7A031EF2D6AFA1100843FA8 /* menu.swift in Sources */,
 				F74270FC2D2E252D001A98C6 /* diaryModel_test.swift in Sources */,
+				F7BB06032D4CCD1600416907 /* AppDelegate.swift in Sources */,
 				F7EFA7562CFF365D00B1D26D /* テスト.swift in Sources */,
 				F79AF0C92CA53C2900DBFAEC /* MyTask+CoreDataProperties.swift in Sources */,
 				F78EB7542C494A2100AB3683 /* dropdown_default.swift in Sources */,
@@ -794,7 +823,7 @@
 				F79041132C40C47600BD67BB /* ScreenTimeSamplesApp.swift in Sources */,
 				F79312212CD8C10D007AA9C6 /* ページ_ブロック画面.swift in Sources */,
 				F79998C72C9FCB1D001A5FEB /* ビュー_予定.swift in Sources */,
-				F7DE20932CB40E960042A2A7 /* パーツ_カスタムセグメントピッカー.swift in Sources */,
+				F7DE20932CB40E960042A2A7 /* パーツ_アプリ選択.swift in Sources */,
 				F79998D22C9FE5E0001A5FEB /* パーツ_FABボタン_タスク作成.swift in Sources */,
 				F7B520492CE446CE00F86232 /* ブロック状態管理.swift in Sources */,
 				F7ED67C42D125ACD007BD0DE /* ManagedSettingsStore.swift in Sources */,
@@ -810,6 +839,7 @@
 				F79CDD772C9EEFF500F93ECE /* Tasks.xcdatamodeld in Sources */,
 				F74357EA2D0C4BA200D5ED9F /* mainSheldView.swift in Sources */,
 				F79338C02BF074A300523E28 /* calendarApp.swift in Sources */,
+				F7BB06012D4CCBC500416907 /* NotificationManager.swift in Sources */,
 				F79EC1EC2C46677500983F8A /* ビュー_タスク作成.swift in Sources */,
 				F7B1E41C2CE0BC1B0040EAD4 /* パーツ_ライナーグラデーション.swift in Sources */,
 				F79338CC2BF074A300523E28 /* calendar.xcdatamodeld in Sources */,
@@ -847,7 +877,9 @@
 				F7CA59762D13B656005D169E /* ManagedSettingsStore.swift in Sources */,
 				F7ED67D42D126AC9007BD0DE /* ApplicationProfile.swift in Sources */,
 				F74357DC2D0C4A4600D5ED9F /* DataController.swift in Sources */,
+				F7A64AB62D4E185A0072F1F3 /* NotificationManager.swift in Sources */,
 				F7A42A832D0C3AC200EE2BEE /* FamilyControllerView_test.swift in Sources */,
+				F7A2AFF22D49C962000553B3 /* diaryModel_test.swift in Sources */,
 				F7AD90632D08431500304B34 /* DeviceActivityMonitorExtension.swift in Sources */,
 				F74357E32D0C4ACA00D5ED9F /* MyTask+CoreDataProperties.swift in Sources */,
 				F7ED67D52D126ACC007BD0DE /* DataBase.swift in Sources */,
@@ -1085,11 +1117,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = calendar/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Kinn;
+				INFOPLIST_KEY_CFBundleDisplayName = Continote;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1120,11 +1151,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = calendar/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Kinn;
+				INFOPLIST_KEY_CFBundleDisplayName = Continote;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
